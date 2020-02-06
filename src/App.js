@@ -54,7 +54,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.FilterResult = this.FilterResult.bind(this)
-    this.FilterByParties = this.FilterByParties.bind(this);
+    this.GetPartyResult = this.GetPartyResult.bind(this);
   }
 
   componentDidMount() {
@@ -63,8 +63,8 @@ class App extends React.Component {
     .then((data) => {
       this.setState({ riksmote: data.voteringlista.votering, hasData: true })
       this.FilterResult();
-      console.log(`%c${'-'.repeat(50)}`, "color: red")
-      this.FilterByParties();
+
+      console.log(this.GetPartyResult());
     });
   }
 
@@ -77,19 +77,16 @@ class App extends React.Component {
     const AvstarResult = filterVotering_id.filter(person => person.rost ===ResutArray[2]);
     const FranvarandeResult = filterVotering_id.filter(person => person.rost ===ResutArray[3]);
 
-    const newResultArray = [YesResult,NoResult,AvstarResult,FranvarandeResult]
     const TotalPresent = YesResult.length + NoResult.length + AvstarResult.length;
-  
     console.log('Antal medlemar i riksdagen är '+TotalPresent+' och från de som är frånvarande är '+FranvarandeResult.length);
     console.log('Resultatet av votering är '+YesResult.length+' ja, '+NoResult.length+' nej och '+AvstarResult.length+' avstår');
   }
-
   
-
-  FilterByParties() {
-    const { riksmote } = this.state;
+  GetPartyResult(index) {
+    const { riksmote } = this.state; 
     const voteringar = {};
-    
+    const parties = [];
+
     riksmote.forEach((person) => {
       const { votering_id } = person;
       if (!voteringar[votering_id]) {
@@ -98,33 +95,34 @@ class App extends React.Component {
       voteringar[votering_id].push(person);
     });
     
-    Object.entries(voteringar).forEach((votering) => {
-      const parties = {};
-      votering[1].forEach((person) => {
+    Object.values(voteringar).forEach((votering) => {
+      const party = {};
+      votering.forEach((person) => {
         const { parti } = person;
   
-        if (!parties[parti]) {
-          parties[parti] = {
-            memberCount: 0,
-            votes: { "Ja": 0, "Nej": 0, "Avstår": 0, "Frånvarande": 0 }
+        if (!party[parti]) {
+          party[parti] = { 
+            memberCount: 0, 
+            votes: {"Ja": 0, "Nej": 0, "Avstår": 0, "Frånvarande": 0} 
           };
         }
         
-        parties[parti].memberCount++;
-        parties[parti].votes[person.rost]++;
+        party[parti].memberCount++;
+        party[parti].votes[person.rost]++;
       })
-      console.log(`%c${votering[0]}:`, 'color: green; font-size: 14px', parties)
+      parties.push(party);
     });
 
+    return index ? parties[index] : parties;
   }
 
   render() {
-    const { riksmote, hasData } = this.state;
+    const { hasData } = this.state;
 
     return (
-      <main>
-      </main>
-    )
+      <div>
+      </div>
+    );
   }
 }
 
