@@ -1,17 +1,30 @@
 import React from 'react';
-import App from './App.js';
+import update from 'immutability-helper';
 
-const APIOne = 'http://data.riksdagen.se/votering/93C09C8A-56C6-40A2-88AA-7560C19456C7/?utformat=JSON';
 
-const VoteringFilter = {
+//Ändra till dok_id
+const AllDocumentID = [
+  'H701AU1',
+  'H701AU2',
+  'H701AU4',
+  'H701AU5',
+  'H701AU6',
+  'H701CU1',
+  'H701CU2',
+]
 
-}
 
-class VoteringFilter extends App.Component {
-  constructor() {
+
+const APITitle = (documentID) => {
+  return `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
+}  
+
+class VoteringFilter extends React.Component {
+  constructor(props) {
+    super(props)
     this.state = {
       voteringInfo: [
-        { 
+        {
           title: '',
           description: '',
           id: 1,
@@ -34,84 +47,61 @@ class VoteringFilter extends App.Component {
           title: '',
           description: '',
           id: 5,
-        }, 
-        {
-          title: '',
-          description: '',
-          id: 6,
-        }, 
-        {
-          title: '',
-          description: '',
-          id: 7,
-        }, 
-        {
-          title: '',
-          description: '',
-          id: 8,
         },
         {
           title: '',
           description: '',
-          id: 9,
-        }, 
+          id: 6,
+        },
         {
           title: '',
           description: '',
-          id: 10,
-        }
+          id: 7,
+        },
       ]
     }
   }
 
-  
 
- componentDidMount() {
-   fetch(API)
-     .then((data) => data.json())
-     .then((data) => {
-       this.setState({
-         riksmote: data.voteringOne.titel,
-         hasData: true
-       })
-       this.voteringTitle();
-     });
- }
-
- voteringTitle() {
-    const {
-      voteringOne,
-      voteringTwo,
-      voteringThree,
-      voteringFour,
-      voteringFive,
-      voteringSix,
-      voteringSeven,
-      voteringEight,
-      voteringNine,
-      voteringTen,
-    } = this.state;
-
-    const votering = () => filter => {
-      // this.state.
-    }
-    
-    riksmote.forEach((person) => {
-      const { parti } = person;
-
-      if (!parties[parti]) {
-        parties[parti] = {
-          memberCount: 0,
-          votes: { "Ja": 0, "Nej": 0, "Avstår": 0, "Frånvarande": 0 }
-        };
-      }
+  componentDidMount(key) {
+    //loop through all strings in array AllDocumentID
+    for (let i = 0; i < 10; i++) {
+      //create variable for all strings (ID:s)
+      let documentID = AllDocumentID[i];
       
-      parties[parti].memberCount++;
-      parties[parti].votes[person.rost]++;
-    });
+      //get titles and descriptions from API 
+      fetch(APITitle(documentID)) 
+        .then((data) => data.json())
+        .then((data) => {
+          //use variable as part of URL = creates API URL in order to get all separate titles
+          const utskottsforslag = data.utskottsforslag
+          this.setState({
+            voteringInfo: update(this.state.voteringInfo, { [i]: { 
+              title: { $set: utskottsforslag.dokument.titel }, 
+              description: { 
+                $set: utskottsforslag.dokutskottsforslag.utskottsforslag.forslag || utskottsforslag.dokutskottsforslag.utskottsforslag[0].forslag 
+              } 
+            } }),
+            hasData: true,
+          })
+        });
+    }
 
-    console.log(parties);
   }
+
+
+
+  render() {
+
+    return (
+      <div>
+        <p>Hello all the politically interested!</p>
+      </div>
+    );
+
+  }
+
+
 }
 
 export default VoteringFilter;

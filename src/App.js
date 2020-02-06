@@ -1,4 +1,5 @@
 import React from 'react';
+import VoteringFilter from './components/VoteringFilter';
 
 const API = "http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=&punkt=&valkrets=&rost=&iid=&sz=3490&utformat=JSON&gruppering="
 
@@ -59,54 +60,54 @@ class App extends React.Component {
 
   componentDidMount() {
     fetch(API)
-    .then((data) => data.json())
-    .then((data) => {
-      this.setState({ riksmote: data.voteringlista.votering, hasData: true })
-      this.FilterResult();
+      .then((data) => data.json())
+      .then((data) => {
+        this.setState({ riksmote: data.voteringlista.votering, hasData: true })
+        this.FilterResult();
 
-      console.log(this.GetPartyResult());
-    });
+        console.log(this.GetPartyResult());
+      });
   }
 
   FilterResult() {
-    const ResutArray = ['Ja','Nej','Avstår','Frånvarande'];
+    const ResutArray = ['Ja', 'Nej', 'Avstår', 'Frånvarande'];
     const beteckningID = this.state.riksmote[0].votering_id;
     const filterVotering_id = this.state.riksmote.filter(person => person.votering_id === beteckningID)
     const YesResult = filterVotering_id.filter(person => person.rost === ResutArray[0]);
-    const NoResult = filterVotering_id.filter(person => person.rost ===ResutArray[1]);
-    const AvstarResult = filterVotering_id.filter(person => person.rost ===ResutArray[2]);
-    const FranvarandeResult = filterVotering_id.filter(person => person.rost ===ResutArray[3]);
+    const NoResult = filterVotering_id.filter(person => person.rost === ResutArray[1]);
+    const AvstarResult = filterVotering_id.filter(person => person.rost === ResutArray[2]);
+    const FranvarandeResult = filterVotering_id.filter(person => person.rost === ResutArray[3]);
 
     const TotalPresent = YesResult.length + NoResult.length + AvstarResult.length;
-    console.log('Antal medlemar i riksdagen är '+TotalPresent+' och från de som är frånvarande är '+FranvarandeResult.length);
-    console.log('Resultatet av votering är '+YesResult.length+' ja, '+NoResult.length+' nej och '+AvstarResult.length+' avstår');
+    console.log('Antal medlemar i riksdagen är ' + TotalPresent + ' och från de som är frånvarande är ' + FranvarandeResult.length);
+    console.log('Resultatet av votering är ' + YesResult.length + ' ja, ' + NoResult.length + ' nej och ' + AvstarResult.length + ' avstår');
   }
 
   GetPartyResult(index) {
-    const { riksmote } = this.state; 
+    const { riksmote } = this.state;
     const voteringar = {};
     const parties = [];
 
     riksmote.forEach((person) => {
       const { votering_id } = person;
       if (!voteringar[votering_id]) {
-        voteringar[votering_id] = []; 
+        voteringar[votering_id] = [];
       }
       voteringar[votering_id].push(person);
     });
-    
+
     Object.values(voteringar).forEach((votering) => {
       const party = {};
       votering.forEach((person) => {
         const { parti } = person;
-  
+
         if (!party[parti]) {
-          party[parti] = { 
-            memberCount: 0, 
-            votes: {"Ja": 0, "Nej": 0, "Avstår": 0, "Frånvarande": 0} 
+          party[parti] = {
+            memberCount: 0,
+            votes: { "Ja": 0, "Nej": 0, "Avstår": 0, "Frånvarande": 0 }
           };
         }
-        
+
         party[parti].memberCount++;
         party[parti].votes[person.rost]++;
       })
@@ -121,6 +122,7 @@ class App extends React.Component {
 
     return (
       <div>
+        <VoteringFilter />
       </div>
     );
   }
