@@ -81,7 +81,7 @@ class App extends React.Component {
     console.log('Antal medlemar i riksdagen är '+TotalPresent+' och från de som är frånvarande är '+FranvarandeResult.length);
     console.log('Resultatet av votering är '+YesResult.length+' ja, '+NoResult.length+' nej och '+AvstarResult.length+' avstår');
   }
-  
+
   GetPartyResult(index) {
     const { riksmote } = this.state; 
     const voteringar = {};
