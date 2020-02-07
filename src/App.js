@@ -1,5 +1,11 @@
 import React from 'react';
 import VoteringFilter from './components/VoteringFilter';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 const API = "http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=&punkt=&valkrets=&rost=&iid=&sz=3490&utformat=JSON&gruppering="
 
@@ -124,6 +130,8 @@ class App extends React.Component {
       <div>
         <VoteringFilter />
       </div>
+
+
     );
   }
 }

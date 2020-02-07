@@ -1,5 +1,7 @@
 import React from 'react';
 import update from 'immutability-helper';
+import { Link } from 'react-router-dom';
+import Votering from '../Votering'
 
 
 //Ändra till dok_id
@@ -14,15 +16,14 @@ const AllDocumentID = [
 ]
 
 
+const APITitle = (documentID) => `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
 
-const APITitle = (documentID) => {
-  return `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
-}  
 
 class VoteringFilter extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      indexToShow: null,
       voteringInfo: [
         {
           title: '',
@@ -62,6 +63,11 @@ class VoteringFilter extends React.Component {
     }
   }
 
+/*   onChange(event) {
+    
+    console.log(event.target.value);
+    console.log(this.state.voteringInfo[event.target.selectedIndex]);
+  } */
 
   componentDidMount(key) {
     //loop through all strings in array AllDocumentID
@@ -89,19 +95,47 @@ class VoteringFilter extends React.Component {
 
   }
 
+    chooseVotering = (id) => {
+      this.setState({
+        indexToShow: id,
+      })
+    }
 
+ 
+
+      
+   /*          console.log(event.target.value);
+      console.log(this.state.voteringInfo[event.target.selectedIndex]);)
+ */
+    
 
   render() {
-
+    const { voteringInfo } = this.state;
     return (
-      <div>
-        <p>Hello all the politically interested!</p>
-      </div>
+<main>
+        <table>
+          <thead>
+          <tr>
+            <th colspan="2"><h1>Voteringslistan</h1></th>
+          </tr>
+          </thead>
+          <tbody>
+            {voteringInfo.map(item => 
+              <tr onClick={ () => this.chooseVotering(item.id) } key={item.id}><td>{item.title}</td></tr>
+              )
+            }
+          </tbody>
+        </table>
+        { this.state.indexToShow ? <Votering index={this.state.indexToShow} voteringInfo={voteringInfo} /> : null }
+      </main>
+      
     );
-
   }
-
-
 }
 
+
 export default VoteringFilter;
+
+
+   
+
