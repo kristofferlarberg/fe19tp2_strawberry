@@ -63,23 +63,25 @@ class App extends React.Component {
     .then((data) => data.json())
     .then((data) => {
       this.setState({ riksmote: data.voteringlista.votering, hasData: true })
-      this.FilterResult(this.state.riksmote[0].votering_id);
-
       console.log(this.GetPartyResult());
     });
   }
 
+  /** 
+   * @param {String} votering_list 
+   */
   FilterResult(votering_list) {
-    const ResutshortedByVotes = ['Ja','Nej','Avstår','Frånvarande'];
    const beteckningID = votering_list;
+   console.log(votering_list);
+   
    const filterVotering_id = this.state.riksmote.filter(person => person.votering_id === beteckningID)
-    const YesResult = filterVotering_id.filter(person => person.rost === ResutshortedByVotes[0]);
-    const NoResult = filterVotering_id.filter(person => person.rost ===ResutshortedByVotes[1]);
-    const AvstarResult = filterVotering_id.filter(person => person.rost ===ResutshortedByVotes[2]);
-    const FranvarandeResult = filterVotering_id.filter(person => person.rost ===ResutshortedByVotes[3]);
-    const TotalPresent = YesResult.length + NoResult.length + AvstarResult.length;
-   console.log('I riksdagen alla '+filterVotering_id.length+' medlemar de som är i riksdagen är '+TotalPresent+' och från de som är frånvarande är '+FranvarandeResult.length);
-   console.log('Resultatet av votering är '+YesResult.length+' ja, '+NoResult.length+' nej och '+AvstarResult.length+' avstår');
+  //   const YesResult = filterVotering_id.filter(person => person.rost === resultShortedByVotes[0]);
+  //   const NoResult = filterVotering_id.filter(person => person.rost ===resultShortedByVotes[1]);
+  //   const AvstarResult = filterVotering_id.filter(person => person.rost ===resultShortedByVotes[2]);
+  //   const FranvarandeResult = filterVotering_id.filter(person => person.rost ===resultShortedByVotes[3]);
+  //   const TotalPresent = YesResult.length + NoResult.length + AvstarResult.length;
+  //  console.log('I riksdagen alla '+filterVotering_id.length+' medlemar de som är i riksdagen är '+TotalPresent+' och från de som är frånvarande är '+FranvarandeResult.length);
+  //  console.log('Resultatet av votering är '+YesResult.length+' ja, '+NoResult.length+' nej och '+AvstarResult.length+' avstår');
 
 
 const shortByparty = {};
@@ -93,7 +95,7 @@ const emptyObject = {}
    })
    const Objkeys = Object.keys(emptyObject);
    let i =0;
-   const arr = []
+   const votesObj = {}
    Object.values(emptyObject).forEach(item => {
      let amoutOfVotes = 0;
      const votes = {};
@@ -106,7 +108,7 @@ const emptyObject = {}
       votes[parti].push(person);
 
      });
-     arr.push(amoutOfVotes) 
+     votesObj[Objkeys[i]] =amoutOfVotes;
     shortByparty[Objkeys[i]]=votes;
      i++;  
    });
@@ -125,15 +127,7 @@ const emptyObject = {}
        shortedByVotes[Object.keys(shortByparty)[outerIndex]]= innterArr;
         outerIndex++;
    })
-console.log(arr);
-console.log(shortedByVotes);
-
-
-
-   
-
-   //console.log(shortByparty);
-   
+   return {votesObj, shortedByVotes}
 }
 
 
@@ -174,9 +168,26 @@ console.log(shortedByVotes);
 
   render() {
     const { hasData } = this.state;
-
+    let returnValue;
+    if (hasData) {
+     console.log(this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'));
+     const voteKeys = Object.keys(this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'));
+     const values = this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7');
+     const voteResult = values[voteKeys[0]];
+     returnValue = <div>
+       <p>Has Data</p>
+       <ul id='roster'>
+         {Object.values(voteResult).map(values => 
+    <li key={Object.values(voteResult).indexOf(values)}><p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p></li>,
+           )}
+       </ul>
+       </div>
+    } else {
+      returnValue = <p>Loading...</p> 
+    }
     return (
       <div>
+          {returnValue}
       </div>
     );
   }
