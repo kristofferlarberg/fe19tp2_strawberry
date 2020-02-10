@@ -1,8 +1,11 @@
 import React from 'react';
 import update from 'immutability-helper';
-import { Link } from 'react-router-dom';
-import Votering from '../Votering'
+import styled from 'styled-components';
 
+const Table = styled.table`
+ border: 1px solid #000;
+ padding:20px;
+`;
 
 //Ändra till dok_id
 const AllDocumentID = [
@@ -18,12 +21,11 @@ const AllDocumentID = [
 
 const APITitle = (documentID) => `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
 
-
 class VoteringFilter extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super();
+
     this.state = {
-      indexToShow: null,
       voteringInfo: [
         {
           title: '',
@@ -59,35 +61,32 @@ class VoteringFilter extends React.Component {
           description: '',
           id: 7,
         },
-      ]
-    }
+      ],
+      expandedRows: []
+    };
   }
-
-/*   onChange(event) {
-    
-    console.log(event.target.value);
-    console.log(this.state.voteringInfo[event.target.selectedIndex]);
-  } */
 
   componentDidMount(key) {
     //loop through all strings in array AllDocumentID
     for (let i = 0; i < 10; i++) {
       //create variable for all strings (ID:s)
       let documentID = AllDocumentID[i];
-      
+
       //get titles and descriptions from API 
-      fetch(APITitle(documentID)) 
+      fetch(APITitle(documentID))
         .then((data) => data.json())
         .then((data) => {
           //use variable as part of URL = creates API URL in order to get all separate titles
           const utskottsforslag = data.utskottsforslag
           this.setState({
-            voteringInfo: update(this.state.voteringInfo, { [i]: { 
-              title: { $set: utskottsforslag.dokument.titel }, 
-              description: { 
-                $set: utskottsforslag.dokutskottsforslag.utskottsforslag.forslag || utskottsforslag.dokutskottsforslag.utskottsforslag[0].forslag 
-              } 
-            } }),
+            voteringInfo: update(this.state.voteringInfo, {
+              [i]: {
+                title: { $set: utskottsforslag.dokument.titel },
+                description: {
+                  $set: utskottsforslag.dokutskottsforslag.utskottsforslag.forslag || utskottsforslag.dokutskottsforslag.utskottsforslag[0].forslag
+                }
+              }
+            }),
             hasData: true,
           })
         });
@@ -95,47 +94,52 @@ class VoteringFilter extends React.Component {
 
   }
 
-    chooseVotering = (id) => {
-      this.setState({
-        indexToShow: id,
-      })
+  handleRowClick(rowId) {
+    const currentExpandedRows = this.state.expandedRows;
+    const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
+
+    const newExpandedRows = isRowCurrentlyExpanded ?
+      currentExpandedRows.filter(id => id !== rowId) :
+      currentExpandedRows.concat(rowId);
+
+    this.setState({ expandedRows: newExpandedRows });
+  }
+
+  renderItem(item) {
+    const clickCallback = () => this.handleRowClick(item.id);
+    const itemRows = [
+      <tr onClick={clickCallback} key={"row-data-" + item.id}>
+        <td>{item.title}</td>
+      </tr>
+    ];
+
+    if (this.state.expandedRows.includes(item.id)) {
+      itemRows.push(
+        <tr key={"row-expanded-" + item.id}>
+          <td>{item.description}</td>
+        </tr>
+      );
     }
 
- 
-
-      
-   /*          console.log(event.target.value);
-      console.log(this.state.voteringInfo[event.target.selectedIndex]);)
- */
-    
+    return itemRows;
+  }
 
   render() {
-    const { voteringInfo } = this.state;
+    let allItemRows = [];
+
+    this.state.voteringInfo.forEach(item => {
+      const perItemRows = this.renderItem(item);
+      allItemRows = allItemRows.concat(perItemRows);
+    });
+
     return (
-<main>
-        <table>
-          <thead>
-          <tr>
-            <th colspan="2"><h1>Voteringslistan</h1></th>
-          </tr>
-          </thead>
-          <tbody>
-            {voteringInfo.map(item => 
-              <tr onClick={ () => this.chooseVotering(item.id) } key={item.id}><td>{item.title}</td></tr>
-              )
-            }
-          </tbody>
-        </table>
-        { this.state.indexToShow ? <Votering index={this.state.indexToShow} voteringInfo={voteringInfo} /> : null }
-      </main>
-      
+      <Table>{allItemRows}</Table>
+
     );
   }
 }
 
-
 export default VoteringFilter;
 
 
-   
 

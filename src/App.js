@@ -1,5 +1,6 @@
 import React from 'react';
 import VoteringFilter from './components/VoteringFilter';
+import Test from './components/Test'
 import {
   BrowserRouter as Router,
   Switch,
@@ -130,8 +131,6 @@ class App extends React.Component {
       <div>
         <VoteringFilter />
       </div>
-
-
     );
   }
 }
