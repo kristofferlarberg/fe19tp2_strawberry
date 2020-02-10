@@ -49,13 +49,17 @@ class App extends React.Component {
 
   state = {
     riksmote: [],
-    hasData: false
+    hasData: false,
+    optionSelect:1,
+    votering_id: '93C09C8A-56C6-40A2-88AA-7560C19456C7'
   };
 
   constructor(props) {
     super(props);
     this.FilterResult = this.FilterResult.bind(this)
     this.GetPartyResult = this.GetPartyResult.bind(this);
+    this.onChangeOption = this.onChangeOption.bind(this)
+    this.HandleSubmit= this.HandleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -128,7 +132,26 @@ const emptyObject = {}
    })
    return {votesObj, shortedByVotes}
 }
+  onChangeOption (event) {
+    this.setState({optionSelect:event.target.value})
+  }
 
+  HandleSubmit (event) {
+    const voteteringsArray = [
+      '93C09C8A-56C6-40A2-88AA-7560C19456C7',
+      'C8CC9671-12AA-41CF-8C04-F07D5E082DDF',
+      '2A6E5AC7-9AD6-4F3A-BCC2-B55D818BE4C2',
+      'D3AA5539-F89A-42E1-8740-33322026FAD9',
+      '367E2382-9304-48B9-99B8-81EFF9A50D8F',
+      '3725650B-F0CB-416C-ADE0-9C2ED725B0BE',
+      'E9E6D48F-1FFE-4AFE-A9A6-752293FAB149',
+      '67766912-8897-4FC2-A807-81F954AEDF7A',
+      '181F3D9F-1AA1-4C36-8057-66A5BD5FDF33',
+      'B1FFED43-30EC-41A1-A17A-23735FA39F4A'
+    ]
+      this.setState({votering_id:voteteringsArray[this.state.optionSelect-1]})
+    event.preventDefault();
+  }
 
   GetPartyResult(index) {
     const { riksmote } = this.state; 
@@ -169,8 +192,8 @@ const emptyObject = {}
     const { hasData } = this.state;
     let returnValue;
     if (hasData) {
-     console.log(this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'));
-      const values = this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'); 
+     console.log(this.FilterResult(this.state.votering_id));
+      const values = this.FilterResult(this.state.votering_id); 
       const voteKeys = Object.keys(values); 
      const voteResult = values[voteKeys[0]];
      const partyResult = values[voteKeys[1]];
@@ -205,6 +228,23 @@ const emptyObject = {}
     }
     return (
       <div>
+          <form onSubmit={this.HandleSubmit}>
+           <label>
+             Välj votering: <select value={this.state.optionSelect} onChange={this.onChangeOption}>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
+             </select>
+           </label>
+           <input type='submit'value='Submit'></input>
+          </form>
           {returnValue}
       </div>
     );
