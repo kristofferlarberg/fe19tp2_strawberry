@@ -72,7 +72,6 @@ class App extends React.Component {
    */
   FilterResult(votering_list) {
    const beteckningID = votering_list;
-   console.log(votering_list);
    
    const filterVotering_id = this.state.riksmote.filter(person => person.votering_id === beteckningID)
   //   const YesResult = filterVotering_id.filter(person => person.rost === resultShortedByVotes[0]);
@@ -171,16 +170,35 @@ const emptyObject = {}
     let returnValue;
     if (hasData) {
      console.log(this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'));
-     const voteKeys = Object.keys(this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'));
-     const values = this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7');
+      const values = this.FilterResult('93C09C8A-56C6-40A2-88AA-7560C19456C7'); 
+      const voteKeys = Object.keys(values); 
      const voteResult = values[voteKeys[0]];
+     const partyResult = values[voteKeys[1]];
+     let loopKey = 0;
      returnValue = <div>
        <p>Has Data</p>
-       <ul id='roster'>
+       <div id='roster'>
+         <p>Votes</p>
          {Object.values(voteResult).map(values => 
-    <li key={Object.values(voteResult).indexOf(values)}><p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p></li>,
+    <div key={Object.values(voteResult).indexOf(values)}>
+      <p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p>
+      </div>,
            )}
-       </ul>
+       </div>
+       <div id='parti-rost'>
+         <p>Votes by Party</p>
+          {Object.values(partyResult).map(votes => 
+            <div key={Object.values(partyResult).indexOf(votes)+' vote-id'}>
+                  <h1>{Object.keys(partyResult)[Object.values(partyResult).indexOf(votes)]}</h1>
+                  <div>
+                    {Object.values(votes).map(party => 
+                    <p key={loopKey++}>{Object.keys(votes)[Object.values(votes).indexOf(party)]}: {party}
+                    </p>
+                    )}
+                    </div>              
+            </div>
+          )}
+       </div>
        </div>
     } else {
       returnValue = <p>Loading...</p> 
