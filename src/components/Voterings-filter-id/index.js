@@ -1,0 +1,129 @@
+import React, { Component } from 'react';
+import { FilterResult, FilterPartyResult } from '../../functions/filter.js'
+
+import { Doughnut } from 'react-chartjs-2'
+
+const API = 'http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=&punkt=&valkrets=&rost=&iid=&sz=3490&utformat=JSON&gruppering='
+
+const voteteringsArray = [
+    '93C09C8A-56C6-40A2-88AA-7560C19456C7',
+    'C8CC9671-12AA-41CF-8C04-F07D5E082DDF',
+    '2A6E5AC7-9AD6-4F3A-BCC2-B55D818BE4C2',
+    'D3AA5539-F89A-42E1-8740-33322026FAD9',
+    '367E2382-9304-48B9-99B8-81EFF9A50D8F',
+    '3725650B-F0CB-416C-ADE0-9C2ED725B0BE',
+    'E9E6D48F-1FFE-4AFE-A9A6-752293FAB149',
+    '67766912-8897-4FC2-A807-81F954AEDF7A',
+    '181F3D9F-1AA1-4C36-8057-66A5BD5FDF33',
+    'B1FFED43-30EC-41A1-A17A-23735FA39F4A'
+]
+
+const getChartData = (votes) => {
+    const out = {
+        labels: Object.keys(votes),
+        datasets: [
+            {
+                data: Object.values(votes),
+                backgroundColor: []
+            }
+        ]
+    }
+
+    for (let i = 0; i < out.labels.length; i++) {
+        out.datasets[0].backgroundColor.push(`#${Math.floor(Math.random() * 16777215).toString(16)}`)
+    }
+
+    return out;
+}
+
+export default class Filter_vote extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hasData: false,
+            optionSelect: 1,
+            votering_id: '93C09C8A-56C6-40A2-88AA-7560C19456C7',
+        }
+        this.onChangeOption = this.onChangeOption.bind(this)
+        this.HandleSubmit = this.HandleSubmit.bind(this)
+        // this.fetchTitles = this.fetchTitles.bind(this);
+    }
+    componentDidMount() {
+        fetch(API)
+            .then((data) => data.json())
+            .then((data) => {
+                this.setState({ riksmote: data.voteringlista.votering, hasData: true })
+            });
+
+     /*    fetch('http://data.riksdagen.se/votering/'+voteteringsArray[0]+'/?utformat=JSON').then((data) => data.json())
+        .then((data) =>  this.setState({voteTitle : data.votering.dokument.titel})) */
+    }
+/*     fetchTitles (arrayIndex) {
+        fetch('http://data.riksdagen.se/votering/'+voteteringsArray[arrayIndex]+'/?utformat=JSON').then((data) => data.json())
+        .then((data) =>  this.setState({voteTitle : data.votering.dokument.titel}))
+    } */
+
+    onChangeOption(event) {
+        this.setState({ optionSelect: event.target.value - 1, votering_id: voteteringsArray[event.target.value - 1] })
+    }
+
+    HandleSubmit(event) {
+        event.preventDefault();
+    }
+
+    render() {
+        const { hasData, riksmote, votering_id, optionSelect } = this.state;
+        let returnValue;
+        let selectForm;
+        if (hasData) {
+            const values = FilterResult(riksmote, votering_id);
+            const voteKeys = Object.keys(values);
+            const voteResult = values[voteKeys[0]];
+            const partyResult = values[voteKeys[1]];
+            let loopKey = 0;
+            selectForm = <select value={optionSelect} onChange={this.onChangeOption}>
+            <option value={1}>{1}</option>
+            <option value={2}>{2}</option>
+            <option value={3}>{3}</option>
+            <option value={4}>{4}</option>
+            <option value={5}>{5}</option>
+            <option value={6}>{6}</option>
+            <option value={7}>{7}</option>
+        </select>
+            returnValue = <div>
+                <div id='roster'>
+                    <p>Votes</p>
+                    <Doughnut data={getChartData(voteResult)} options={{ events: ['click'] }} />
+                    {Object.values(voteResult).map(values =>
+                        <div key={Object.values(voteResult).indexOf(values)}>
+                            <p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p>
+                        </div>,
+                    )}
+                </div>
+
+                <div id='parti-rost'>
+                    <p>Votes by Party</p>
+                    {Object.values(partyResult).map(votes =>
+                        <div key={loopKey++}>
+                            <h2>{Object.keys(partyResult)[Object.values(partyResult).indexOf(votes)]}</h2>
+                            <Doughnut data={getChartData(votes)} />
+                        </div>
+                    )}
+                </div>
+            </div>
+        } else {
+            returnValue = <p>Loading...</p>
+            selectForm = null;
+        }
+        return (
+            <div>
+                <form onSubmit={this.HandleSubmit}>
+                    <label>
+                        Välj votering: {selectForm}
+                    </label>
+                </form>
+                {returnValue}
+            </div>
+        );
+    }
+}

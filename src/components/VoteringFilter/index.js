@@ -4,7 +4,15 @@ import styled from 'styled-components';
 
 const Table = styled.table`
  border: 1px solid #000;
- padding:20px;
+ padding: 20px;
+
+ strong {
+   cursor: pointer;
+ }
+
+ td {
+   border-bottom: 1px solid #000;
+ }
 `;
 
 //Ändra till dok_id
@@ -68,7 +76,7 @@ class VoteringFilter extends React.Component {
 
   componentDidMount(key) {
     //loop through all strings in array AllDocumentID
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < AllDocumentID.length; i++) {
       //create variable for all strings (ID:s)
       let documentID = AllDocumentID[i];
 
@@ -108,16 +116,20 @@ class VoteringFilter extends React.Component {
   renderItem(item) {
     const clickCallback = () => this.handleRowClick(item.id);
     const itemRows = [
-      <tr onClick={clickCallback} key={"row-data-" + item.id}>
-        <td>{item.title}</td>
-      </tr>
+      <tbody key={"row-data-" + item.id}>
+        <tr onClick={clickCallback}>
+          <td><strong>{item.title}</strong></td>
+        </tr>
+      </tbody>
     ];
 
     if (this.state.expandedRows.includes(item.id)) {
       itemRows.push(
-        <tr key={"row-expanded-" + item.id}>
-          <td>{item.description}</td>
-        </tr>
+        <tbody key={"row-expanded-" + item.id}>
+          <tr>
+            <td>{item.description}</td>
+          </tr>
+        </tbody>
       );
     }
 
@@ -134,12 +146,8 @@ class VoteringFilter extends React.Component {
 
     return (
       <Table>{allItemRows}</Table>
-
     );
   }
 }
 
 export default VoteringFilter;
-
-
-
