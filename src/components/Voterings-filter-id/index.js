@@ -101,10 +101,7 @@ export default class Filter_vote extends Component {
             selectForm = <select value={optionSelect} onChange={this.onChangeOption}>
                 {this.state.voteTitle.map((title, index) => 
                     <option key={index} value={index}>{title}</option>
-                    )}
-            
-            
-            
+                    )}         
         </select>
             returnValue = <div>
                 <div id='roster'>
@@ -112,7 +109,7 @@ export default class Filter_vote extends Component {
                     <Doughnut data={getChartData(voteResult)} options={{ events: ['click'] }} />
                     {Object.values(voteResult).map((values,index) =>
                         <div key={index}>
-                            <p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p>
+                            <p>{values} {Object.keys(voteResult)[index]} Röster</p>
                         </div>,
                     )}
                 </div>
@@ -121,7 +118,7 @@ export default class Filter_vote extends Component {
                     <p>Votes by Party</p>
                     {Object.values(partyResult).map((votes,index) =>
                         <div key={index}>
-                            <h2>{Object.keys(partyResult)[Object.values(partyResult).indexOf(votes)]}</h2>
+                            <h2>{Object.keys(partyResult)[index]}</h2>
                             <Doughnut data={getChartData(votes)} />
                         </div>
                     )}
