@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FilterResult, FilterPartyResult } from '../../functions/filter.js'
+import { FilterResult} from '../../functions/filter.js'
 
 import { Doughnut } from 'react-chartjs-2'
 
@@ -97,9 +97,7 @@ export default class Filter_vote extends Component {
             const values = FilterResult(riksmote, votering_id);
             const voteKeys = Object.keys(values);
             const voteResult = values[voteKeys[0]];
-            const partyResult = values[voteKeys[1]];
-            let loopKey = 0;
-        
+            const partyResult = values[voteKeys[1]];        
             selectForm = <select value={optionSelect} onChange={this.onChangeOption}>
                 {this.state.voteTitle.map((title, index) => 
                     <option key={index} value={index}>{title}</option>
@@ -112,8 +110,8 @@ export default class Filter_vote extends Component {
                 <div id='roster'>
                     <p>Votes</p>
                     <Doughnut data={getChartData(voteResult)} options={{ events: ['click'] }} />
-                    {Object.values(voteResult).map(values =>
-                        <div key={Object.values(voteResult).indexOf(values)}>
+                    {Object.values(voteResult).map((values,index) =>
+                        <div key={index}>
                             <p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p>
                         </div>,
                     )}
@@ -121,8 +119,8 @@ export default class Filter_vote extends Component {
 
                 <div id='parti-rost'>
                     <p>Votes by Party</p>
-                    {Object.values(partyResult).map(votes =>
-                        <div key={loopKey++}>
+                    {Object.values(partyResult).map((votes,index) =>
+                        <div key={index}>
                             <h2>{Object.keys(partyResult)[Object.values(partyResult).indexOf(votes)]}</h2>
                             <Doughnut data={getChartData(votes)} />
                         </div>
