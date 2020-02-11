@@ -18,6 +18,18 @@ const voteteringsArray = [
     'B1FFED43-30EC-41A1-A17A-23735FA39F4A'
 ]
 
+ const AllDocumentID = [
+  'H701AU1',
+  'H701AU2',
+  'H701AU4',
+  'H701AU5',
+  'H701AU6',
+  'H701CU1',
+  'H701CU2',
+]
+
+const APITitles = (documentID) => `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
+
 const getChartData = (votes) => {
     const out = {
         labels: Object.keys(votes),
@@ -41,30 +53,36 @@ export default class Filter_vote extends Component {
         super(props);
         this.state = {
             hasData: false,
-            optionSelect: 1,
+            optionSelect: 0,
             votering_id: '93C09C8A-56C6-40A2-88AA-7560C19456C7',
+            voteTitle : []
         }
         this.onChangeOption = this.onChangeOption.bind(this)
         this.HandleSubmit = this.HandleSubmit.bind(this)
-        // this.fetchTitles = this.fetchTitles.bind(this);
+         this.fetchTitles = this.fetchTitles.bind(this);
     }
-    componentDidMount() {
+    componentDidMount() { 
+        this.fetchTitles(AllDocumentID)
         fetch(API)
             .then((data) => data.json())
             .then((data) => {
                 this.setState({ riksmote: data.voteringlista.votering, hasData: true })
             });
-
-     /*    fetch('http://data.riksdagen.se/votering/'+voteteringsArray[0]+'/?utformat=JSON').then((data) => data.json())
-        .then((data) =>  this.setState({voteTitle : data.votering.dokument.titel})) */
+           
     }
-/*     fetchTitles (arrayIndex) {
-        fetch('http://data.riksdagen.se/votering/'+voteteringsArray[arrayIndex]+'/?utformat=JSON').then((data) => data.json())
-        .then((data) =>  this.setState({voteTitle : data.votering.dokument.titel}))
-    } */
+     fetchTitles (DocumentIDArray) {
+         const titlePush = []
+         for (let index = 0; index < DocumentIDArray.length; index++) {
+             let documentID = DocumentIDArray[index]
+             fetch(APITitles(documentID)).then((data) => data.json())         
+            .then((data) => titlePush.push(data.utskottsforslag.dokument.titel))
+        } 
+         this.setState({voteTitle: titlePush})
+         }
+     
 
-    onChangeOption(event) {
-        this.setState({ optionSelect: event.target.value - 1, votering_id: voteteringsArray[event.target.value - 1] })
+    onChangeOption(event) {        
+        this.setState({ optionSelect: event.target.value, votering_id: voteteringsArray[event.target.value] })
     }
 
     HandleSubmit(event) {
@@ -81,14 +99,14 @@ export default class Filter_vote extends Component {
             const voteResult = values[voteKeys[0]];
             const partyResult = values[voteKeys[1]];
             let loopKey = 0;
+        
             selectForm = <select value={optionSelect} onChange={this.onChangeOption}>
-            <option value={1}>{1}</option>
-            <option value={2}>{2}</option>
-            <option value={3}>{3}</option>
-            <option value={4}>{4}</option>
-            <option value={5}>{5}</option>
-            <option value={6}>{6}</option>
-            <option value={7}>{7}</option>
+                {this.state.voteTitle.map((title, index) => 
+                    <option key={index} value={index}>{title}</option>
+                    )}
+            
+            
+            
         </select>
             returnValue = <div>
                 <div id='roster'>
