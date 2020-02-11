@@ -55,7 +55,6 @@ export const FilterResult = (riksmote, votering_list) => {
       innterArr[Object.keys(votes)[innerIndex]] = lengthValue;
       innerIndex++;
     })
-    // console.log(Object.keys(shortByparty)[outerIndex]);
     shortedByVotes[Object.keys(shortByparty)[outerIndex]] = innterArr;
     outerIndex++;
   })
@@ -68,7 +67,7 @@ export const FilterResult = (riksmote, votering_list) => {
 
 
 
-
+/* 
 export const FilterPartyResult = (riksmote, index) => {
   const voteringar = {};
   const parties = [];
@@ -108,4 +107,4 @@ export const FilterPartyResult = (riksmote, index) => {
     })
     parties.push(party);
   });
-}
+} */
