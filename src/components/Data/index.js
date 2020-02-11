@@ -15,6 +15,8 @@ const AllDocumentID = [
 
 
 const APITitle = (documentID) => `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
+const infoURL = (documentID) => `http://data.riksdagen.se/dokument/${documentID}`;
+
 
 export class Data extends Component {
 
@@ -74,7 +76,7 @@ export class Data extends Component {
                             [i]: {
                                 title: { $set: utskottsforslag.dokument.titel },
                                 description: {
-                                    $set: utskottsforslag.dokutskottsforslag.utskottsforslag.forslag || utskottsforslag.dokutskottsforslag.utskottsforslag[0].forslag
+                                    $set: infoURL(documentID)
                                 }
                             }
                         }),

@@ -15,9 +15,9 @@ class App extends React.Component {
 
     return (
       <div>
-        <VoteringFilter />
-        <Filter_vote />
-        {/* <Data /> */}
+{/*         <VoteringFilter />
+        <Filter_vote /> */}
+        <Data />
       </div>
     );
   }

@@ -11,7 +11,7 @@ export class Renderer extends Component {
         return (
             <div>
                 <p><strong>{title}</strong></p>
-                <p>{description}</p>
+                <a href={description} target='_blank'>Läs mer</a>
 
                 <Visualization />
             </div>
