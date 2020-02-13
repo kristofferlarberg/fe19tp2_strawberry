@@ -12,6 +12,7 @@ export default class Members extends Component {
         super(props);
         this.state = {
             votering_id: votingArray[0],
+            date: '',
             party: '',
             parties: [],
             yes: [],
@@ -68,6 +69,7 @@ export default class Members extends Component {
                     })
                     let members = voting.filter(member => member.parti === currentParty);
                     this.setState({
+                        date: voting[0].systemdatum.substring(0, 10),
                         parties: parties,
                         yes: members.filter(vote => vote.rost === 'Ja'),
                         no: members.filter(vote => vote.rost === 'Nej'),
@@ -114,7 +116,7 @@ export default class Members extends Component {
         let returnValue = <p>Loading data...</p>;
         if (this.state.hasData) {
             returnValue = [
-                <p key='0' onClick={this.handleClick}>Voterings-id: {this.state.votering_id}</p>,
+                <p key='0' onClick={this.handleClick}>Voterings-id: {this.state.votering_id} - {this.state.date}</p>,
                 <select key='1' onChange={this.handleChange}>
                     {!this.state.party && <option value="Välj parti...">Välj parti...</option>}
                     {parties.map((party, i) => <option key={i} value={party}>{party}</option>)}
