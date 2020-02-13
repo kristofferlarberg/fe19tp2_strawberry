@@ -1,5 +1,6 @@
 /** 
- * @param {String} votering_list 
+ * @param {String} votering_list
+ * @param {Array} riksmote
  */
 export const FilterResult = (riksmote, votering_list) => {
   const beteckningID = votering_list;
@@ -96,3 +97,26 @@ export const FilterPartyResult = (riksmote, index) => {
     parties.push(party);
   });
 } */
+
+/** 
+ * @param {String} shorted
+ * @param {Array} riksmote
+ */
+export const FilterPartiesVote = (riksmote,shorted) => {
+  const filterVotering_id = riksmote.filter(person => person.votering_id === shorted);
+  const parties = {}
+  filterVotering_id.forEach(person => {
+    const {parti} = person;
+    if (!parties[parti]) {
+      parties[parti] ={ 
+        votes : {
+            "Ja": 0,
+            "Nej": 0,
+            "Avstår": 0,
+            "Frånvarande": 0}
+      }
+    }
+    parties[parti].votes[person.rost]++;
+  })
+  return parties
+} 
