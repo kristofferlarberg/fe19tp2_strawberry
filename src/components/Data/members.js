@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 
 let bet = []
-let votingArray = ['E9E6D48F-1FFE-4AFE-A9A6-752293FAB149'];
+let votingArray = ['FC1E56AA-9651-46BB-9BDC-2D3EDE51D3F7'];
 let votingData = JSON.parse(localStorage.getItem('votingData'));
 const API1 = 'http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=2019-12-31&tom=2020-02-13&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff'
 
@@ -12,6 +12,7 @@ export default class Members extends Component {
         super(props);
         this.state = {
             votering_id: votingArray[0],
+            title: '',
             date: '',
             party: '',
             parties: [],
@@ -33,20 +34,20 @@ export default class Members extends Component {
                 .then((data) => data.json())
                 .then((data) => {
                     let beteckning = data.dokumentlista.dokument
-
+                    let titles = []
                     beteckning.map(item => {
-                        return (!bet.includes(item.beteckning)) ? bet.push(item.beteckning) : null;
+                        return (!bet.includes(item.beteckning)) ? bet.push(item.beteckning) && titles.push(item.titel) : null;
                     });
-
-                    for (let i = 0; i < 10; i++) {
+                    for (let i = 0; i < 14; i++) {
                         fetch(`http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=${bet[i]}&punkt=&valkrets=&rost=&iid=&sz=349&utformat=JSON&gruppering=`)
                             .then((data) => data.json())
                             .then((data) => {
+                                data.voteringlista.votering[0].titel = titles[i]
                                 votingData.push(data.voteringlista.votering);
                                 localStorage.setItem('votingData', JSON.stringify(votingData));
+                                this.getData();
                             });
                     }
-                    this.getData();
                 })
         } else {
             this.getData();
@@ -70,6 +71,7 @@ export default class Members extends Component {
                     let members = voting.filter(member => member.parti === currentParty);
                     this.setState({
                         date: voting[0].systemdatum.substring(0, 10),
+                        title: voting[0].titel,
                         parties: parties,
                         yes: members.filter(vote => vote.rost === 'Ja'),
                         no: members.filter(vote => vote.rost === 'Nej'),
@@ -116,7 +118,7 @@ export default class Members extends Component {
         let returnValue = <p>Loading data...</p>;
         if (this.state.hasData) {
             returnValue = [
-                <p key='0' onClick={this.handleClick}>Voterings-id: {this.state.votering_id} - {this.state.date}</p>,
+                <p key='0' onClick={this.handleClick}>Votering: {this.state.title} - {this.state.date}</p>,
                 <select key='1' onChange={this.handleChange}>
                     {!this.state.party && <option value="Välj parti...">Välj parti...</option>}
                     {parties.map((party, i) => <option key={i} value={party}>{party}</option>)}
