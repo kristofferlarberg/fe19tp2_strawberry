@@ -1,60 +1,63 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { DataConsumer } from '.';
 
+const votingArray = ['FC1E56AA-9651-46BB-9BDC-2D3EDE51D3F7'];
 
-let bet = []
-let votingArray = ['FC1E56AA-9651-46BB-9BDC-2D3EDE51D3F7'];
-let votingData = JSON.parse(localStorage.getItem('votingData'));
-const API1 = 'http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=2019-12-31&tom=2020-02-13&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff'
+const options = {
+    tooltips: {
+      callbacks: {
+        title: function(tooltipItem, data) {
+          return data['labels'][tooltipItem[0]['index']];
+        },
+        label: function(tooltipItem, data) {
+            var dataset = data['datasets'][0];
+            var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
+            return `${data['datasets'][0]['data'][tooltipItem['index']]} (${percent}%)`;
+        }
+      }
+    }
+  }
 
 export default class Members extends Component {
+
+    state = {
+        votering_id: votingArray[0],
+        title: '',
+        caseIndex: 0,
+        case: 'yes',
+        date: '',
+        party: '',
+        parties: [],
+        yes: [],
+        no: [],
+        pass: [],
+        absent: []
+    }
+    
     constructor(props) {
         super(props);
-        this.state = {
-            votering_id: votingArray[0],
-            title: '',
-            date: '',
-            party: '',
-            parties: [],
-            yes: [],
-            no: [],
-            pass: [],
-            absent: [],
-            hasData: false,
-        };
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-
+    
     componentDidMount() {
-        if (!votingData) {
-            votingData = []
+        this.getData();
+    }
 
-            fetch(API1)
-                .then((data) => data.json())
-                .then((data) => {
-                    let beteckning = data.dokumentlista.dokument
-                    let titles = []
-                    beteckning.map(item => {
-                        return (!bet.includes(item.beteckning)) ? bet.push(item.beteckning) && titles.push(item.titel) : null;
-                    });
-                    for (let i = 0; i < 14; i++) {
-                        fetch(`http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=${bet[i]}&punkt=&valkrets=&rost=&iid=&sz=349&utformat=JSON&gruppering=`)
-                            .then((data) => data.json())
-                            .then((data) => {
-                                data.voteringlista.votering[0].titel = titles[i]
-                                votingData.push(data.voteringlista.votering);
-                                localStorage.setItem('votingData', JSON.stringify(votingData));
-                                this.getData();
-                            });
-                    }
-                })
-        } else {
-            this.getData();
-        };
+    handleChange(event) {
+        this.setState({ party: event.target.value });
+        this.getData(event.target.value);
+    };
+
+    handleClick() {
+        let i = Math.min(Math.floor(Math.random() * 10), votingArray.length);
+        this.setState({ votering_id: votingArray[i] });
+        this.getData(this.state.party, votingArray[i]);
     };
 
     getData(currentParty, currentId = this.state.votering_id) {
+        const votingData = JSON.parse(localStorage.getItem('votingData'))
         if (votingData) {
             votingData.forEach(votering => {
                 votering.forEach(id => {
@@ -68,16 +71,16 @@ export default class Members extends Component {
                     voting.map((party) => {
                         return (!parties.includes(party.parti)) ? parties.push(party.parti) : null;
                     })
+
                     let members = voting.filter(member => member.parti === currentParty);
+
                     this.setState({
-                        date: voting[0].systemdatum.substring(0, 10),
                         title: voting[0].titel,
                         parties: parties,
                         yes: members.filter(vote => vote.rost === 'Ja'),
                         no: members.filter(vote => vote.rost === 'Nej'),
                         pass: members.filter(vote => vote.rost === 'Avstår'),
-                        absent: members.filter(vote => vote.rost === 'Frånvarande'),
-                        hasData: true,
+                        absent: members.filter(vote => vote.rost === 'Frånvarande')
                     });
                     return
                 }
@@ -85,19 +88,30 @@ export default class Members extends Component {
         };
     };
 
-    handleChange(event) {
-        this.setState({ party: event.target.value, hasData: false });
-        this.getData(event.target.value);
-    };
-
-    handleClick() {
-        let i = Math.floor(Math.random() * 10);
-        this.setState({ votering_id: votingArray[i], hasData: false });
-        this.getData(this.state.party, votingArray[i]);
-    };
+    onChartClick(chart) {
+        if (chart.length > 0) {
+            const index = chart[0]._index;
+            switch(index) {
+                case 0:
+                    this.setState({case: 'yes'});
+                    break;
+                case 1:
+                    this.setState({case: 'no'});
+                    break;
+                case 2:
+                    this.setState({case: 'pass'});
+                    break;
+                case 3:
+                    this.setState({case: 'absent'});
+                    break;    
+            }
+            this.setState({ caseIndex: index })
+        }
+    }
 
     render() {
-        const { parties, yes, no, pass, absent } = this.state;
+        const { yes, no, pass, absent, party, parties, title, date } = this.state;
+
         const data = {
             labels: [
                 'Ja',
@@ -106,7 +120,7 @@ export default class Members extends Component {
                 'Frånvarande',
             ],
             datasets: [{
-                data: [this.state.yes.length, this.state.no.length, this.state.pass.length, this.state.absent.length],
+                data: [yes.length, no.length, pass.length, absent.length],
                 backgroundColor: [
                     '#0FCE56',
                     '#FF6384',
@@ -115,26 +129,37 @@ export default class Members extends Component {
                 ],
             }]
         };
-        let returnValue = <p>Loading data...</p>;
-        if (this.state.hasData) {
-            returnValue = [
-                <p key='0' onClick={this.handleClick}>Votering: {this.state.title} - {this.state.date}</p>,
-                <select key='1' onChange={this.handleChange}>
-                    {!this.state.party && <option value="Välj parti...">Välj parti...</option>}
-                    {parties.map((party, i) => <option key={i} value={party}>{party}</option>)}
-                </select>,
-                <Doughnut key='2' data={data} />,
-                <Fragment key='3'>
-                    {yes.map((e, i) => <p key={i} style={{ color: '#0FCE56' }}>Ja: {e.fornamn} {e.efternamn}</p>)}
-                    {no.map((e, i) => <p key={i} style={{ color: '#FF6384' }}>Nej: {e.fornamn} {e.efternamn}</p>)}
-                    {pass.map((e, i) => <p key={i} style={{ color: '#36A2EB' }}>Avstår: {e.fornamn} {e.efternamn}</p>)}
-                    {absent.map((e, i) => <p key={i} style={{ color: '#FFCE56' }}>Frånvarande: {e.fornamn} {e.efternamn}</p>)}
-                </Fragment>]
-        };
+
         return (
             <div style={{ marginLeft: '50px' }}>
-                {returnValue}
-            </div >
+                <DataConsumer>
+                    {
+                        (ctx) => (
+                            <>
+                                <p onClick={this.handleClick}>Votering: {title} - {date}</p>
+
+                                <select onChange={this.handleChange}>
+                                    {!party && <option value="Välj parti...">Välj parti...</option>}
+                                    {parties.map((party, i) => <option key={i} value={party}>{party}</option>)}
+                                </select>
+
+                                <Doughnut data={data} onElementsClick={this.onChartClick.bind(this)} options={options} />
+                                <>
+                                    {
+                                        this.state[this.state.case].map(
+                                            (e, i) => (
+                                                <p key={i} style={{ color: data.datasets[0].backgroundColor[this.state.caseIndex] }}>
+                                                    {data.labels[this.state.caseIndex]}: {e.fornamn} {e.efternamn}
+                                                </p>
+                                            )
+                                        )
+                                    }
+                                </>
+                            </>
+                        )
+                    }
+                </DataConsumer>
+            </div>
         );
     };
 };
