@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
-import { getData } from '../../functions/filter';
+import { getVoteData } from '../../functions/filter';
 
 const options = {
     tooltips: {
@@ -27,7 +27,7 @@ export default class Members extends Component {
         caseIndex: 0,
         case: 'yes',
         date: '',
-        party: '',
+        party: 'S',
         parties: [],
         yes: [],
         no: [],
@@ -42,18 +42,18 @@ export default class Members extends Component {
     }
     
     componentDidMount() {
-        this.setState(getData(this.state.votering_id));
+        this.setState(getVoteData(this.state.votering_id, this.state.party));
     }
 
     handleChange(event) {
         const party = event.target.value;
-        this.setState({...getData(this.state.votering_id, party), party: party});
+        this.setState({...getVoteData(this.state.votering_id, party), party: party});
     };
 
     handleClick() {
         let i = Math.min(Math.floor(Math.random() * 10), this.state.votingArray.length - 1);
-        this.setState({ votering_id: this.state.votingArray[i] });
-        this.setState(getData(this.state.votering_id, this.state.party));
+        const votering_id = this.state.votingArray[i];
+        this.setState({...getVoteData(votering_id, this.state.party), votering_id});
     };
 
     onChartClick(chart) {

@@ -1,4 +1,4 @@
-export function getData(currentId, currentParty, data) {
+export function getVoteData(currentId, currentParty, data) {
 	const votingData = data || JSON.parse(localStorage.getItem('votingData'));
 	const votingArray = [];
 
