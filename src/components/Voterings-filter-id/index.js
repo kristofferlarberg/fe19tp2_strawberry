@@ -82,7 +82,7 @@ export default class Filter_vote extends Component {
             const partyResult = values[voteKeys[1]];
             let loopKey = 0;
             selectForm = <select value={optionSelect} onChange={this.onChangeOption}>
-            <option value={1}>{1}</option>
+            <option value="first-route">{1}</option>
             <option value={2}>{2}</option>
             <option value={3}>{3}</option>
             <option value={4}>{4}</option>

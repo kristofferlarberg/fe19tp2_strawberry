@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Visualization from './Visualization'
-//import Filter_vote from '../Voterings-filter-id/index.js';
+
 
 export class Renderer extends Component {
 
@@ -10,10 +10,11 @@ export class Renderer extends Component {
 
         return (
             <div>
+                
                 <p><strong>{title}</strong></p>
                 <a href={description} target='_blank'>Läs mer</a>
 
-                <Visualization />
+                {/* <Visualization /> */}
             </div>
         )
     }

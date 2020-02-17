@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import update from 'immutability-helper';
 import Menu from '../Menu';
 
+
+
 //Ändra till dok_id
 const AllDocumentID = [
     'H701AU1',
