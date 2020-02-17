@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
-
-const votingArray = ['FC1E56AA-9651-46BB-9BDC-2D3EDE51D3F7'];
+import { getData } from '../../functions/filter';
 
 const options = {
     tooltips: {
-      callbacks: {
-        title: function(tooltipItem, data) {
-          return data['labels'][tooltipItem[0]['index']];
-        },
-        label: function(tooltipItem, data) {
-            var dataset = data['datasets'][0];
-            var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
-            return `${data['datasets'][0]['data'][tooltipItem['index']]} (${percent}%)`;
+        callbacks: {
+            title: function(tooltipItem, data) {
+                return data['labels'][tooltipItem[0]['index']];
+            },
+            label: function(tooltipItem, data) {
+                var dataset = data['datasets'][0];
+                var percent = Math.round((dataset.data[tooltipItem.index / dataset._meta[0].total]) * 100);
+                return `${data.datasets[0].data[tooltipItem.index]} (${percent}%)`;
+            }
         }
-      }
     }
-  }
+};
 
 export default class Members extends Component {
 
     state = {
-        votering_id: votingArray[0],
+        votingArray: ['FC1E56AA-9651-46BB-9BDC-2D3EDE51D3F7'],
+        votering_id: 'FC1E56AA-9651-46BB-9BDC-2D3EDE51D3F7',
         title: '',
         caseIndex: 0,
         case: 'yes',
@@ -42,50 +42,18 @@ export default class Members extends Component {
     }
     
     componentDidMount() {
-        this.getData();
+        this.setState(getData(this.state.votering_id));
     }
 
     handleChange(event) {
-        this.setState({ party: event.target.value });
-        this.getData(event.target.value);
+        const party = event.target.value;
+        this.setState({...getData(this.state.votering_id, party), party: party});
     };
 
     handleClick() {
-        let i = Math.min(Math.floor(Math.random() * 10), votingArray.length);
-        this.setState({ votering_id: votingArray[i] });
-        this.getData(this.state.party, votingArray[i]);
-    };
-
-    getData(currentParty, currentId = this.state.votering_id) {
-        const votingData = JSON.parse(localStorage.getItem('votingData'))
-        if (votingData) {
-            votingData.forEach(votering => {
-                votering.forEach(id => {
-                    (!votingArray.includes(id.votering_id)) && votingArray.push(id.votering_id);
-                })
-            });
-            let parties = [];
-            votingData.forEach(votering => {
-                let voting = votering.filter(id => id.votering_id === currentId);
-                if (voting.length) {
-                    voting.map((party) => {
-                        return (!parties.includes(party.parti)) ? parties.push(party.parti) : null;
-                    })
-
-                    let members = voting.filter(member => member.parti === currentParty);
-
-                    this.setState({
-                        title: voting[0].titel,
-                        parties: parties,
-                        yes: members.filter(vote => vote.rost === 'Ja'),
-                        no: members.filter(vote => vote.rost === 'Nej'),
-                        pass: members.filter(vote => vote.rost === 'Avstår'),
-                        absent: members.filter(vote => vote.rost === 'Frånvarande')
-                    });
-                    return
-                }
-            })
-        };
+        let i = Math.min(Math.floor(Math.random() * 10), this.state.votingArray.length - 1);
+        this.setState({ votering_id: this.state.votingArray[i] });
+        this.setState(getData(this.state.votering_id, this.state.party));
     };
 
     onChartClick(chart) {
