@@ -43,7 +43,7 @@ export default class DataContext extends Component {
 
     render() {
         return (
-            <Provider value={{...this.state, setState: this.setState.bind(this)}}>
+            <Provider value={this.state}>
                 {this.state.hasData && this.props.children}
             </Provider>
         );
