@@ -2,7 +2,7 @@ import React, { Component, Fragment, createContext } from 'react';
 
 let bet = []
 let votingData = JSON.parse(localStorage.getItem('votingData'));
-const API_QUERY = 'http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=2019-12-31&tom=2020-02-13&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff'
+const API1 = 'http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=2019-12-31&tom=2020-02-13&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff'
 
 const {Provider, Consumer} = createContext();
 
@@ -17,7 +17,7 @@ export default class DataContext extends Component {
         if (!votingData) {
             votingData = []
 
-            fetch(API_QUERY)
+            fetch(API1)
                 .then((data) => data.json())
                 .then((data) => {
                     let beteckning = data.dokumentlista.dokument
@@ -48,6 +48,7 @@ export default class DataContext extends Component {
             </Provider>
         );
     };
+
 };
 
 export {
