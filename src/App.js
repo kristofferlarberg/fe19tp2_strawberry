@@ -1,6 +1,7 @@
 import React from 'react';
 import VoteringFilter from './components/VoteringFilter'
 import Filter_vote from './components/Voterings-filter-id'
+import Members from './components/Data/members'
 
 import {
   BrowserRouter as Router,
@@ -15,9 +16,10 @@ class App extends React.Component {
 
     return (
       <div>
-        <VoteringFilter />
-        <Filter_vote />
+        {/* <VoteringFilter />
+        <Filter_vote /> */}
         {/* <Data /> */}
+        <Members />
       </div>
     );
   }

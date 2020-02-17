@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FilterResult, FilterPartyResult } from '../../functions/filter.js'
+import { FilterResult,FilterPartiesVote} from '../../functions/filter.js'
 
 import { Doughnut } from 'react-chartjs-2'
 
@@ -17,6 +17,18 @@ const voteteringsArray = [
     '181F3D9F-1AA1-4C36-8057-66A5BD5FDF33',
     'B1FFED43-30EC-41A1-A17A-23735FA39F4A'
 ]
+
+ const AllDocumentID = [
+  'H701AU1',
+  'H701AU2',
+  'H701AU4',
+  'H701AU5',
+  'H701AU6',
+  'H701CU1',
+  'H701CU2',
+]
+
+const APITitles = (documentID) => `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
 
 const getChartData = (votes) => {
     const out = {
@@ -41,37 +53,99 @@ export default class Filter_vote extends Component {
         super(props);
         this.state = {
             hasData: false,
-            optionSelect: 1,
+            optionSelect: 0,
             votering_id: '93C09C8A-56C6-40A2-88AA-7560C19456C7',
+            voteTitle : [],
+            selectedVote : undefined,
+            partySelect: ''
         }
         this.onChangeOption = this.onChangeOption.bind(this)
         this.HandleSubmit = this.HandleSubmit.bind(this)
-        // this.fetchTitles = this.fetchTitles.bind(this);
+        this.fetchTitles = this.fetchTitles.bind(this);
+        this.onVoteClick=this.onVoteClick.bind(this);
+        this.BooleanObject= this.BooleanObject.bind(this);
+        this.seclectedParty=this.seclectedParty.bind(this);
+        this.displayVotes= this.displayVotes.bind(this)
     }
-    componentDidMount() {
+    componentDidMount() { 
+        this.fetchTitles(AllDocumentID)
         fetch(API)
             .then((data) => data.json())
             .then((data) => {
                 this.setState({ riksmote: data.voteringlista.votering, hasData: true })
             });
-
-     /*    fetch('http://data.riksdagen.se/votering/'+voteteringsArray[0]+'/?utformat=JSON').then((data) => data.json())
-        .then((data) =>  this.setState({voteTitle : data.votering.dokument.titel})) */
-    }
-/*     fetchTitles (arrayIndex) {
-        fetch('http://data.riksdagen.se/votering/'+voteteringsArray[arrayIndex]+'/?utformat=JSON').then((data) => data.json())
-        .then((data) =>  this.setState({voteTitle : data.votering.dokument.titel}))
-    } */
-
-    onChangeOption(event) {
-        this.setState({ optionSelect: event.target.value - 1, votering_id: voteteringsArray[event.target.value - 1] })
+           
     }
 
+    seclectedParty (event)  {
+        this.setState({partySelect: event.target.value})
+        event.preventDefault();
+    }
+     fetchTitles (DocumentIDArray) {
+         const titlePush = []
+         for (let index = 0; index < DocumentIDArray.length; index++) {
+             let documentID = DocumentIDArray[index]
+             fetch(APITitles(documentID)).then((data) => data.json())         
+            .then((data) => titlePush.push(data.utskottsforslag.dokument.titel))
+        } 
+         this.setState({voteTitle: titlePush})
+         }
+
+         /**
+          * 
+          * @param {Object} votes 
+          */
+    displayVotes (votes) {
+        let returnVotes;
+        if (this.state.partySelect) {
+            const newObj = {};
+            Object.values(votes[''+this.state.partySelect+'']).map((votes,index) => {
+                   Object.values(votes).map((num,jndex)=> {
+                       if (num!==0) {
+                        newObj[Object.keys(votes)[jndex]]= num
+                       }
+                   }           
+                   )}
+               );
+            returnVotes = <div> 
+                <h1>{this.state.partySelect}</h1>
+                <Doughnut data={getChartData(newObj)}/>
+           </div>
+           return returnVotes
+        } else {
+            return null
+        }
+    }
+
+    onChangeOption(event) {        
+        this.setState({ optionSelect: event.target.value, votering_id: voteteringsArray[event.target.value] })
+    }
+    onVoteClick (event) {
+        this.setState({selectedVote: event.target.value})
+         event.preventDefault();
+    }
     HandleSubmit(event) {
         event.preventDefault();
     }
 
-    render() {
+    
+    BooleanObject (partyObjectresult) {
+        if (this.state.selectedVote) {
+            const filterParty = FilterPartiesVote(this.state.riksmote, this.state.votering_id);
+            const returnChart =<div>
+                <Doughnut data={getChartData(partyObjectresult[''+Object.keys(partyObjectresult).filter(vote => vote === this.state.selectedVote)+''])} />
+                {Object.keys(filterParty).map((party,index) => 
+                    <button onClick={this.seclectedParty} value={party} key={index}>{party}</button>
+                    )}
+                    {this.displayVotes(filterParty)}
+            </div> 
+            return returnChart      
+        }
+        else {
+            return null;
+        }
+    }
+    render() {        
         const { hasData, riksmote, votering_id, optionSelect } = this.state;
         let returnValue;
         let selectForm;
@@ -79,37 +153,35 @@ export default class Filter_vote extends Component {
             const values = FilterResult(riksmote, votering_id);
             const voteKeys = Object.keys(values);
             const voteResult = values[voteKeys[0]];
-            const partyResult = values[voteKeys[1]];
-            let loopKey = 0;
+            const partyResult = values[voteKeys[1]];    
             selectForm = <select value={optionSelect} onChange={this.onChangeOption}>
-            <option value={1}>{1}</option>
-            <option value={2}>{2}</option>
-            <option value={3}>{3}</option>
-            <option value={4}>{4}</option>
-            <option value={5}>{5}</option>
-            <option value={6}>{6}</option>
-            <option value={7}>{7}</option>
+                {this.state.voteTitle.map((title, index) => 
+                    <option key={index} value={index}>{title}</option>
+                    )}         
         </select>
             returnValue = <div>
                 <div id='roster'>
                     <p>Votes</p>
                     <Doughnut data={getChartData(voteResult)} options={{ events: ['click'] }} />
-                    {Object.values(voteResult).map(values =>
-                        <div key={Object.values(voteResult).indexOf(values)}>
-                            <p>{values} {Object.keys(voteResult)[Object.values(voteResult).indexOf(values)]} Röster</p>
+                    {Object.values(voteResult).map((values,index) =>
+                        <div key={index}>
+                            <button onClick={this.onVoteClick} value={Object.keys(voteResult)[index]}>{values} {Object.keys(voteResult)[index]} Röster</button>
                         </div>,
                     )}
                 </div>
-
-                <div id='parti-rost'>
+                    <div>
+                        <h2>{this.state.selectedVote}</h2>
+                        {this.BooleanObject(partyResult)}
+                    </div>
+{/*                 <div id='parti-rost'>
                     <p>Votes by Party</p>
-                    {Object.values(partyResult).map(votes =>
-                        <div key={loopKey++}>
-                            <h2>{Object.keys(partyResult)[Object.values(partyResult).indexOf(votes)]}</h2>
+                   {Object.values(partyResult).map((votes,index) =>
+                        <div key={index}>
+                            <h2>{Object.keys(partyResult)[index]}</h2>
                             <Doughnut data={getChartData(votes)} />
                         </div>
                     )}
-                </div>
+                </div> */}
             </div>
         } else {
             returnValue = <p>Loading...</p>

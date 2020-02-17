@@ -1,17 +1,10 @@
 /** 
- * @param {String} votering_list 
+ * @param {String} votering_list
+ * @param {Array} riksmote
  */
 export const FilterResult = (riksmote, votering_list) => {
-  const ResutArray = ['Ja', 'Nej', 'Avstår', 'Frånvarande'];
   const beteckningID = votering_list;
   const filterVotering_id = riksmote.filter(person => person.votering_id === beteckningID)
-  const YesResult = filterVotering_id.filter(person => person.rost === ResutArray[0]);
-  const NoResult = filterVotering_id.filter(person => person.rost === ResutArray[1]);
-  const AvstarResult = filterVotering_id.filter(person => person.rost === ResutArray[2]);
-  const FranvarandeResult = filterVotering_id.filter(person => person.rost === ResutArray[3]);
-
-  const TotalPresent = YesResult.length + NoResult.length + AvstarResult.length;
-
   const shortByparty = {};
   const emptyObject = {}
   filterVotering_id.forEach(person => {
@@ -45,19 +38,14 @@ export const FilterResult = (riksmote, votering_list) => {
     i++;
   });
   const shortedByVotes = {};
-  let outerIndex = 0;
-  Object.values(shortByparty).forEach(votes => {
+  Object.values(shortByparty).forEach((votes,index) => {
     const innterArr = {}
     let lengthValue = 0;
-    let innerIndex = 0;
-    Object.values(votes).forEach(party => {
+    Object.values(votes).forEach((party,jndex) => {
       lengthValue = party.length
-      innterArr[Object.keys(votes)[innerIndex]] = lengthValue;
-      innerIndex++;
+      innterArr[Object.keys(votes)[jndex]] = lengthValue;
     })
-    // console.log(Object.keys(shortByparty)[outerIndex]);
-    shortedByVotes[Object.keys(shortByparty)[outerIndex]] = innterArr;
-    outerIndex++;
+    shortedByVotes[Object.keys(shortByparty)[index]] = innterArr;
   })
   return {
     votesObj,
@@ -68,7 +56,7 @@ export const FilterResult = (riksmote, votering_list) => {
 
 
 
-
+/* 
 export const FilterPartyResult = (riksmote, index) => {
   const voteringar = {};
   const parties = [];
@@ -108,4 +96,27 @@ export const FilterPartyResult = (riksmote, index) => {
     })
     parties.push(party);
   });
-}
+} */
+
+/** 
+ * @param {String} shorted
+ * @param {Array} riksmote
+ */
+export const FilterPartiesVote = (riksmote,shorted) => {
+  const filterVotering_id = riksmote.filter(person => person.votering_id === shorted);
+  const parties = {}
+  filterVotering_id.forEach(person => {
+    const {parti} = person;
+    if (!parties[parti]) {
+      parties[parti] ={ 
+        votes : {
+            "Ja": 0,
+            "Nej": 0,
+            "Avstår": 0,
+            "Frånvarande": 0}
+      }
+    }
+    parties[parti].votes[person.rost]++;
+  })
+  return parties
+} 

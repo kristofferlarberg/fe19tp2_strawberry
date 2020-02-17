@@ -1,97 +1,55 @@
-import React, { Component } from 'react'
-import update from 'immutability-helper';
-import Menu from '../Menu';
+import React, { Component, Fragment, createContext } from 'react';
 
-//Ändra till dok_id
-const AllDocumentID = [
-    'H701AU1',
-    'H701AU2',
-    'H701AU4',
-    'H701AU5',
-    'H701AU6',
-    'H701CU1',
-    'H701CU2',
-]
+let bet = []
+let votingData = JSON.parse(localStorage.getItem('votingData'));
+const API_QUERY = 'http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=2019-12-31&tom=2020-02-13&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff'
 
+const {Provider, Consumer} = createContext();
 
-const APITitle = (documentID) => `http://data.riksdagen.se/utskottsforslag/${documentID}/?utformat=JSON`;
-
-export class Data extends Component {
+export default class DataContext extends Component {
 
     state = {
-        voteringInfo: [
-            {
-                title: '',
-                description: '',
-                id: 1,
-            },
-            {
-                title: '',
-                description: '',
-                id: 2,
-            },
-            {
-                title: '',
-                description: '',
-                id: 3,
-            }, {
-                title: '',
-                description: '',
-                id: 4,
-            },
-            {
-                title: '',
-                description: '',
-                id: 5,
-            },
-            {
-                title: '',
-                description: '',
-                id: 6,
-            },
-            {
-                title: '',
-                description: '',
-                id: 7,
-            },
-        ],
-
-        hasData: false,
-
-        expandedRows: []
+        data: {},
+        hasData: false
     };
-
+    
     componentDidMount() {
-        for (let i = 0; i < AllDocumentID.length; i++) {
-            let documentID = AllDocumentID[i];
-            fetch(APITitle(documentID))
+        if (!votingData) {
+            votingData = []
+
+            fetch(API_QUERY)
                 .then((data) => data.json())
                 .then((data) => {
-                    //use variable as part of URL = creates API URL in order to get all separate titles
-                    const utskottsforslag = data.utskottsforslag
-                    this.setState({
-                        voteringInfo: update(this.state.voteringInfo, {
-                            [i]: {
-                                title: { $set: utskottsforslag.dokument.titel },
-                                description: {
-                                    $set: utskottsforslag.dokutskottsforslag.utskottsforslag.forslag || utskottsforslag.dokutskottsforslag.utskottsforslag[0].forslag
-                                }
-                            }
-                        }),
-                        hasData: true,
-                    })
-                });
-        }
-    }
+                    let beteckning = data.dokumentlista.dokument
+                    let titles = []
+                    beteckning.map(item => {
+                        return (!bet.includes(item.beteckning)) ? bet.push(item.beteckning) && titles.push(item.titel) : null;
+                    });
+                    for (let i = 0; i < 14; i++) {
+                        fetch(`http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=${bet[i]}&punkt=&valkrets=&rost=&iid=&sz=349&utformat=JSON&gruppering=`)
+                            .then((data) => data.json())
+                            .then((data) => {
+                                data.voteringlista.votering[0].titel = titles[i]
+                                votingData.push(data.voteringlista.votering);
+                                localStorage.setItem('votingData', JSON.stringify(votingData));
+                                this.setState({ data, hasData: true })
+                            });
+                    }
+                })
+        } else {
+            this.setState({ data: JSON.parse(localStorage.getItem('votingData')), hasData: true });
+        };
+    };
 
     render() {
-        const { voteringInfo, hasData } = this.state;
         return (
-            <>
-                {hasData ? <Menu data={voteringInfo} /> : <p>Loading...</p>}
-            </>
-        )
-    }
-}
+            <Provider value={{...this.state, setState: this.setState.bind(this)}}>
+                {this.state.hasData && this.props.children}
+            </Provider>
+        );
+    };
+};
 
-export default Data
+export {
+    Consumer as DataConsumer
+}
