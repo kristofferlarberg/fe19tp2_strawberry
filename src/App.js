@@ -1,5 +1,5 @@
 import React from 'react';
-import Members from './components/Data/members';
+import Renderer from './components/Data/Renderer';
 import Data from './components/Data';
 
 class App extends React.Component {
@@ -8,7 +8,7 @@ class App extends React.Component {
     return (
       <div>
         <Data>
-          <Members />
+          <Renderer />
         </Data>
       </div>
     );
