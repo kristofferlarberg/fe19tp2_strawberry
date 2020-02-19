@@ -10,8 +10,12 @@ const options = {
                 return data['labels'][tooltipItem[0]['index']];
             },
             label: function(tooltipItem, data) {
-                var dataset = data['datasets'][0];
-                var percent = Math.round((dataset.data[tooltipItem.index / dataset._meta[0].total]) * 100);
+                const dataset = data['datasets'][0];
+                // TODO: Find a way to get the meta index in another way / or not have it increase
+                
+                const getMeta = (index = 0) => dataset._meta[index] || getMeta(index + 1);
+                const percent = Math.round((dataset.data[tooltipItem.index] / getMeta().total) * 100);
+
                 return `${data.datasets[0].data[tooltipItem.index]} (${percent}%)`;
             }
         }
