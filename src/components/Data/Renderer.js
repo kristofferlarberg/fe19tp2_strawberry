@@ -136,7 +136,7 @@ export default class Renderer extends Component {
                                         })
                                         voteRows.push("'")
                                     }),
-                                    [...x(20)].map((i) =>
+                                    [...x(4)].map((i) =>
                                         voteRows.push(<br key={i} />)
                                     ),
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
