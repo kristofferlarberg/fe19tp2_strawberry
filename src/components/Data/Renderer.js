@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { BarChart } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
 
@@ -13,16 +13,20 @@ const Span = styled.span`
     margin: 5px;
 `;
 
-const options = {
+const options2 = {
+    scales: {
+        xAxes: [{
+            stacked: true
+        }],
+        yAxes: [{
+            stacked: true
+        }]
+    },
     tooltips: {
+        mode: 'label',
         callbacks: {
-            title: function (tooltipItem, data) {
-                return data['labels'][tooltipItem[0]['index']];
-            },
             label: function (tooltipItem, data) {
-                var dataset = data['datasets'][0];
-                var percent = Math.round((dataset.data[tooltipItem.index] / dataset._meta[0].total) * 100);
-                return `${data.datasets[0].data[tooltipItem.index]} (${percent}%)`;
+                return ` ${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.yLabel} st `;
             }
         }
     }
@@ -104,21 +108,38 @@ export default class Renderer extends Component {
             '#FFCE56',
         ]
 
+        let totalVoteResult = [0, 0, 0, 0]
+        let voteResult = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-        const data = {
+        let data2 = {
             labels: [
-                'Ja',
-                'Nej',
-                'Avstår',
-                'Frånvarande',
+                ...this.state.parties
             ],
             datasets: [{
-                data: [yes.length, no.length, pass.length, absent.length],
-                backgroundColor
-            }]
+                label: 'Ja',
+                data: voteResult[0],
+                backgroundColor: backgroundColor[0],
+            },
+            {
+                label: 'Nej',
+                data: voteResult[1],
+                backgroundColor: backgroundColor[1],
+
+            },
+            {
+                label: 'Avstår',
+                data: voteResult[2],
+                backgroundColor: backgroundColor[2],
+            },
+            {
+                label: 'Frånvarande',
+                data: voteResult[3],
+                backgroundColor: backgroundColor[3],
+            }
+
+            ]
         };
         let voteRows = []
-        let voteResult = [0, 0, 0, 0]
         return (
             <div style={{ marginLeft: '50px' }}>
                 <h1>Riksdagskollen</h1>
@@ -129,7 +150,7 @@ export default class Renderer extends Component {
                                 <p onClick={this.handleClick}>Votering: {title} - {date}</p>
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
-                                        const colorIndex = data.labels.findIndex(value => value === vote.rost);
+                                        const colorIndex = data2.datasets.findIndex(value => value.label === vote.rost);
                                         voteRows.push(
                                             <Span
                                                 key={i + vote.efternamn + vote.fornamn}
@@ -148,29 +169,28 @@ export default class Renderer extends Component {
                                                 voteRows.push(<Span key={i + vote.fornamn + vote.efternamn} title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`} style={{ background: backgroundColor[id] }}></Span>))
                                         })
                                         voteRows.push(<Span key={'span' + party} style={{ width: '4px', marginLeft: '-2px', marginRight: '-2px', background: '#CCC', borderRadius: '0' }} />)
-                                    }),
-                                    [...x(4)].map((i) =>
-                                        voteRows.push(<br key={i + 5} />)
-                                    ),
-                                    console.log(voteRows.length)
+                                    })
                                 }
                                 <div style={{ width: '900px', textAlign: 'center', cursor: 'pointer' }} >
                                     {
-                                        this.state.parties.forEach(party => {
+                                        this.state.parties.forEach((party, id) => {
                                             let voteObject = getVoteData(this.state.votering_id, party)
                                             voteObject.votes.forEach((vote, i) => {
-                                                voteResult[i] += vote.length;
+                                                voteResult[i][id] += vote.length;
+                                                totalVoteResult[i] += vote.length;
                                             })
                                         })
                                     }
-                                    {voteResult.map((e, i) => {
-                                        return <div key={e + i + 'a'} style={{ display: 'inline-block', width: `${e / 349 * 100}%`, textAlign: 'center', cursor: 'pointer', background: backgroundColor[i], marginTop: '20px', marginBottom: '15px' }}>{data.labels[i]}: <br /> {(e / 349 * 100).toFixed(1)}%</div>
+                                    {totalVoteResult.map((e, i) => {
+                                        return <div key={e + i + 'a'} style={{ display: 'inline-block', width: `${e / 349 * 100}%`, textAlign: 'center', cursor: 'pointer', background: backgroundColor[i], marginTop: '20px', marginBottom: '15px' }}>{data2.datasets[i].label}: <br /> {(e / 349 * 100).toFixed(1)}%</div>
                                     })
                                     }
 
                                     {voteRows}
 
                                 </div>
+                                <br /><br />
+                                <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
                             </>
                         )
                     }
