@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Doughnut } from 'react-chartjs-2';
+import { BarChart } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
 
@@ -121,24 +121,13 @@ export default class Renderer extends Component {
         let voteResult = [0, 0, 0, 0]
         return (
             <div style={{ marginLeft: '50px' }}>
+                <h1>Riksdagskollen</h1>
                 <DataConsumer>
                     {
                         (ctx) => (
                             <>
                                 <p onClick={this.handleClick}>Votering: {title} - {date}</p>
                                 {
-                                    this.state.parties.forEach(party => {
-                                        let voteObject = getVoteData(this.state.votering_id, party)
-
-                                        voteObject.votes.forEach((v, id) => {
-                                            v.map((vote, i) =>
-                                                voteRows.push(<Span key={i + vote.fornamn + vote.efternamn} title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`} style={{ background: backgroundColor[id] }}></Span>))
-                                        })
-                                        voteRows.push("'")
-                                    }),
-                                    [...x(4)].map((i) =>
-                                        voteRows.push(<br key={i} />)
-                                    ),
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
                                         const colorIndex = data.labels.findIndex(value => value === vote.rost);
                                         voteRows.push(
@@ -147,11 +136,25 @@ export default class Renderer extends Component {
                                                 title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`}
                                                 style={{ background: backgroundColor[colorIndex] }}
                                             />)
-                                    })
+                                    }),
+                                    [...x(4)].map((i) =>
+                                        voteRows.push(<br key={i} />)
+                                    ),
+                                    this.state.parties.forEach(party => {
+                                        let voteObject = getVoteData(this.state.votering_id, party)
+
+                                        voteObject.votes.forEach((v, id) => {
+                                            v.map((vote, i) =>
+                                                voteRows.push(<Span key={i + vote.fornamn + vote.efternamn} title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`} style={{ background: backgroundColor[id] }}></Span>))
+                                        })
+                                        voteRows.push(<Span key={'span' + party} style={{ width: '4px', marginLeft: '-2px', marginRight: '-2px', background: '#CCC', borderRadius: '0' }} />)
+                                    }),
+                                    [...x(4)].map((i) =>
+                                        voteRows.push(<br key={i + 5} />)
+                                    ),
+                                    console.log(voteRows.length)
                                 }
                                 <div style={{ width: '900px', textAlign: 'center', cursor: 'pointer' }} >
-                                    {voteRows}
-
                                     {
                                         this.state.parties.forEach(party => {
                                             let voteObject = getVoteData(this.state.votering_id, party)
@@ -160,11 +163,13 @@ export default class Renderer extends Component {
                                             })
                                         })
                                     }
-                                    <br />
                                     {voteResult.map((e, i) => {
-                                        return <div key={i} style={{ display: 'inline-block', width: `${e / 349 * 100}%`, textAlign: 'center', cursor: 'pointer', background: backgroundColor[i], marginTop: '25px', marginBottom: '50px' }}>{data.labels[i]}: <br /> {(e / 349 * 100).toFixed(1)}%</div>
+                                        return <div key={e + i + 'a'} style={{ display: 'inline-block', width: `${e / 349 * 100}%`, textAlign: 'center', cursor: 'pointer', background: backgroundColor[i], marginTop: '20px', marginBottom: '15px' }}>{data.labels[i]}: <br /> {(e / 349 * 100).toFixed(1)}%</div>
                                     })
                                     }
+
+                                    {voteRows}
+
                                 </div>
                             </>
                         )
