@@ -200,7 +200,7 @@ export default class Renderer extends Component {
                                             <Span
                                                 key={i + vote.efternamn + vote.fornamn}
                                                 title={loggedIn ? `${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}` : null}
-                                                style={{ transitionDuration: '0.8s', background: loggedIn ? backgroundColor[colorIndex] : '#ddd' }}
+                                                style={{ transitionDuration: '0.5s', background: loggedIn ? backgroundColor[colorIndex] : '#ddd' }}
                                             />)
                                     })
                                     // [...x(4)].map((i) =>
@@ -230,7 +230,7 @@ export default class Renderer extends Component {
                                     <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', cursor: loggedIn && 'pointer' }} >
                                         {totalVoteResult.map((e, i) => {
                                             return loggedIn ?
-                                                <div key={e + i + 'a'} style={{ display: 'inline-block', boxSizing: 'border-box', width: `${e / 349 * 100}%`, textAlign: 'center', background: backgroundColor[i], transitionDuration: '0.5s', border: e > 0 && '1px solid white', marginTop: '19px', marginBottom: '14px' }}>{data2.datasets[i].label}: <br /> {(e / 349 * 100).toFixed(1)}%</div>
+                                                <div key={e + i + 'a'} style={{ display: 'inline-block', boxSizing: 'border-box', width: `${e / 349 * 100}%`, textAlign: 'center', background: backgroundColor[i], transitionDuration: '0.5s', border: e > 0 && '1px solid white', marginTop: '19px', marginBottom: '14px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
                                                 : <div key={e + i + 'a'} style={{ display: 'inline-block', width: '25%', boxSizing: 'border-box', textAlign: 'center', background: '#eee', border: '1px solid white', transitionDuration: '0.5s', marginTop: '19px', marginBottom: '14px' }}><br /><br /></div>
                                         })
                                         }
@@ -245,16 +245,20 @@ export default class Renderer extends Component {
                                     </div>
                                 }
                                 {chartNumber == 3 && loggedIn &&
-                                    <div style={{ width: '900px', textAlign: 'center', cursor: loggedIn && 'pointer' }} >
+                                    <div style={{ width: '900px', cursor: loggedIn && 'pointer' }} >
+                                        <select onChange={this.handleChange}>
+                                            {!party && <option value="Välj parti...">Välj parti...</option>}
+                                            {parties.map((party, i) => <option key={i} value={party}>{party}</option>)}
+                                        </select>
+                                        <Doughnut style={{ display: 'inline' }} data={data} onElementsClick={this.onChartClick.bind(this)} options={options} />
+                                        <>
 
-                                        <Doughnut data={data} onElementsClick={this.onChartClick.bind(this)} options={options} />,
-                                    <>
                                             {
                                                 this.state[this.state.case].map(
                                                     (e, i) => (
-                                                        <p key={i} style={{ color: data.datasets[0].backgroundColor[this.state.caseIndex] }}>
-                                                            {data.labels[this.state.caseIndex]}: {e.fornamn} {e.efternamn}
-                                                        </p>
+                                                        <span key={i} style={{ position: 'relative', top: '-420px', color: data.datasets[0].backgroundColor[this.state.caseIndex] }}>
+                                                            {i === 0 && data.labels[this.state.caseIndex] + ':'}{i === 0 && <br />} {e.fornamn} {e.efternamn}<br />
+                                                        </span>
                                                     )
                                                 )
                                             }
