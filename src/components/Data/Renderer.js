@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
 
@@ -12,7 +12,20 @@ const Span = styled.span`
     width: 20px;
     margin: 5px;
 `;
-
+const options = {
+    tooltips: {
+        callbacks: {
+            title: function (tooltipItem, data) {
+                return data['labels'][tooltipItem[0]['index']];
+            }
+            // label: function (tooltipItem, data) {
+            //     var dataset = data['datasets'][0];
+            //     var percent = Math.round((dataset.data[tooltipItem.index] / dataset._meta[0].total) * 100);
+            //     return `${data.datasets[0].data[tooltipItem.index]} (${percent}%)`;
+            // }
+        }
+    }
+};
 const options2 = {
     scales: {
         xAxes: [{
@@ -75,6 +88,8 @@ export default class Renderer extends Component {
     handleClick(event) {
         if (event.target.dataset.value === 'user') {
             this.setState({ loggedIn: !this.state.loggedIn, selectedChart: 1 })
+        } else if (event.target.dataset.value === 'back') {
+            this.setState({ selectedChart: this.state.selectedChart - 1 })
         } else {
             let votering_id = Math.min(Math.floor(Math.random() * 10), this.state.votingArray.length - 1);
             this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
@@ -82,7 +97,7 @@ export default class Renderer extends Component {
         }
     };
     chooseChart() {
-        if (this.state.loggedIn) this.setState({ selectedChart: this.state.selectedChart == 1 ? 2 : 1 });
+        if (this.state.loggedIn) this.setState({ selectedChart: this.state.selectedChart + 1 });
     };
 
     //ctx.data[this.state.votering_index].forEach((vote, i) => voteRows.push(<Span key={i + vote.fornamn + vote.efternamn} title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`} style={{ background: backgroundColor[data.labels[0]] }}></Span>))
@@ -124,6 +139,18 @@ export default class Renderer extends Component {
         for (let i = 0; i < 4; i++) {
             voteResult.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
         }
+        const data = {
+            labels: [
+                'Ja',
+                'Nej',
+                'Avstår',
+                'Frånvarande',
+            ],
+            datasets: [{
+                data: [yes.length, no.length, pass.length, absent.length],
+                backgroundColor
+            }]
+        };
         let data2 = {
             labels: [
                 ...this.state.parties
@@ -156,7 +183,10 @@ export default class Renderer extends Component {
         return (
             <div style={{ marginLeft: '50px' }}>
                 <h1 style={{ display: 'inline-block', marginRight: '20px' }}>Riksdagskollen </h1>
-                <button data-value='user' style={{ display: 'inline-block', position: 'relative', top: '-7px' }} onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
+                <button data-value='user' style={{ display: 'inline-block', marginRight: '20px', position: 'relative', top: '-7px' }} onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
+                {this.state.selectedChart > 1 &&
+                    <button data-value='back' style={{ display: 'inline-block', position: 'relative', top: '-7px' }} onClick={this.handleClick}>Tillbaka </button>
+                }
                 <DataConsumer>
                     {
                         (ctx) => (
@@ -212,6 +242,23 @@ export default class Renderer extends Component {
 
                                         <br /><br />
                                         <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
+                                    </div>
+                                }
+                                {chartNumber == 3 && loggedIn &&
+                                    <div style={{ width: '900px', textAlign: 'center', cursor: loggedIn && 'pointer' }} >
+
+                                        <Doughnut data={data} onElementsClick={this.onChartClick.bind(this)} options={options} />,
+                                    <>
+                                            {
+                                                this.state[this.state.case].map(
+                                                    (e, i) => (
+                                                        <p key={i} style={{ color: data.datasets[0].backgroundColor[this.state.caseIndex] }}>
+                                                            {data.labels[this.state.caseIndex]}: {e.fornamn} {e.efternamn}
+                                                        </p>
+                                                    )
+                                                )
+                                            }
+                                        </>
                                     </div>
                                 }
                             </>
