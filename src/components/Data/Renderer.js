@@ -191,7 +191,7 @@ export default class Renderer extends Component {
                     {
                         (ctx) => (
                             <>
-                                <p onClick={this.handleClick}>Votering: {title} - {date}</p>
+                                <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p>
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
@@ -227,11 +227,11 @@ export default class Renderer extends Component {
                                 }
 
                                 {chartNumber == 1 &&
-                                    <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', cursor: loggedIn && 'pointer' }} >
+                                    <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
                                         {totalVoteResult.map((e, i) => {
                                             return loggedIn ?
-                                                <div key={e + i + 'a'} style={{ display: 'inline-block', boxSizing: 'border-box', width: `${e / 349 * 100}%`, textAlign: 'center', background: backgroundColor[i], transitionDuration: '0.5s', border: e > 0 && '1px solid white', marginTop: '19px', marginBottom: '14px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                                                : <div key={e + i + 'a'} style={{ display: 'inline-block', width: '25%', boxSizing: 'border-box', textAlign: 'center', background: '#eee', border: '1px solid white', transitionDuration: '0.5s', marginTop: '19px', marginBottom: '14px' }}><br /><br /></div>
+                                                <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '14px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                                : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '14px' }}><br /><br /></div>
                                         })
                                         }
                                         {voteRows}
