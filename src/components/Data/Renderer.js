@@ -12,7 +12,16 @@ const Span = styled.span`
     width: 20px;
     margin: 5px;
 `;
-//constStyledSelect
+const StyledSelect = styled.select`
+  width: auto;
+  height: 35px;
+  background: white;
+  color: black;
+  /* font-family: Helvetica; */
+  font-size: 14px;
+  border: none;
+  margin-left: 10px;
+`;
 
 const options = {
     tooltips: {
@@ -61,7 +70,7 @@ export default class Renderer extends Component {
         title: '',
         caseIndex: 0,
         case: 'yes',
-        //titleDates:[],
+        titleDates: [],
         date: '',
         party: 'S',
         parties: [],
@@ -194,8 +203,15 @@ export default class Renderer extends Component {
                     {
                         (ctx) => (
                             <>
-                                {/* <StyledSelect/> */}
-                                <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p>
+
+                                <p>Välj votering</p>
+                                <StyledSelect onChange={this.handleClick}>
+
+                                    {titleDates.map((item) => <option>{item.title} - {item.date}</option>)}
+
+                                </StyledSelect>
+                                <p>Läs mer på {this.state.title}</p>
+                                {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {

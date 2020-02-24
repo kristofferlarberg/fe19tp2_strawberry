@@ -1,11 +1,12 @@
 const votingArray = [];
 let parties = [];
-//allTitles
-//allDates
 
 const cached_voteData = {}
 
 export function getVoteData(currentId, currentParty, data) {
+	const allTitles = [];
+	const allDates = [];
+
 	if (cached_voteData[`${currentId}_${currentParty}`]) {
 		return cached_voteData[`${currentId}_${currentParty}`]
 	}
@@ -16,13 +17,16 @@ export function getVoteData(currentId, currentParty, data) {
 		votingData.forEach(votering => {
 			votering.forEach(id => {
 				(!votingArray.includes(id.votering_id)) && votingArray.push(id.votering_id);
-				// Title
-				// Date
+				((id.titel && !allTitles.includes(id.titel))) && allTitles.push(id.titel.substr(31, id.titel.length));
+				((id.systemdatum && !allDates.includes(id.systemdatum))) && allDates.push(id.systemdatum.substr(0, 10))
+				console.log(allDates)
 			})
 		});
 	}
 
-	//titleDateArray
+	let titleDateArray = allTitles.map((title, index) => {
+		return { title, date: allDates[index] }
+	})
 
 	let dataOut = {};
 	let voting = votingData[currentId]
@@ -56,11 +60,11 @@ export function getVoteData(currentId, currentParty, data) {
 		dataOut = {
 			parties,
 			votingArray,
-			//titles: allTitles,
+			titles: allTitles,
 			title: voting[0].titel,
-			//dates: allDates,
+			dates: allDates,
 			date: voting[0].systemdatum.substring(0, 10),
-			//titleDates: titleDateArray,
+			titleDates: titleDateArray,
 			yes,
 			no,
 			pass,
