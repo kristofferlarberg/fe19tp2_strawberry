@@ -7,6 +7,15 @@ var config = {
 /**
  * ! Your firebase APi key
  */
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+    measurementId: '' 
+
 };
 
 class Firebase {
