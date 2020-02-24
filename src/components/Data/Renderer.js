@@ -261,7 +261,7 @@ export default class Renderer extends Component {
                                     <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', cursor: 'pointer' }} >
 
                                         <br /><br />
-                                        <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
+                                        <Bar data={data2} options={options2} />
                                     </div>
                                 }
                                 {chartNumber == 3 && loggedIn &&
