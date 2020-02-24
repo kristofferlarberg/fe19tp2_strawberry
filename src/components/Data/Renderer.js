@@ -12,6 +12,8 @@ const Span = styled.span`
     width: 20px;
     margin: 5px;
 `;
+//constStyledSelect
+
 const options = {
     tooltips: {
         callbacks: {
@@ -59,6 +61,7 @@ export default class Renderer extends Component {
         title: '',
         caseIndex: 0,
         case: 'yes',
+        //titleDates:[],
         date: '',
         party: 'S',
         parties: [],
@@ -125,7 +128,7 @@ export default class Renderer extends Component {
     }
 
     render() {
-        const { yes, no, pass, absent, party, parties, title, date } = this.state;
+        const { yes, no, pass, absent, party, parties, title, date, titleDates } = this.state;
         const backgroundColor = [
             '#0FCE56',
             '#FF6384',
@@ -191,6 +194,7 @@ export default class Renderer extends Component {
                     {
                         (ctx) => (
                             <>
+                                {/* <StyledSelect/> */}
                                 <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p>
 
                                 {
