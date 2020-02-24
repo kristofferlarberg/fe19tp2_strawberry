@@ -56,11 +56,11 @@ const options2 = {
     }
 };
 
-const x = (amt) => {
-    let arr = [];
-    for (let i = 0; i < amt; i++) arr[i] = i
-    return arr;
-}
+// const x = (amt) => {
+//     let arr = [];
+//     for (let i = 0; i < amt; i++) arr[i] = i
+//     return arr;
+// }
 
 export default class Renderer extends Component {
 
@@ -103,9 +103,8 @@ export default class Renderer extends Component {
         } else if (event.target.dataset.value === 'back') {
             this.setState({ selectedChart: this.state.selectedChart - 1 })
         } else {
-            let votering_id = Math.min(Math.floor(Math.random() * 10), this.state.votingArray.length - 1);
+            let votering_id = event.target.value;
             this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
-
         }
     };
     chooseChart() {
@@ -131,13 +130,15 @@ export default class Renderer extends Component {
                 case 3:
                     this.setState({ case: 'absent' });
                     break;
+                default:
+                    break;
             }
             this.setState({ caseIndex: index })
         }
     }
 
     render() {
-        const { yes, no, pass, absent, party, parties, title, date, titleDates } = this.state;
+        const { yes, no, pass, absent, party, parties, titleDates, dok_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
             '#FF6384',
@@ -204,13 +205,12 @@ export default class Renderer extends Component {
                         (ctx) => (
                             <>
 
-                                <p>Välj votering</p>
+                                <p style={{ marginTop: '0px' }}>Välj votering:</p>
                                 <StyledSelect onChange={this.handleClick}>
 
-                                    {titleDates.map((item) => <option>{item.title} - {item.date}</option>)}
-
+                                    {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
                                 </StyledSelect>
-                                <p>Läs mer på {this.state.title}</p>
+                                <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p>
                                 {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
 
                                 {
