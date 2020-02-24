@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { AuthUserContext, withAuthorization } from '../../Session';
 
-class HomePage extends Component {
-    
-    render() { 
-        return ( 
+const HomePage = () => (
+    <AuthUserContext.Consumer>
+        {authUser => (
             <div>
-                <h1>Home</h1>
+                <h1>Welcome {authUser.email}</h1>
+                <p>The Home Page is accessible by every signed in user</p>
             </div>
-         )
-    }
-}
- 
-export default HomePage;
+        )}
+    </AuthUserContext.Consumer>
+);
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(HomePage);

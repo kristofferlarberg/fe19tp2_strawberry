@@ -1,9 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../../constants/routes'
 
-const Navigation = () => {
-    return ( <div>
+import SignOutButton from '../SignOut';
+import * as ROUTES from '../../../constants/routes'
+import { AuthUserContext } from '../../Session';
+
+
+const Navigation = ({ authUser }) => (
+    <div>
+        <AuthUserContext.Consumer>
+            {authUser =>
+                authUser ? <NavigationAuth /> : <NavigationNonAuth />
+            }
+        </AuthUserContext.Consumer>
+    </div>
+);
+
+const NavigationAuth = () => (
+    <div>
         <ul>
             <li>
                 <Link to={ROUTES.LANDING}>Landing</Link>
@@ -12,13 +26,33 @@ const Navigation = () => {
                 <Link to={ROUTES.HOME}>Home</Link>
             </li>
             <li>
-                <Link to={ROUTES.VOTERING}>Votering</Link>
+                <Link to={ROUTES.ACCOUNT}>Account</Link>
             </li>
             <li>
-                <Link to={ROUTES.SIGN_IN}>Sign in</Link>
+                <Link to={ROUTES.ADMIN}>Admin</Link>
+            </li>
+            <li>
+                <Link to={ROUTES.VOTERING}>Votering signed</Link>
+            </li>
+            <li>
+                <SignOutButton />
             </li>
         </ul>
-    </div> );
-}
- 
+    </div>
+)
+
+const NavigationNonAuth = () => (
+    <ul>
+        <li>
+            <Link to={ROUTES.LANDING}>Landing</Link>
+        </li>
+        <li>
+            <Link to={ROUTES.VOTERING}>Votering not signed</Link>
+        </li>
+        <li>
+            <button><Link to={ROUTES.SIGN_IN}>Sign In</Link></button>
+        </li>
+    </ul>
+);
+
 export default Navigation;

@@ -12,7 +12,8 @@ import AccountPage from './components/Pages/Account'
 import AdminPage from './components/Pages/Admin'
 import PasswordForgetPage from './components/Pages/PasswordForget'
 
-import * as ROUTES from './constants/routes'
+import * as ROUTES from './constants/routes';
+import { withAuthentication } from './components/Session';
 
 class App extends React.Component {
   render() {
@@ -39,4 +40,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuthentication(App);
