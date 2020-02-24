@@ -116,24 +116,29 @@ export default class Renderer extends Component {
 
     onChartClick(chart) {
         if (chart.length > 0) {
-            const index = chart[0]._index;
-            switch (index) {
-                case 0:
-                    this.setState({ case: 'yes' });
-                    break;
-                case 1:
-                    this.setState({ case: 'no' });
-                    break;
-                case 2:
-                    this.setState({ case: 'pass' });
-                    break;
-                case 3:
-                    this.setState({ case: 'absent' });
-                    break;
-                default:
-                    break;
+            if (chart[0]._chart.config.type === 'bar') {
+                const party = this.state.parties[chart[0]._index]
+                this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
+            } else {
+                const index = chart[0]._index;
+                switch (index) {
+                    case 0:
+                        this.setState({ case: 'yes' });
+                        break;
+                    case 1:
+                        this.setState({ case: 'no' });
+                        break;
+                    case 2:
+                        this.setState({ case: 'pass' });
+                        break;
+                    case 3:
+                        this.setState({ case: 'absent' });
+                        break;
+                    default:
+                        break;
+                }
+                this.setState({ caseIndex: index })
             }
-            this.setState({ caseIndex: index })
         }
     }
 
@@ -261,14 +266,14 @@ export default class Renderer extends Component {
                                     <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', cursor: 'pointer' }} >
 
                                         <br /><br />
-                                        <Bar data={data2} options={options2} />
+                                        <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
                                     </div>
                                 }
                                 {chartNumber == 3 && loggedIn &&
                                     <div style={{ width: '900px', cursor: loggedIn && 'pointer' }} >
-                                        <select onChange={this.handleChange}>
+                                        <select defaultValue={this.state.party} onChange={this.handleChange}>
                                             {!party && <option value="Välj parti...">Välj parti...</option>}
-                                            {parties.map((party, i) => <option key={i} value={party}>{party}</option>)}
+                                            {parties.map((party, i) => <option key={i} value={party} >{party}</option>)}
                                         </select>
                                         <Doughnut style={{ display: 'inline' }} data={data} onElementsClick={this.onChartClick.bind(this)} options={options} />
                                         <>
