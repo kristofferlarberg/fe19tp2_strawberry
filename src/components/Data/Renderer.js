@@ -154,17 +154,10 @@ export default class Renderer extends Component {
     render() {
         const { yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
         const backgroundColor = [
-<<<<<<< HEAD
             '#0FCE56',
             '#FF6384',
             '#FFCE56',
             '#85a8d3',
-=======
-            '#14A76C',
-            '#FF652F',
-            '#FFE400',
-            'rgb(238, 238, 238)',
->>>>>>> New colors
         ]
         let loggedIn = this.state.loggedIn
         let chartNumber = this.state.selectedChart
