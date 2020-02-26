@@ -16,7 +16,7 @@ const StyledSelect = styled.select`
   width: auto;
   height: 35px;
   background: white;
-  color: black;
+  color: #797979;
   /* font-family: Helvetica; */
   font-size: 14px;
   border: none;
@@ -24,7 +24,7 @@ const StyledSelect = styled.select`
 `;
 const DocH1 = styled.h1`
     color:#797979;
-    font-size: 4rem;
+    font-size: 2.5rem;
     margin: 0px;
     margin-right: 20px;
 `;
@@ -222,7 +222,7 @@ export default class Renderer extends Component {
         return (
             <div style={{ width: '900px', marginLeft: '50px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
-                    <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText style={{ lineHeight: '1.2rem' }}>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
+                    <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
                 <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                 <DataConsumer>
