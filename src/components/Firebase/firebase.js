@@ -7,14 +7,14 @@ var config = {
 /**
  * ! Your firebase APi key
  */
-    apiKey: '',
-    authDomain: '',
-    databaseURL: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-    measurementId: '' 
+    apiKey: "AIzaSyADWVa2qZ4xEdN2PuC6MRodxmsx84niNSQ",
+    authDomain: "test-firebase-75c7c.firebaseapp.com",
+    databaseURL: "https://test-firebase-75c7c.firebaseio.com",
+    projectId: "test-firebase-75c7c",
+    storageBucket: "test-firebase-75c7c.appspot.com",
+    messagingSenderId: "194902267565",
+    appId: "1:194902267565:web:9cf40dc976e1961d461824",
+    measurementId: "G-6YHPZZ2BS5"
 
 };
 

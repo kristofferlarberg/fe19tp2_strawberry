@@ -1,16 +1,16 @@
 import React from 'react';
-import { AuthUserContext, withAuthorization } from '../../Session';
+import Renderer from '../../Data/Renderer';
+import Data from '../../Data';
+import Side from '../../Side';
 
 const HomePage = () => (
-    <AuthUserContext.Consumer>
-        {authUser => (
-            <div>
-                <h1>Welcome {authUser.email}</h1>
-                <p>The Home Page is accessible by every signed in user</p>
-            </div>
-        )}
-    </AuthUserContext.Consumer>
+    <div style={{ display: 'flex' }}>
+        <Side />
+        <Data>
+            <Renderer />
+        </Data>
+    </div>
 );
 const condition = authUser => !!authUser;
 
-export default withAuthorization(condition)(HomePage);
+export default HomePage;
