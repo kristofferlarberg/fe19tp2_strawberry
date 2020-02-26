@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserStatus from './Pages/SignIn/sign_in_out'
 import styled, { ThemeProvider }  from 'styled-components';
 // import { DataConsumer } from 'data/DataConsumer';
 // import { getVoteData } from '../functions/filter';
@@ -82,7 +83,7 @@ class Side extends React.Component {
             <ThemeProvider theme={theme}>
                  <SidenavDiv>
                 <UserDiv>
-                   Side menu 
+                 <UserStatus/>
                 </UserDiv>
                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>

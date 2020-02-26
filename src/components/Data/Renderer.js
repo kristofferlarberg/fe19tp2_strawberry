@@ -22,6 +22,18 @@ const StyledSelect = styled.select`
   border: none;
   margin-left: 10px;
 `;
+const DocH1 = styled.h1`
+    color:#797979;
+    font-size: 4rem;
+    margin: 0px;
+    margin-right: 20px;
+`;
+
+const DocText = styled.h3`
+line-height: 1.2rem;
+color:#797979;
+`
+
 
 const options = {
     tooltips: {
@@ -210,7 +222,7 @@ export default class Renderer extends Component {
         return (
             <div style={{ width: '900px', marginLeft: '50px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
-                    <h1 style={{ fontSize: '4rem', margin: '0px', marginRight: '20px' }}>{dok_id && dok_id.substr(4)}</h1> <h3 style={{ lineHeight: '1.2rem' }}>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</h3>
+                    <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText style={{ lineHeight: '1.2rem' }}>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
                 <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                 <DataConsumer>
