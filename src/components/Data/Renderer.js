@@ -8,9 +8,9 @@ const Span = styled.span`
     background: #0FCE56;
     border-radius: 50%;
     display: inline-block;
-    height: 20px;
-    width: 20px;
-    margin: 5px;
+    height: 11px;
+    width: 11px;
+    margin: 1.8px;
 `;
 const StyledSelect = styled.select`
   width: auto;
@@ -46,6 +46,7 @@ const options2 = {
             stacked: true
         }]
     },
+    maintainAspectRatio: true,
     tooltips: {
         mode: 'label',
         callbacks: {
@@ -102,7 +103,7 @@ export default class Renderer extends Component {
             this.setState({ loggedIn: !this.state.loggedIn, selectedChart: 1 })
         } else if (event.target.dataset.value === 'back') {
             this.setState({ selectedChart: this.state.selectedChart - 1 })
-        } else {
+        } else if (event.target.value !== 'Välj votering...') {
             let votering_id = event.target.value;
             this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
         }
@@ -117,9 +118,17 @@ export default class Renderer extends Component {
     onChartClick(chart) {
         if (chart.length > 0) {
             if (chart[0]._chart.config.type === 'bar') {
+                console.log(chart)
+
+                console.log(chart[0])
+                console.log(chart[1])
+                console.log(chart[2])
+                console.log(chart[3])
+
                 const party = this.state.parties[chart[0]._index]
                 this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
             } else {
+
                 const index = chart[0]._index;
                 switch (index) {
                     case 0:
@@ -143,12 +152,12 @@ export default class Renderer extends Component {
     }
 
     render() {
-        const { yes, no, pass, absent, party, parties, titleDates, dok_id } = this.state;
+        const { yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
             '#FF6384',
-            '#36A2EB',
             '#FFCE56',
+            '#85a8d3',
         ]
         let loggedIn = this.state.loggedIn
         let chartNumber = this.state.selectedChart
@@ -166,7 +175,7 @@ export default class Renderer extends Component {
             ],
             datasets: [{
                 data: [yes.length, no.length, pass.length, absent.length],
-                backgroundColor
+                backgroundColor: loggedIn ? backgroundColor : '#ddd',
             }]
         };
         let data2 = {
@@ -176,42 +185,41 @@ export default class Renderer extends Component {
             datasets: [{
                 label: 'Ja',
                 data: voteResult[0],
-                backgroundColor: backgroundColor[0],
+                backgroundColor: loggedIn ? backgroundColor[0] : '#ddd',
             },
             {
                 label: 'Nej',
                 data: voteResult[1],
-                backgroundColor: backgroundColor[1],
+                backgroundColor: loggedIn ? backgroundColor[1] : '#ddd',
 
             },
             {
                 label: 'Avstår',
                 data: voteResult[2],
-                backgroundColor: backgroundColor[2],
+                backgroundColor: loggedIn ? backgroundColor[2] : '#eee',
             },
             {
                 label: 'Frånvarande',
                 data: voteResult[3],
-                backgroundColor: backgroundColor[3],
+                backgroundColor: loggedIn ? backgroundColor[3] : '#eee',
             }
 
             ]
         };
         let voteRows = []
         return (
-            <div style={{ marginLeft: '50px' }}>
-                <h1 style={{ display: 'inline-block', marginRight: '20px' }}>Riksdagskollen </h1>
-                <button data-value='user' style={{ display: 'inline-block', marginRight: '20px', position: 'relative', top: '-7px' }} onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
-                {this.state.selectedChart > 1 &&
-                    <button data-value='back' style={{ display: 'inline-block', position: 'relative', top: '-7px' }} onClick={this.handleClick}>Tillbaka </button>
-                }
+            <div style={{ width: '900px', marginLeft: '50px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
+                    <h1 style={{ fontSize: '4rem', margin: '0px', marginRight: '20px' }}>{dok_id && dok_id.substr(4)}</h1> <h3 style={{ lineHeight: '1.2rem' }}>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</h3>
+                </div >
+                <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                 <DataConsumer>
                     {
                         (ctx) => (
                             <>
 
-                                <p style={{ marginTop: '0px' }}>Välj votering:</p>
-                                <StyledSelect onChange={this.handleClick}>
+                                <StyledSelect selectedValue={{ label: "Välj voteiring...", value: 'Välj votering...' }} onChange={this.handleClick}>
+                                    {<option value='Välj votering...'>Välj votering...</option>}
 
                                     {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
                                 </StyledSelect>
@@ -223,8 +231,8 @@ export default class Renderer extends Component {
                                         const colorIndex = data2.datasets.findIndex(value => value.label === vote.rost);
                                         voteRows.push(
                                             <Span
-                                                key={i + vote.efternamn + vote.fornamn}
-                                                title={loggedIn ? `${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}` : null}
+                                                key={i + vote.namn}
+                                                title={loggedIn ? `${vote.namn} (${vote.parti}): ${vote.rost}` : null}
                                                 style={{ transitionDuration: '0.5s', background: loggedIn ? backgroundColor[colorIndex] : '#ddd' }}
                                             />)
                                     })
@@ -250,26 +258,28 @@ export default class Renderer extends Component {
                                         })
                                     })
                                 }
+                                {totalVoteResult.map((e, i) => {
+                                    return loggedIn ?
+                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                        : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
+                                })
+                                }
+                                <div style={{ display: 'flex', width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
+                                    {/* {chartNumber == 1 && */}
 
-                                {chartNumber == 1 &&
-                                    <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
-                                        {totalVoteResult.map((e, i) => {
-                                            return loggedIn ?
-                                                <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '14px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                                                : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '14px' }}><br /><br /></div>
-                                        })
-                                        }
+                                    <div style={{ width: '50%', fontSize: '8px', marginRight: '10px' }} >
+
                                         {voteRows}
                                     </div>
-                                }
-                                {chartNumber == 2 && loggedIn &&
-                                    <div onClick={this.chooseChart.bind(this)} style={{ width: '900px', textAlign: 'center', cursor: 'pointer' }} >
+                                    {/* } */}
+                                    {/* {chartNumber == 2 && loggedIn && */}
+                                    <div style={{ width: '50%', marginTop: '-50px', marginLeft: '10px' }} >
 
                                         <br /><br />
                                         <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
                                     </div>
-                                }
-                                {chartNumber == 3 && loggedIn &&
+                                    {/* } */}
+                                    {/* {chartNumber == 3 && loggedIn &&
                                     <div style={{ width: '900px', cursor: loggedIn && 'pointer' }} >
                                         <select defaultValue={this.state.party} onChange={this.handleChange}>
                                             {!party && <option value="Välj parti...">Välj parti...</option>}
@@ -282,14 +292,14 @@ export default class Renderer extends Component {
                                                 this.state[this.state.case].map(
                                                     (e, i) => (
                                                         <span key={i} style={{ position: 'relative', top: '-420px', color: data.datasets[0].backgroundColor[this.state.caseIndex] }}>
-                                                            {i === 0 && data.labels[this.state.caseIndex] + ':'}{i === 0 && <br />} {e.fornamn} {e.efternamn}<br />
+                                                            {i === 0 && data.labels[this.state.caseIndex] + ':'}{i === 0 && <br />} {e.namn}<br />
                                                         </span>
                                                     )
                                                 )
                                             }
-                                        </>
-                                    </div>
-                                }
+                                        </> */}
+                                </div>
+
                             </>
                         )
                     }
