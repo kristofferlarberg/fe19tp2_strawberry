@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/SignIn/sign_in_out'
 import styled, { ThemeProvider }  from 'styled-components';
+import CogWheel from './icons/cog-solid.svg'
+import SearchIcon from './icons/search-solid.svg'
+import EyeIcon from './icons/eye-solid.svg'
+import StarIcon from './icons/star-solid.svg'
 // import { DataConsumer } from 'data/DataConsumer';
 // import { getVoteData } from '../functions/filter';
 
 const theme = {
-    font_color: '#797979;',
+    font_color: '#797979',
     darker_font: '#707070'
 }
 
@@ -52,6 +56,7 @@ const InputSearch = styled.input`
   border:none;
   outline:none;
   padding-left:.5rem;
+  width:150px;
   font-size: 1rem;
 `
 
@@ -59,22 +64,43 @@ const SomethingDiv = styled.div`
   color: ${props => props.theme.font_color};
 `
 const ULlist = styled.ul`
-  list-style-type:none;
-  padding:0;
+    list-style-type:none;
+    padding:0;
+    display: flex;
+    align-itmes:center;
+    flex-direction: column;
+    > li{
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        
+  }
+`
+const SearchHistoryDiv = styled.div`
+    padding:5px 0;
 `
 
-const SearchHistoryDiv = styled.div`
-
+const Icons = styled.img`
+    height:25px;
+    margin-left: ${props => props.right ? '-25px' : '0'};
+    padding: ${props => props.padding ? '0 .5rem' : '0'}
 `
 const TextOverFlow = styled.p`
   text-overflow: ellipsis;
   width: 11rem;
   font-style: italic;
+  margin:.5rem;
   white-space: nowrap;
   overflow: hidden;
   color: ${props => props.theme.font_color};
 `
-
+const LIWithImg = styled.li`
+display:flex;
+justify-content: flex-start;
+  flex-direction: row;
+  align-items:center;
+    padding: .3rem;
+`
 
 class Side extends React.Component {
     render() {
@@ -87,22 +113,28 @@ class Side extends React.Component {
                 </UserDiv>
                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
+                    <Icons src={SearchIcon} right/>
                 </SearchBarDiv>
                 <SomethingDiv>
                     <ULlist>
-                        <li>
+                        <LIWithImg>
+                            <Icons src={CogWheel} padding/>
                             <h3>Inställningar</h3>
-                        </li>
-                        <li>
+                        </LIWithImg>
+                        <LIWithImg>
+                            <Icons src={EyeIcon} padding/>
                             <h3>Bevakningar</h3>
-                        </li>
-                        <li>
+                        </LIWithImg>
+                        <LIWithImg>
+                            <Icons src={StarIcon} padding/>
                             <h3>Favoriter</h3>
-                        </li>
+                        </LIWithImg>
                     </ULlist>
                     <SearchHistoryDiv>
                         <SearchBarDiv>
+                            <Icons src={SearchIcon}/>
                             <InputSearch placeholder='Sök'/>
+                                
                         </SearchBarDiv>
                         <ULlist>
                             <li>

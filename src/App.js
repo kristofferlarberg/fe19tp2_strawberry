@@ -2,8 +2,8 @@ import React from 'react';
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 //  import Members from './components/Data/members';
 //  import Data from './components/Data';
-import LandingPage from './components/Pages/Landing'
-import SignUpPage from './components/Pages/SignUp'
+//import LandingPage from './components/Pages/Landing'
+//import SignUpPage from './components/Pages/SignUp'
 import HomePage from './components/Pages/Home'
 
 // import * as ROUTES from './constants/routes';
