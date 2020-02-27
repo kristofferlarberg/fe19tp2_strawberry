@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-/* import PdfPopup from './PdfPopup' */
 import styled from 'styled-components';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
-
+import DocPopup from './DocPopup';
 
 const Span = styled.span`
     background: #0FCE56;
@@ -82,7 +81,8 @@ export default class Renderer extends Component {
         pass: [],
         absent: [],
         selectedChart: 1,
-        loggedIn: false
+        loggedIn: false,
+        descriptiondata: '',
     }
 
     constructor(props) {
