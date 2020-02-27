@@ -3,6 +3,7 @@ import Renderer from './components/Data/Renderer';
 import Data from './components/Data';
 import Side from './components/Side';
 import { findAllByDisplayValue } from '@testing-library/react';
+import './App.css';
 
 class App extends React.Component {
   render() {

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
+import { TextField } from '@material-ui/core';
+import Search from '../Search';
 
 const Span = styled.span`
     background: #0FCE56;
@@ -85,7 +87,7 @@ export default class Renderer extends Component {
 
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -93,10 +95,17 @@ export default class Renderer extends Component {
         this.setState(getVoteData(this.state.votering_id, this.state.party));
     }
 
-    handleChange(event) {
-        const party = event.target.value;
-        this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
-    };
+    handleSearchChange(event, values) {
+        /* const index = this.state.titleDates.map(function (e) { return e.title; }).indexOf(values.title); */
+        //console.log(values)
+        if (!values) {
+            // gör ev en setState som nollar "grafiken"
+            return;
+        }
+        const index = this.state.titleDates.findIndex(i => i.title === values.title);
+        let votering_id = index;
+        this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
+    }
 
     handleClick(event) {
         if (event.target.dataset.value === 'user') {
@@ -158,6 +167,12 @@ export default class Renderer extends Component {
             '#FF6384',
             '#FFCE56',
             '#85a8d3',
+
+/*             '#04E762',
+            '#EF3054',
+            '#F5B700',
+            '#F5B700', */
+            
         ]
         let loggedIn = this.state.loggedIn
         let chartNumber = this.state.selectedChart
@@ -210,7 +225,7 @@ export default class Renderer extends Component {
         return (
             <div style={{ width: '900px', marginLeft: '50px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
-                    <h1 style={{ fontSize: '4rem', margin: '0px', marginRight: '20px' }}>{dok_id && dok_id.substr(4)}</h1> <h3 style={{ lineHeight: '1.2rem' }}>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</h3>
+                    <h1>{dok_id && dok_id.substr(4)}</h1> <h3>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</h3>
                 </div >
                 <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                 <DataConsumer>
@@ -218,13 +233,20 @@ export default class Renderer extends Component {
                         (ctx) => (
                             <>
 
-                                <StyledSelect selectedValue={{ label: "Välj voteiring...", value: 'Välj votering...' }} onChange={this.handleClick}>
+                                <StyledSelect selectedValue={{ label: "Välj votering...", value: 'Välj votering...' }} onChange={this.handleClick}>
                                     {<option value='Välj votering...'>Välj votering...</option>}
 
                                     {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
                                 </StyledSelect>
                                 <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p>
                                 {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
+
+
+                                <div>
+                                    <Search
+                                        handleChange={this.handleSearchChange}
+                                    />
+                                </div>
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
