@@ -14,7 +14,7 @@ class App extends React.Component {
         <Data>
           <Renderer />
         </Data>
-        <DocPopup/>
+        
       </div>
     );
   }

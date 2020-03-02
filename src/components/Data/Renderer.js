@@ -83,6 +83,7 @@ export default class Renderer extends Component {
         selectedChart: 1,
         loggedIn: false,
         descriptiondata: '',
+        dok_id: '',
     }
 
     constructor(props) {
@@ -306,6 +307,7 @@ export default class Renderer extends Component {
                         )
                     }
                 </DataConsumer>
+                <DocPopup dok_id = {dok_id} />
             </div >
         
         );
