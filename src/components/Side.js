@@ -137,6 +137,7 @@ class Side extends React.Component {
                                 
                         </SearchBarDiv>
                         <ULlist>
+                            {/* Example List */}
                             <li>
                                     <TextOverFlow>
                                         SoU4

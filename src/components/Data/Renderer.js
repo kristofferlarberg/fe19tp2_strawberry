@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
@@ -24,14 +25,23 @@ const StyledSelect = styled.select`
 `;
 const DocH1 = styled.h1`
     color:#797979;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     margin: 0px;
-    margin-right: 20px;
+    margin-right: 0.5rem;
 `;
 
 const DocText = styled.h3`
 line-height: 1.2rem;
+font-size:1rem;
+margin-bottom:0;
 color:#797979;
+`
+const InfoIcon = styled.img`
+    width:35px;
+    margin-bottom: -12px;
+    &:hover{
+        filter: opacity(0.7);
+    }
 `
 
 
@@ -235,7 +245,11 @@ export default class Renderer extends Component {
 
                                     {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
                                 </StyledSelect>
-                                <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p>
+                                 <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> 
+                                    <InfoIcon src={InfoCircle} alt={'Link to  http://data.riksdagen.se/dokument/' +dok_id} />
+                                {/* http://data.riksdagen.se/dokument/{dok_id} */}
+
+                                </a> 
                                 {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
 
                                 {

@@ -11,6 +11,6 @@ const HomePage = () => (
         </Data>
     </div>
 );
-const condition = authUser => !!authUser;
+// const condition = authUser => !!authUser;
 
 export default HomePage;
