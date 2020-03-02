@@ -11,6 +11,7 @@ import HomePage from './components/Pages/Home'
 import { withAuthentication } from './components/Session';
 
 import { findAllByDisplayValue } from '@testing-library/react';
+import './App.css';
 
 class App extends React.Component {
   render() {

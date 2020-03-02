@@ -5,8 +5,10 @@ import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
 import StarIcon from './icons/star-solid.svg'
+import Search from './Search';
 // import { DataConsumer } from 'data/DataConsumer';
 // import { getVoteData } from '../functions/filter';
+import Renderer from './Data/Renderer';
 
 const theme = {
     font_color: '#797979',

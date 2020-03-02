@@ -4,6 +4,8 @@ import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
+import { TextField } from '@material-ui/core';
+import Search from '../Search';
 
 const Span = styled.span`
     background: #0FCE56;
@@ -109,7 +111,7 @@ export default class Renderer extends Component {
 
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -117,10 +119,16 @@ export default class Renderer extends Component {
         this.setState(getVoteData(this.state.votering_id, this.state.party));
     }
 
-    handleChange(event) {
-        const party = event.target.value;
-        this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
-    };
+    handleSearchChange(event, values) {
+        if (!values) {
+            this.setState({ loggedIn: false })
+            return;
+        }
+        
+        const index = this.state.titleDates.findIndex(i => i.title === values.title);
+        let votering_id = index;
+        this.setState({ ...getVoteData(votering_id, this.state.party), votering_id, loggedIn: true });
+    }
 
     handleClick(event) {
         if (event.target.dataset.value === 'user') {
@@ -182,8 +190,15 @@ export default class Renderer extends Component {
             '#FF6384',
             '#FFCE56',
             '#85a8d3',
+
+/*             '#04E762',
+            '#EF3054',
+            '#F5B700',
+            '#F5B700', */
+            
         ]
         let loggedIn = this.state.loggedIn
+        let loggedOut = !this.state.loggedIn
         let chartNumber = this.state.selectedChart
         let totalVoteResult = [0, 0, 0, 0]
         let voteResult = []
@@ -236,23 +251,30 @@ export default class Renderer extends Component {
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
-                <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
+
                 <DataConsumer>
                     {
                         (ctx) => (
                             <>
+                                    <Search
+                                        handleChange={this.handleSearchChange}
+                                    style={{ width: '100%' }}
+                                    />
+                                
 
-                                <StyledSelect selectedValue={{ label: "Välj voteiring...", value: 'Välj votering...' }} onChange={this.handleClick}>
+                                <StyledSelect selectedValue={{ label: "Välj votering...", value: 'Välj votering...' }} onChange={this.handleClick}>
                                     {<option value='Välj votering...'>Välj votering...</option>}
 
                                     {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
                                 </StyledSelect>
                                  <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> 
                                     <InfoIcon src={InfoCircle} alt={'Link to  http://data.riksdagen.se/dokument/' +dok_id} />
-                                {/* http://data.riksdagen.se/dokument/{dok_id} */}
+                                http://data.riksdagen.se/dokument/{dok_id} 
 
                                 </a> 
                                 {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
+
+
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
@@ -288,7 +310,7 @@ export default class Renderer extends Component {
                                 }
                                 {totalVoteResult.map((e, i) => {
                                     return loggedIn ?
-                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', padding:'5px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
                                         : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
                                 })
                                 }
@@ -326,6 +348,7 @@ export default class Renderer extends Component {
                                                 )
                                             }
                                         </> */}
+                                    <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                                 </div>
 
                             </>
