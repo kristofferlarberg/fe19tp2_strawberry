@@ -4,6 +4,7 @@ import React from 'react';
 //  import Data from './components/Data';
 //import LandingPage from './components/Pages/Landing'
 //import SignUpPage from './components/Pages/SignUp'
+import './App.css'
 import HomePage from './components/Pages/Home'
 
 // import * as ROUTES from './constants/routes';
