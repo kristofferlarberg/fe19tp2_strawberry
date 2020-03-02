@@ -22,6 +22,8 @@ const StyledSelect = styled.select`
   font-size: 14px;
   border: none;
   margin-left: 10px;
+  font-family: Avenir next;
+  font-weight: 500;
 `;
 const DocH1 = styled.h1`
     color:#797979;
