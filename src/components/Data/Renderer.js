@@ -4,6 +4,7 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
 import Popup from '../Popup';
+import Search from '../Search';
 
 
 const Span = styled.span`
@@ -13,16 +14,6 @@ const Span = styled.span`
     height: 11px;
     width: 11px;
     margin: 1.8px;
-`;
-const StyledSelect = styled.select`
-  width: auto;
-  height: 35px;
-  background: white;
-  color: black;
-  /* font-family: Helvetica; */
-  font-size: 14px;
-  border: none;
-  margin-left: 10px;
 `;
 
 const options = {
@@ -72,6 +63,7 @@ export default class Renderer extends Component {
         votering_id: 0,
         title: '',
         caseIndex: 0,
+        dok_id: '',
         case: 'yes',
         titleDates: [],
         date: '',
@@ -82,79 +74,52 @@ export default class Renderer extends Component {
         pass: [],
         absent: [],
         selectedChart: 1,
-        loggedIn: false
+        loggedIn: false,
+        popup: false
     }
 
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+        this.onChartClick = this.onChartClick.bind(this);
     }
 
     componentDidMount() {
         this.setState(getVoteData(this.state.votering_id, this.state.party));
     }
 
-    handleChange(event) {
-        const party = event.target.value;
-        this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
-    };
-
+    handleSearchChange(event, values) {
+        /* const index = this.state.titleDates.map(function (e) { return e.title; }).indexOf(values.title); */
+        //console.log(values)
+        if (!values) {
+            this.setState({ loggedIn: false })
+            return;
+        }
+        const index = this.state.titleDates.findIndex(i => i.title === values.title);
+        let votering_id = index;
+        this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
+        console.log(event)
+    }
     handleClick(event) {
         if (event.target.dataset.value === 'user') {
             this.setState({ loggedIn: !this.state.loggedIn, selectedChart: 1 })
-        } else if (event.target.dataset.value === 'back') {
-            this.setState({ selectedChart: this.state.selectedChart - 1 })
-        } else if (event.target.value !== 'Välj votering...') {
-            let votering_id = event.target.value;
-            this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
+        } else {
+            this.setState({ popup: false })
         }
     };
-    chooseChart() {
-        if (this.state.loggedIn) this.setState({ selectedChart: this.state.selectedChart + 1 });
-    };
-
-    //ctx.data[this.state.votering_index].forEach((vote, i) => voteRows.push(<Span key={i + vote.fornamn + vote.efternamn} title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`} style={{ background: backgroundColor[data.labels[0]] }}></Span>))
-
 
     onChartClick(chart) {
         if (chart.length > 0) {
-            if (chart[0]._chart.config.type === 'bar') {
-                console.log(chart)
+            const party = this.state.parties[chart[0]._index]
+            this.setState({ popup: true })
+            this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
 
-                console.log(chart[0])
-                console.log(chart[1])
-                console.log(chart[2])
-                console.log(chart[3])
-
-                const party = this.state.parties[chart[0]._index]
-                this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
-            } else {
-
-                const index = chart[0]._index;
-                switch (index) {
-                    case 0:
-                        this.setState({ case: 'yes' });
-                        break;
-                    case 1:
-                        this.setState({ case: 'no' });
-                        break;
-                    case 2:
-                        this.setState({ case: 'pass' });
-                        break;
-                    case 3:
-                        this.setState({ case: 'absent' });
-                        break;
-                    default:
-                        break;
-                }
-                this.setState({ caseIndex: index })
-            }
         }
     }
 
     render() {
-        const { yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
+        const { popup, yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
             '#FF6384',
@@ -214,19 +179,18 @@ export default class Renderer extends Component {
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     <h1 style={{ fontSize: '4rem', margin: '0px', marginRight: '20px' }}>{dok_id && dok_id.substr(4)}</h1> <h3 style={{ lineHeight: '1.2rem' }}>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</h3>
                 </div >
-                <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
+                <button style={{ marginBottom: '20px' }} data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                 <DataConsumer>
                     {
                         (ctx) => (
                             <>
 
-                                <StyledSelect selectedValue={{ label: "Välj voteiring...", value: 'Välj votering...' }} onChange={this.handleClick}>
-                                    {<option value='Välj votering...'>Välj votering...</option>}
-
-                                    {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
-                                </StyledSelect>
+                                <div>
+                                    <Search
+                                        handleChange={this.handleSearchChange}
+                                    />
+                                </div>
                                 <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p>
-                                {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
@@ -267,41 +231,18 @@ export default class Renderer extends Component {
                                 })
                                 }
                                 <div style={{ display: 'flex', width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
-                                    {/* {chartNumber == 1 && */}
 
                                     <div style={{ width: '50%', fontSize: '8px', marginRight: '10px' }} >
 
                                         {voteRows}
                                     </div>
-                                    {/* } */}
-                                    {/* {chartNumber == 2 && loggedIn && */}
                                     <div style={{ width: '50%', marginTop: '-50px', marginLeft: '10px' }} >
 
                                         <br /><br />
-                                        <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
+                                        <Bar data={data2} onElementsClick={this.onChartClick} options={options2} />
                                     </div>
-                                    {/* } */}
-                                    {/* {chartNumber == 3 && loggedIn &&
-                                    <div style={{ width: '900px', cursor: loggedIn && 'pointer' }} >
-                                        <select defaultValue={this.state.party} onChange={this.handleChange}>
-                                            {!party && <option value="Välj parti...">Välj parti...</option>}
-                                            {parties.map((party, i) => <option key={i} value={party} >{party}</option>)}
-                                        </select>
-                                        <Doughnut style={{ display: 'inline' }} data={data} onElementsClick={this.onChartClick.bind(this)} options={options} />
-                                        <>
-
-                                            {
-                                                this.state[this.state.case].map(
-                                                    (e, i) => (
-                                                        <span key={i} style={{ position: 'relative', top: '-420px', color: data.datasets[0].backgroundColor[this.state.caseIndex] }}>
-                                                            {i === 0 && data.labels[this.state.caseIndex] + ':'}{i === 0 && <br />} {e.namn}<br />
-                                                        </span>
-                                                    )
-                                                )
-                                            }
-                                        </> */}
                                 </div>
-                                <Popup id={this.state.votering_id} party={this.state.party} />
+                                {popup && <Popup handleClick={this.handleClick} id={votering_id} party={party} />}
 
 
                             </>
