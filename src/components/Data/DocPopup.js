@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 //Den här behöver vara en prop som manipuleras och sedan skickas till render
@@ -36,10 +35,5 @@ class DocPopup extends React.Component {
     )
   }
 }
-
-/* function done() {
-  document.getElementById('log').textContent =
-    "Here's what I got! \n" + storedText;
-} */
 
 export default DocPopup;
