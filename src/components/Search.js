@@ -5,6 +5,7 @@ import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Renderer from './Data/Renderer';
 
+<<<<<<< .merge_file_ypGtul
 export class Search extends Component {
     render() {
         let titleDates = getVoteData(3);
@@ -25,3 +26,21 @@ export class Search extends Component {
 }
 
 export default Search
+=======
+let titleDates = getVoteData(3);
+
+const Search = (props) => (
+    <div>
+        <Autocomplete
+            id="combo-box-demo"
+            onChange={props.handleChange}
+            options={titleDates.titleDates}
+            getOptionLabel={option => option.title}
+            style={{ width: '100%' }}
+            renderInput={params => <TextField {...params} label="Välj votering.." variant="outlined" />}
+        />
+    </div>)
+
+
+export default Search
+>>>>>>> .merge_file_eELJVq
