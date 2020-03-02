@@ -14,7 +14,7 @@ const Search = (props) => (
             onChange={props.handleChange}
             options={titleDates.titleDates}
             getOptionLabel={option => option.title}
-            style={{ width: 300 }}
+            style={{ width: '100%' }}
             renderInput={params => <TextField {...params} label="Välj votering.." variant="outlined" />}
         />
     </div>)

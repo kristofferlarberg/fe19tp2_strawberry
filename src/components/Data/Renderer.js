@@ -96,15 +96,14 @@ export default class Renderer extends Component {
     }
 
     handleSearchChange(event, values) {
-        /* const index = this.state.titleDates.map(function (e) { return e.title; }).indexOf(values.title); */
-        //console.log(values)
         if (!values) {
-            // gör ev en setState som nollar "grafiken"
+            this.setState({ loggedIn: false })
             return;
         }
+        
         const index = this.state.titleDates.findIndex(i => i.title === values.title);
         let votering_id = index;
-        this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
+        this.setState({ ...getVoteData(votering_id, this.state.party), votering_id, loggedIn: true });
     }
 
     handleClick(event) {
@@ -175,6 +174,7 @@ export default class Renderer extends Component {
             
         ]
         let loggedIn = this.state.loggedIn
+        let loggedOut = !this.state.loggedIn
         let chartNumber = this.state.selectedChart
         let totalVoteResult = [0, 0, 0, 0]
         let voteResult = []
@@ -223,30 +223,30 @@ export default class Renderer extends Component {
         };
         let voteRows = []
         return (
-            <div style={{ width: '900px', marginLeft: '50px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
+            <div style={{ width: '950px', marginLeft: '50px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', width: '950px' }}>
                     <h1>{dok_id && dok_id.substr(4)}</h1> <h3>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</h3>
                 </div >
-                <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
+
                 <DataConsumer>
                     {
                         (ctx) => (
                             <>
+                                    <Search
+                                        handleChange={this.handleSearchChange}
+                                    style={{ width: '100%' }}
+                                    />
+                                
 
-                                <StyledSelect selectedValue={{ label: "Välj votering...", value: 'Välj votering...' }} onChange={this.handleClick}>
+ {/*                                <StyledSelect selectedValue={{ label: "Välj votering...", value: 'Välj votering...' }} onChange={this.handleClick}>
                                     {<option value='Välj votering...'>Välj votering...</option>}
 
                                     {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
                                 </StyledSelect>
-                                <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p>
+                                <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p> */}
                                 {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
 
 
-                                <div>
-                                    <Search
-                                        handleChange={this.handleSearchChange}
-                                    />
-                                </div>
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
@@ -282,7 +282,7 @@ export default class Renderer extends Component {
                                 }
                                 {totalVoteResult.map((e, i) => {
                                     return loggedIn ?
-                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', padding:'5px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
                                         : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
                                 })
                                 }
@@ -320,6 +320,7 @@ export default class Renderer extends Component {
                                                 )
                                             }
                                         </> */}
+                                    <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
                                 </div>
 
                             </>
