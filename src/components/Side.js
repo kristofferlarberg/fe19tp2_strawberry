@@ -14,50 +14,48 @@ const theme = {
 }
 
 const UserDiv = styled.div`
-  height: 4rem;
-  width: 200px;
-  background-color: white;
+    height: 4rem;
+    width: 200px;
+    background-color: white;
 `
 
 const SidenavDiv = styled.div`
-height:100vh;
-min-width:200px;
-z-index:1;
-overflow-x:hidden;
-top: 0;
-display: flex;
-justify-content: flex-start;
-flex-direction: column;
-align-items:center;
-left: 0;
-background-color: #DDD;
-overflow-x: hidden;
+    height:100vh;
+    min-width:200px;
+    z-index:1;
+    overflow-x:hidden;
+    top: 0;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items:center;
+    left: 0;
+    background-color: #DDD;
+    overflow-x: hidden;
 `
 const DataDiv = styled.div`
-  margin-left:150px;
-  padding:0 10px;
+    margin-left:150px;
+    padding:0 10px;
 `
 
 const SearchBarDiv = styled.div`
-  display: flex;
-  color: ${props => props.theme.font_color};
-  margin-top:2rem;
-  justify-content: flex-start;
-  flex-direction: row;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: .3rem;
-  border: ${props => props.borded ? '1px solid ' + props.theme.font_color + '' : 'none'};
-  border-radius:  ${props => props.borded ? '0.5rem' : '0'};
+    display: flex;
+    color: ${props => props.theme.font_color};
+    margin-top:2rem;
+    justify-content: flex-start;
+    flex-direction: row;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: .3rem;
 `
 
 const InputSearch = styled.input`
-  background-color:transparent;
-  border:none;
-  outline:none;
-  padding-left:.5rem;
-  width:150px;
-  font-size: 1rem;
+    background-color:transparent;
+    border:none;
+    outline:none;
+    padding-left:.5rem;
+    width:150px;
+    font-size: 1rem;
 `
 
 const SomethingDiv = styled.div`
@@ -85,20 +83,21 @@ const Icons = styled.img`
     margin-left: ${props => props.right ? '-25px' : '0'};
     padding: ${props => props.padding ? '0 .5rem' : '0'}
 `
-const TextOverFlow = styled.p`
-  text-overflow: ellipsis;
-  width: 11rem;
-  font-style: italic;
-  margin:.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  color: ${props => props.theme.font_color};
+const TextOverFlow = styled.h3`
+    text-overflow: ellipsis;
+    width: 11rem;
+    font-style: italic;
+    margin:.5rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    color: ${props => props.theme.font_color};
 `
 const LIWithImg = styled.li`
-display:flex;
-justify-content: flex-start;
-  flex-direction: row;
-  align-items:center;
+    display:flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items:center;
     padding: .3rem;
 `
 
@@ -111,10 +110,10 @@ class Side extends React.Component {
                 <UserDiv>
                  <UserStatus/>
                 </UserDiv>
-                <SearchBarDiv borded>
+{/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
-                </SearchBarDiv>
+                </SearchBarDiv> */}
                 <SomethingDiv>
                     <ULlist>
                         <LIWithImg>
