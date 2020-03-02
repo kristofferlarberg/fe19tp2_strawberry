@@ -3,13 +3,10 @@ import styled from 'styled-components';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
-<<<<<<< .merge_file_EKTdyY
 import DocPopup from './DocPopup';
-=======
 import Popup from '../Popup';
 import Search from '../Search';
 
->>>>>>> .merge_file_TlkPAM
 
 const Span = styled.span`
     background: #0FCE56;
@@ -79,12 +76,10 @@ export default class Renderer extends Component {
         absent: [],
         selectedChart: 1,
         loggedIn: false,
-<<<<<<< .merge_file_EKTdyY
         descriptiondata: '',
         dok_id: '',
-=======
-        popup: false
->>>>>>> .merge_file_TlkPAM
+        popup: false,
+        docPopup: false,
     }
 
     constructor(props) {
@@ -113,8 +108,10 @@ export default class Renderer extends Component {
     handleClick(event) {
         if (event.target.dataset.value === 'user') {
             this.setState({ loggedIn: !this.state.loggedIn, selectedChart: 1 })
+        } else if (event.target.dataset.value === 'link') {
+            this.setState({ docPopup: true });
         } else {
-            this.setState({ popup: false })
+            this.setState({ popup: false, docPopup: false })
         }
     };
 
@@ -199,7 +196,7 @@ export default class Renderer extends Component {
                                         handleChange={this.handleSearchChange}
                                     />
                                 </div>
-                                <p>Läs mer på <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> http://data.riksdagen.se/dokument/{dok_id}</a> </p>
+                                <button data-value='link' onClick={this.handleClick} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }}>Läs mer</button>
 
                                 {
                                     ctx.data[this.state.votering_id].forEach((vote, i) => {
@@ -258,7 +255,7 @@ export default class Renderer extends Component {
                         )
                     }
                 </DataConsumer>
-                <DocPopup dok_id = {dok_id} />
+                {this.state.docPopup && <DocPopup handleClick={this.handleClick} dok_id={dok_id} />}
             </div >
         
         );

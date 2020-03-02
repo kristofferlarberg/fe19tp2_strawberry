@@ -9,7 +9,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <div /* style={{ display: 'flex' }} */>
+      <div style={{ display: 'flex' }}>
         <Side />
         <Data>
           <Renderer />

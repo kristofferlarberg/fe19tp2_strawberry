@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import styled from 'styled-components';
+
 
 //Den här behöver vara en prop som manipuleras och sedan skickas till render
 /* let storedText; */
 
+const DocBoxShadow = styled.div`
+  position: relative;
+  top:-350px;
+  left: -100px;
+  box-shadow: 0px 0px 15px #aaa;
+  margin: 0;
+  width: 850px;
+  height: 500px;
+  border-radius: 10px;
+  overflow: auto;
+  padding: 15px;
+  background: white;
+`
 
 
 class DocPopup extends React.Component {
@@ -30,7 +45,7 @@ class DocPopup extends React.Component {
 
     const {text} = this.state
     //Är det möjligt att lägga in prop här ist för string?
-    return ( <div>{text && ReactHtmlParser(text)}</div>
+    return (<DocBoxShadow onClick={this.props.handleClick}><div>{text && ReactHtmlParser(text)}</div></DocBoxShadow>
 
     )
   }
