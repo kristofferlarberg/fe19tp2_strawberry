@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+/* import PdfPopup from './PdfPopup' */
 import styled from 'styled-components';
 import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -6,6 +7,7 @@ import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
 import { TextField } from '@material-ui/core';
 import Search from '../Search';
+
 
 const Span = styled.span`
     background: #0FCE56;
@@ -356,6 +358,7 @@ export default class Renderer extends Component {
                     }
                 </DataConsumer>
             </div >
+        
         );
     };
 };
