@@ -9,11 +9,7 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "chart.js": "^2.9.3",
-<<<<<<< .merge_file_DsVZ3C
     "html-parser": "^0.11.0",
-=======
-    "i": "^0.3.6",
->>>>>>> .merge_file_Ti3czv
     "immutability-helper": "^3.0.1",
     "npm": "^6.14.1",
     "react": "^16.12.0",
