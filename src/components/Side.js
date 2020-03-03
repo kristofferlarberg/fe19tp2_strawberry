@@ -83,8 +83,9 @@ const SearchHistoryDiv = styled.div`
 const Icons = styled.img`
     height:25px;
     margin-left: ${props => props.right ? '-25px' : '0'};
-    padding: ${props => props.padding ? '0 .5rem' : '0'}
+    padding: ${props => props.padding ? '0 .5rem' : '0'};
 `
+
 const TextOverFlow = styled.h3`
     text-overflow: ellipsis;
     width: 11rem;
@@ -95,6 +96,7 @@ const TextOverFlow = styled.h3`
     overflow: hidden;
     color: ${props => props.theme.font_color};
 `
+
 const LIWithImg = styled.li`
     display:flex;
     justify-content: flex-start;

@@ -1,19 +1,33 @@
 import React, { Component, createContext } from 'react';
 
+const votingArray = [];
+let parties = [];
+const allTitles = [];
+const allDates = [];
+const cached_voteData = {}
+
+let _counter = 0;
+
 let bet = []
 let votingData = JSON.parse(localStorage.getItem('votingData'));
 const API_QUERY = 'http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=2019-12-31&tom=2020-02-13&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff'
 
-const { Provider, Consumer } = createContext();
+const DataContext = createContext(null);
 
-export default class DataContext extends Component {
+export default class Data extends Component {
 
-    state = {
-        data: {},
-        hasData: false
-    };
+    state = {};
+
+    constructor() {
+        super();
+        this.rawData = [];
+    }
 
     componentDidMount() {
+        this.fetchData();
+    }
+
+    fetchData() {
         if (!votingData) {
             votingData = []
 
@@ -32,24 +46,117 @@ export default class DataContext extends Component {
                                 data.voteringlista.votering[0].titel = titles[i]
                                 votingData.push(data.voteringlista.votering);
                                 localStorage.setItem('votingData', JSON.stringify(votingData));
-                                this.setState({ data, hasData: true })
+                                this.rawData = votingData;
+                                _counter++;
+                                this.setState({_update: true})
                             });
-                    }
-                })
-        } else {
-            this.setState({ data: JSON.parse(localStorage.getItem('votingData')), hasData: true });
+                        }
+                    });
+            } else {
+            this.rawData = JSON.parse(localStorage.getItem('votingData'));
+            this.setState({hasData: true})
         };
+    }
+
+    getVoteData(currentId, currentParty) {
+
+        if (cached_voteData[`${currentId}_${currentParty}`]) {
+            return cached_voteData[`${currentId}_${currentParty}`]
+        }
+        
+        const votingData = this.rawData || JSON.parse(localStorage.getItem('votingData'));
+    
+        if (!votingArray.length) {
+            if (votingData) {
+                votingData.forEach(votering => {	
+                    votering.forEach(id => {
+                        (!votingArray.includes(id.votering_id)) && votingArray.push(id.votering_id);
+                        ((id.titel && !allTitles.includes(id.titel))) && allTitles.push(id.titel.substr(31, id.titel.length));
+                        ((id.systemdatum && !allDates.includes(id.systemdatum))) && allDates.push(id.systemdatum);
+                    })
+                });
+            }
+        }
+    
+        let titleDateArray = allTitles.map((title, index) => {
+            return { title, date: allDates[index] }
+        })
+    
+        let dataOut = {};
+        let voting = votingData && votingData[currentId]
+    
+        if (voting && voting.length) {
+    
+            if (!parties.length) {
+                voting.map((party) => {
+                    return (!parties.includes(party.parti)) && parties.push(party.parti);
+                });
+            }
+    
+    
+            let members = voting.filter(member => member.parti === currentParty);
+            const votes = {
+                "Ja": [],
+                "Nej": [],
+                "Avstår": [],
+                "Frånvarande": []
+            };
+    
+            members.forEach(member => {
+                votes[member.rost].push(member);
+            });
+    
+            const yes = votes['Ja'];
+            const no = votes['Nej'];
+            const pass = votes['Avstår'];
+            const absent = votes['Frånvarande'];
+
+            dataOut = {
+                parties,
+                votingArray,
+                dok_id: voting[0].dok_id,
+                title: voting[0].titel,
+                dates: allDates,
+                date: voting[0].systemdatum.substring(0, 10),
+                titleDates: titleDateArray,
+                yes,
+                no,
+                pass,
+                absent,
+                votes: [yes, no, pass, absent]
+            };
+            cached_voteData[`${currentId}_${currentParty}`] = dataOut;
+        }
+        
+        return dataOut;
     };
+
 
     render() {
-        return (
-            <Provider value={this.state}>
-                {this.state.hasData && this.props.children}
-            </Provider>
-        );
-    };
-};
+        if (this.state._update && _counter === 14) {
+            this.setState({hasData: true, _update: false});
+        }
 
-export {
-    Consumer as DataConsumer
+        return (
+            <DataContext.Provider value={this}>
+                {this.state.hasData ?
+                    <DataContext.Consumer>
+                        {
+                            (data) => (
+                                React.Children.map(this.props.children, (Child) => React.cloneElement(Child, {...Child.props, data: this}))
+                            )
+                        }
+                    </DataContext.Consumer>
+                : <p>Loading...</p>}
+            </DataContext.Provider>
+        )
+    }
 }
+
+export const withData = Component => props => (
+    <DataContext.Consumer>
+        {data => <Component {...props} data={data} />}
+    </DataContext.Consumer>
+);
+
+export { DataContext }

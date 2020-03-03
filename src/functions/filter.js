@@ -14,24 +14,25 @@ export function getVoteData(currentId, currentParty, data) {
 	const votingData = data || JSON.parse(localStorage.getItem('votingData'));
 
 	if (!votingArray.length) {
-		votingData.forEach(votering => {
-			votering.forEach(id => {
-				(!votingArray.includes(id.votering_id)) && votingArray.push(id.votering_id);
-				((id.titel && !allTitles.includes(id.titel))) && allTitles.push(id.titel.substr(31, id.titel.length));
-				((id.systemdatum && !allDates.includes(id.systemdatum))) && allDates.push(id.systemdatum);
-			})
-		});
+		if (votingData) {
+			votingData.forEach(votering => {	
+				votering.forEach(id => {
+					(!votingArray.includes(id.votering_id)) && votingArray.push(id.votering_id);
+					((id.titel && !allTitles.includes(id.titel))) && allTitles.push(id.titel.substr(31, id.titel.length));
+					((id.systemdatum && !allDates.includes(id.systemdatum))) && allDates.push(id.systemdatum);
+				})
+			});
+		}
 	}
 
 	let titleDateArray = allTitles.map((title, index) => {
 		return { title, date: allDates[index] }
-
 	})
 
 	let dataOut = {};
-	let voting = votingData[currentId]
+	let voting = votingData && votingData[currentId]
 
-	if (voting.length) {
+	if (voting && voting.length) {
 
 		if (!parties.length) {
 			voting.map((party) => {

@@ -20,9 +20,9 @@ var config = {
 class Firebase {
     constructor () {
         app.initializeApp(config);
-
+        
         this.auth = app.auth();
-       this.db = app.database();
+        this.db = app.database();
     }
 
     // *** Auth API ***

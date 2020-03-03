@@ -28,7 +28,8 @@ class DocPopup extends React.Component {
   }
 
   componentDidMount() {
-    this.getText();
+    const url = `http://data.riksdagen.se/dokument/${this.props.dok_id}`;
+    this.getText(url);
   }
 
   getText(url) { 
@@ -41,9 +42,6 @@ class DocPopup extends React.Component {
   };
 
   render(props) {
-    const url = `http://data.riksdagen.se/dokument/${this.props.dok_id}`;
-    this.getText(url);
-
     const {text} = this.state
     //Är det möjligt att lägga in prop här ist för string?
     return (<DocBoxShadow onClick={this.props.handleClick}><div>{text && ReactHtmlParser(text)}</div></DocBoxShadow>
