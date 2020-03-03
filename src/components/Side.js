@@ -5,6 +5,8 @@ import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
 import StarIcon from './icons/star-solid.svg'
+import LogIcon from './icons/sign-in-alt-solid.svg'
+
 import Search from './Search';
 // import { DataConsumer } from 'data/DataConsumer';
 // import { getVoteData } from '../functions/filter';
@@ -118,6 +120,10 @@ const Side = () => {
                 </SearchBarDiv> */}
                 <SomethingDiv>
                     <ULlist>
+                        <LIWithImg>
+                            <Icons src={LogIcon} padding />
+                            <h3>Logga in</h3>
+                        </LIWithImg>
                         <LIWithImg>
                             <Icons src={CogWheel} padding />
                             <h3>Inställningar</h3>
