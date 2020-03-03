@@ -103,9 +103,7 @@ const LIWithImg = styled.li`
     padding: .3rem;
 `
 
-class Side extends React.Component {
-    render() {
-
+const Side = () => {
         return (
             <ThemeProvider theme={theme}>
                  <SidenavDiv>
@@ -163,6 +161,5 @@ Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, 
            
         );
     }
-}
 
-export default Side;
+    export default Side

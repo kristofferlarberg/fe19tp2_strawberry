@@ -10,6 +10,8 @@ import HomePage from './components/Pages/Home'
 // import * as ROUTES from './constants/routes';
 import { withAuthentication } from './components/Session';
 
+import Side from './components/Side';
+import DocPopup from './components/Data/DocPopup';
 import { findAllByDisplayValue } from '@testing-library/react';
 import './App.css';
 

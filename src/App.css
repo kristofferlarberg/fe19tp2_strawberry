@@ -5,7 +5,7 @@ h1{
   font-family: 'Roboto';
 }
 h3{
-font-family: 'Avenir Next';
+font-family: 'Roboto';
 }
 /* 
 .App {
@@ -37,3 +37,12 @@ h3 {
   }
 }
  */
+
+
+ li {
+   list-style-type:none;
+   text-align:left;
+   margin:0;
+   padding:0;
+
+ }

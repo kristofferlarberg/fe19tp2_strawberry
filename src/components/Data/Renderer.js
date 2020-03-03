@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-/* import PdfPopup from './PdfPopup' */
 import styled from 'styled-components';
 import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { DataConsumer } from '.';
 import { getVoteData } from '../../functions/filter';
 import { TextField } from '@material-ui/core';
+import DocPopup from './DocPopup';
+import Popup from '../Popup';
 import Search from '../Search';
 
 
@@ -17,30 +18,20 @@ const Span = styled.span`
     width: 11px;
     margin: 1.8px;
 `;
-const StyledSelect = styled.select`
-  width: auto;
-  height: 35px;
-  background: white;
-  color: #797979;
-  /* font-family: Helvetica; */
-  font-size: 14px;
-  border: none;
-  margin-left: 10px;
-  font-family: Avenir next;
-  font-weight: 500;
-`;
+
 const DocH1 = styled.h1`
-    color:#797979;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin: 0px;
-    margin-right: 0.5rem;
+    margin-right: 0.7rem;
+    
 `;
 
 const DocText = styled.h3`
+font-family:Roboto;
 line-height: 1.2rem;
-font-size:1rem;
-margin-bottom:0;
-color:#797979;
+font-size:1.1rem;
+font-weight:400;
+
 `
 const InfoIcon = styled.img`
     width:35px;
@@ -49,7 +40,6 @@ const InfoIcon = styled.img`
         filter: opacity(0.7);
     }
 `
-
 
 const options = {
     tooltips: {
@@ -98,6 +88,7 @@ export default class Renderer extends Component {
         votering_id: 0,
         title: '',
         caseIndex: 0,
+        dok_id: '',
         case: 'yes',
         titleDates: [],
         date: '',
@@ -108,13 +99,18 @@ export default class Renderer extends Component {
         pass: [],
         absent: [],
         selectedChart: 1,
-        loggedIn: false
+        loggedIn: false,
+        descriptiondata: '',
+        dok_id: '',
+        popup: false,
+        docPopup: false,
     }
 
     constructor(props) {
         super(props);
-        this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+        this.onChartClick = this.onChartClick.bind(this);
     }
 
     componentDidMount() {
@@ -135,58 +131,24 @@ export default class Renderer extends Component {
     handleClick(event) {
         if (event.target.dataset.value === 'user') {
             this.setState({ loggedIn: !this.state.loggedIn, selectedChart: 1 })
-        } else if (event.target.dataset.value === 'back') {
-            this.setState({ selectedChart: this.state.selectedChart - 1 })
-        } else if (event.target.value !== 'Välj votering...') {
-            let votering_id = event.target.value;
-            this.setState({ ...getVoteData(votering_id, this.state.party), votering_id });
+        } else if (event.target.dataset.value === 'link') {
+            this.setState({ docPopup: true });
+        } else {
+            this.setState({ popup: false, docPopup: false })
         }
     };
-    chooseChart() {
-        if (this.state.loggedIn) this.setState({ selectedChart: this.state.selectedChart + 1 });
-    };
-
-    //ctx.data[this.state.votering_index].forEach((vote, i) => voteRows.push(<Span key={i + vote.fornamn + vote.efternamn} title={`${vote.fornamn} ${vote.efternamn} (${vote.parti}): ${vote.rost}`} style={{ background: backgroundColor[data.labels[0]] }}></Span>))
-
 
     onChartClick(chart) {
         if (chart.length > 0) {
-            if (chart[0]._chart.config.type === 'bar') {
-                console.log(chart)
+            const party = this.state.parties[chart[0]._index]
+            this.setState({ popup: true })
+            this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
 
-                console.log(chart[0])
-                console.log(chart[1])
-                console.log(chart[2])
-                console.log(chart[3])
-
-                const party = this.state.parties[chart[0]._index]
-                this.setState({ ...getVoteData(this.state.votering_id, party), party: party });
-            } else {
-
-                const index = chart[0]._index;
-                switch (index) {
-                    case 0:
-                        this.setState({ case: 'yes' });
-                        break;
-                    case 1:
-                        this.setState({ case: 'no' });
-                        break;
-                    case 2:
-                        this.setState({ case: 'pass' });
-                        break;
-                    case 3:
-                        this.setState({ case: 'absent' });
-                        break;
-                    default:
-                        break;
-                }
-                this.setState({ caseIndex: index })
-            }
         }
     }
 
     render() {
-        const { yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
+        const { popup, yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
             '#FF6384',
@@ -249,33 +211,22 @@ export default class Renderer extends Component {
         };
         let voteRows = []
         return (
-            <div style={{ width: '900px', marginLeft: '50px' }}>
+            <div style={{ width: '1000px', marginLeft: '50px'}}>
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
-
+                {/* <button style={{ marginBottom: '20px' }} data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button> */}
                 <DataConsumer>
                     {
                         (ctx) => (
                             <>
+                                <div style={{ display: 'flex', flexDirection: 'row', width:'100%' }}>
                                     <Search
                                         handleChange={this.handleSearchChange}
-                                    style={{ width: '100%' }}
+                                    
                                     />
-                                
 
-                                <StyledSelect selectedValue={{ label: "Välj votering...", value: 'Välj votering...' }} onChange={this.handleClick}>
-                                    {<option value='Välj votering...'>Välj votering...</option>}
-
-                                    {titleDates.map((item, i) => <option key={i} value={i}>{item.title} - {item.date.substr(0, 10)}</option>)}
-                                </StyledSelect>
-                                 <a href={`http://data.riksdagen.se/dokument/${dok_id}`}> 
-                                    <InfoIcon src={InfoCircle} alt={'Link to  http://data.riksdagen.se/dokument/' +dok_id} />
-                                http://data.riksdagen.se/dokument/{dok_id} 
-
-                                </a> 
-                                {/* <p style={{ height: '50px', width: '900px', marginTop: '0px' }} onClick={this.handleClick}>Votering: {title} - {date}</p> */}
-
+                                <InfoIcon src={InfoCircle} data-value='link' onClick={this.handleClick} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} /></div>
 
 
                                 {
@@ -312,23 +263,20 @@ export default class Renderer extends Component {
                                 }
                                 {totalVoteResult.map((e, i) => {
                                     return loggedIn ?
-                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', padding:'5px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                                        : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
+                                        <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', padding:'5px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                        : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
                                 })
                                 }
                                 <div style={{ display: 'flex', width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
-                                    {/* {chartNumber == 1 && */}
 
                                     <div style={{ width: '50%', fontSize: '8px', marginRight: '10px' }} >
 
                                         {voteRows}
                                     </div>
-                                    {/* } */}
-                                    {/* {chartNumber == 2 && loggedIn && */}
                                     <div style={{ width: '50%', marginTop: '-50px', marginLeft: '10px' }} >
 
                                         <br /><br />
-                                        <Bar data={data2} onElementsClick={this.onChartClick.bind(this)} options={options2} />
+                                        <Bar data={data2} onElementsClick={this.onChartClick} options={options2} />
                                     </div>
                                     {/* } */}
                                     {/* {chartNumber == 3 && loggedIn &&
@@ -350,13 +298,16 @@ export default class Renderer extends Component {
                                                 )
                                             }
                                         </> */}
-                                    <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button>
+                                    {/* <button data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button> */}
                                 </div>
+                                {popup && <Popup handleClick={this.handleClick} id={votering_id} party={party} />}
+
 
                             </>
                         )
                     }
                 </DataConsumer>
+                {this.state.docPopup && <DocPopup handleClick={this.handleClick} dok_id={dok_id} />}
             </div >
         
         );

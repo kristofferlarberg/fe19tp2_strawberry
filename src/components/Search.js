@@ -8,16 +8,16 @@ import Renderer from './Data/Renderer';
 let titleDates = getVoteData(3);
 
 const Search = (props) => (
-    <div>
+    <>
         <Autocomplete
             id="combo-box-demo"
             onChange={props.handleChange}
             options={titleDates.titleDates}
             getOptionLabel={option => option.title}
-            style={{ width: '100%' }}
+            style={{ width: '90%', marginRight: '20px'}}
             renderInput={params => <TextField {...params} label="Välj votering.." variant="outlined" />}
         />
-    </div>)
+    </>)
 
 
 export default Search
