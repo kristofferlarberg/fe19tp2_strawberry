@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/SignIn/sign_in_out'
-import styled, { ThemeProvider }  from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
@@ -18,7 +18,7 @@ const theme = {
 const UserDiv = styled.div`
     height: 4rem;
     width: 200px;
-    background-color: white;
+    padding:10px;
 `
 
 const SidenavDiv = styled.div`
@@ -106,47 +106,47 @@ const LIWithImg = styled.li`
 `
 
 const Side = () => {
-        return (
-            <ThemeProvider theme={theme}>
-                 <SidenavDiv>
+    return (
+        <ThemeProvider theme={theme}>
+            <SidenavDiv>
                 <UserDiv>
-                 <UserStatus/>
+                    <UserStatus />
                 </UserDiv>
-{/*                 <SearchBarDiv borded>
+                {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
                 </SearchBarDiv> */}
                 <SomethingDiv>
                     <ULlist>
                         <LIWithImg>
-                            <Icons src={CogWheel} padding/>
+                            <Icons src={CogWheel} padding />
                             <h3>Inställningar</h3>
                         </LIWithImg>
                         <LIWithImg>
-                            <Icons src={EyeIcon} padding/>
+                            <Icons src={EyeIcon} padding />
                             <h3>Bevakningar</h3>
                         </LIWithImg>
                         <LIWithImg>
-                            <Icons src={StarIcon} padding/>
+                            <Icons src={StarIcon} padding />
                             <h3>Favoriter</h3>
                         </LIWithImg>
                     </ULlist>
                     <SearchHistoryDiv>
                         <SearchBarDiv>
-                            <Icons src={SearchIcon}/>
-                            <InputSearch placeholder='Sök'/>
-                                
+                            <Icons src={SearchIcon} />
+                            <InputSearch placeholder='Sök' />
+
                         </SearchBarDiv>
                         <ULlist>
                             {/* Example List */}
                             <li>
-                                    <TextOverFlow>
-                                        SoU4
+                                <TextOverFlow>
+                                    SoU4
 Äldrefrågor, förslagspunkt 8 - 2020-02-13</TextOverFlow>
                             </li>
                             <li>
-                                    <TextOverFlow>
-                                        JuU18
+                                <TextOverFlow>
+                                    JuU18
 Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, förslagspunkt 3 - 2020-02-13</TextOverFlow>
                             </li>
                             <li>
@@ -159,9 +159,9 @@ Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, 
                     </SearchHistoryDiv>
                 </SomethingDiv>
             </SidenavDiv>
-            </ThemeProvider>
-           
-        );
-    }
+        </ThemeProvider>
 
-    export default Side
+    );
+}
+
+export default Side

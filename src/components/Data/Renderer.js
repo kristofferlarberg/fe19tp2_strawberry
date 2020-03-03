@@ -18,7 +18,7 @@ const Span = styled.span`
 `;
 
 const DocH1 = styled.h1`
-    font-size: 2.2rem;
+    font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;
     
@@ -29,7 +29,7 @@ font-family:Roboto;
 line-height: 1.2rem;
 font-size:1.1rem;
 font-weight:400;
-
+margin: 0;
 `
 const InfoIcon = styled.img`
     width:35px;
@@ -120,7 +120,7 @@ class Renderer extends Component {
             this.setState({ loggedIn: false })
             return;
         }
-        
+
         const index = this.state.titleDates.findIndex(i => i.title === values.title);
         let votering_id = index;
         this.setState({ ...this.props.data.getVoteData(votering_id, this.state.party), votering_id, loggedIn: true });
@@ -153,11 +153,11 @@ class Renderer extends Component {
             '#FFCE56',
             '#85a8d3',
 
-/*             '#04E762',
-            '#EF3054',
-            '#F5B700',
-            '#F5B700', */
-            
+            /*             '#04E762',
+                        '#EF3054',
+                        '#F5B700',
+                        '#F5B700', */
+
         ]
         let loggedIn = this.state.loggedIn
         let loggedOut = !this.state.loggedIn
@@ -212,12 +212,12 @@ class Renderer extends Component {
         const { data } = this.props;
 
         return (
-            <div style={{ width: '1000px', marginLeft: '50px'}}>
+            <div style={{ width: '1000px', marginLeft: '50px', marginTop: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
                 {/* <button style={{ marginBottom: '20px' }} data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button> */}
-                <div style={{ display: 'flex', flexDirection: 'row', width:'100%' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
 
                     <InfoIcon src={InfoCircle} data-value='link' onClick={this.handleClick} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} />
@@ -245,9 +245,9 @@ class Renderer extends Component {
                 {
                     totalVoteResult.map((e, i) => {
                         return loggedIn ?
-                            <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', padding:'5px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                            <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
                             : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
-                        })
+                    })
                 }
                 <div style={{ display: 'flex', width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
 
@@ -263,11 +263,9 @@ class Renderer extends Component {
                 </div>
                 {popup && <Popup handleClick={this.handleClick} id={votering_id} party={party} />}
 
-                )
-            }
-            {this.state.docPopup && <DocPopup handleClick={this.handleClick} dok_id={dok_id} />}
+                {this.state.docPopup && <DocPopup handleClick={this.handleClick} dok_id={dok_id} />}
             </div >
-        
+
         );
     };
 };
