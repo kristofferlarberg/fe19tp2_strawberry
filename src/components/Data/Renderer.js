@@ -212,7 +212,7 @@ class Renderer extends Component {
         const { data } = this.props;
 
         return (
-            <div style={{ width: '1000px', marginLeft: '50px', marginTop: '1rem' }}>
+            <div style={{ width: '1000px', marginLeft: '50px', height: '100vh' }}>
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
