@@ -82,8 +82,7 @@ class Popup extends React.Component {
                         }
                     </div>
                 </div>
-                )
-            }
+
             </BoxShadow >
         );
     }
