@@ -6,7 +6,8 @@ h1{
 }
 h3{
 font-family: 'Roboto';
-font-size:1em;
+font-size:1.2em;
+font-weight:500;
 margin:10px !important;
 }
 /* 
@@ -48,3 +49,8 @@ h3 {
    padding:0;
 
  }
+
+ .close {
+  color: Black;
+  float: right;
+}

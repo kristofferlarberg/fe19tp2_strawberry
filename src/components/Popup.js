@@ -58,8 +58,9 @@ class Popup extends React.Component {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    {<h1>{this.props.party === '-' ? 'Partilösa' : parties[voteObject.parties.indexOf(this.props.party)]}</h1>}
-                    {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: '55px', height: '55px' }} />}
+                    {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: '55px', height: '55px', marginRight:'10px'}} />}
+                    <h1 style={{fontFamily: 'Roboto', fontWeight: '400', fontSize: '1.8em', color: 'black'}}>{this.props.party === '-' ? 'Partilösa' : parties[voteObject.parties.indexOf(this.props.party)]}</h1>
+        
                 </div>
                 {
                     voteObject.votes.map((e, i) => {
@@ -82,7 +83,6 @@ class Popup extends React.Component {
                         }
                     </div>
                 </div>
-
             </BoxShadow >
         );
     }
