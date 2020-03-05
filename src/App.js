@@ -1,5 +1,5 @@
 import React from 'react';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 //  import Members from './components/Data/members';
 //  import Data from './components/Data';
 //import LandingPage from './components/Pages/Landing'
@@ -19,9 +19,12 @@ class App extends React.Component {
   render() {
 
     return (
+      <Router>
       <div>
         <HomePage />
+        
       </div>
+      </Router>
     );
   }
 }

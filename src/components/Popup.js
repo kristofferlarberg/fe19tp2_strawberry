@@ -9,8 +9,8 @@ const BoxShadow = styled.div`
   /* left: -100px; */
   box-shadow: 0px 0px 15px #aaa;
   /* margin: 25px; */
-  width: 1000px;
-  height: 650px;
+  width: 850px;
+  height: 500px;
   border-radius: 10px;
   overflow: hidden;
   padding:0px;
@@ -55,8 +55,7 @@ class Popup extends React.Component {
                     display: 'flex',
                     borderRadius: '5px 5px 0 0',
                     /* backgroundImage: 'linear-gradient(to right, #385858, #8cb5b5)', */
-                    color: 'white',
-                    justifyContent: 'center',
+                    justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
                     {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: '55px', height: '55px', marginRight:'10px'}} />}
@@ -65,7 +64,7 @@ class Popup extends React.Component {
                 </div>
                 {
                     voteObject.votes.map((e, i) => {
-                        return <div key={i} style={{ display: 'inline-flex', alignItems: 'center', height: '50px', boxSizing: 'border-box', width: `${e.length / totalVotes * 1000}px`, justifyContent: 'center', background: backgroundColor[i], borderTop: e.length > 0 && '2px solid white', borderRight: i === 0 && e.length > 0 && (e.length / totalVotes) !== 1 && '2px solid white' || (e.length / totalVotes) > 0.5 && (e.length / totalVotes) !== 1 && '2px solid white', color: 'white', fontSize: '20px' }}><span>{e.length > 0 && `${(e.length / totalVotes * 100).toFixed(1)}%`}</span></div>
+                        return <div key={i} style={{ display: 'inline-flex', alignItems: 'center', height: '50px', boxSizing: 'border-box', width: `${e.length / totalVotes * 850}px`, justifyContent: 'center', background: backgroundColor[i], borderTop: e.length > 0 && '2px solid white', borderRight: i === 0 && e.length > 0 && (e.length / totalVotes) !== 1 && '2px solid white' || (e.length / totalVotes) > 0.5 && (e.length / totalVotes) !== 1 && '2px solid white', color: 'white', fontSize: '20px' }}><span>{e.length > 0 && `${(e.length / totalVotes * 100).toFixed(1)}%`}</span></div>
                     })
                 }
                 {
@@ -73,18 +72,17 @@ class Popup extends React.Component {
                         e.forEach((member, i) => partyMembers[id].push(<li key={i} style={{ color: '#707070' }} title={member.valkrets}>{member.namn}<br /></li>))
                     })
                 }
-                <div style={{padding: '30px'}}>
-                <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '15px', marginTop: '20px', width: '100%' }}>
-                    {labels.map((label, i) => <span style={{ color: backgroundColor[i], fontFamily: 'Roboto', fontSize: '1.4em', fontWeight: '400', display: 'inline-block'}}>{label}</span>)}
+                <div >
+                    <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '15px', marginTop: '20px', width: '100%' }}>
+                        {labels.map((label, i) => <span style={{ color: backgroundColor[i], fontFamily: 'Roboto', fontSize: '1.4em', fontWeight: '400', display: 'inline-block' }}>{label}</span>)}
+                    </div>
+                    <div style={{ height: '279px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: '1em', fontWeight: '400', lineHeight: '1.5em' }}>
+                        {partyMembers.map(members => {
+                            return <ul style={{ width: '25%' }}>{members}</ul>
+                        })
+                        }
+                    </div>
                 </div>
-                    <div style={{ height: '349px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: '1em', fontWeight: '400', lineHeight: '1.8em'}}>
-                    {partyMembers.map(members => {
-                        return <ul style={{width:'25%'}}>{members}</ul>
-                    })
-                    }
-                </div>
-                </div>
-              
             </BoxShadow >
         );
     }

@@ -28,6 +28,7 @@ const UserDiv = styled.div`
 const SidenavDiv = styled.div`
     height:100vh;
     min-width:270px;
+    max-width:296px;
     z-index:1;
     overflow-x:hidden;
     top: 0;
@@ -66,6 +67,7 @@ const InputSearch = styled.input`
 
 const SomethingDiv = styled.div`
   color: ${props => props.theme.font_color};
+      margin: 50px;
 `
 const ULlist = styled.ul`
     list-style-type:none;
@@ -124,7 +126,7 @@ render() {
     return (
         <ThemeProvider theme={theme}>
             <SidenavDiv>
-                <div style={{ backgroundColor: '#fff', minWidth: '270px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center'}}><img src={DN} style={{height:'95px'}}/></div>
+                <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center'}}><img src={DN} style={{height:'95px'}}/></div>
 {/*                 <UserDiv>
                     <UserStatus />
                 </UserDiv> */}
@@ -136,9 +138,10 @@ render() {
                     <ULlist>
                         <LIWithImg>
                             <Icons src={LogIcon} style={{cursor:'pointer'}}padding data-value='link' onClick={this.togglePop}/>
-                            {this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
                             <h3>Logga in</h3>
                         </LIWithImg>
+                        <div>{this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
+                    </div>
                         <LIWithImg>
                             <Icons src={CogWheel} padding />
                             <h3>Inställningar</h3>

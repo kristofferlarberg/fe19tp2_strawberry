@@ -75,4 +75,4 @@ const SignInForm = compose(
     withFirebase,
 )(SignInFormBase);
 export default SignInPage;
-export { SignInForm };
+export { SignInFormBase};

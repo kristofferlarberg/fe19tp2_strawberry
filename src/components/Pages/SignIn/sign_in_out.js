@@ -5,10 +5,12 @@ import { withFirebase } from '../../Firebase';
 import { AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut';
 import styled from 'styled-components';
+import SignUpForm from '../SignUp'
+import SignInPage from '.';
 
 const MyForm = styled.form`
-width:200px;
-margin-top:10px;
+width:auto;
+/* margin-top:10px; */
 `
 
 const Input = styled.input`
@@ -27,7 +29,7 @@ outline: none;
 const UserStatus = () => {
     return ( <AuthUserContext.Consumer>
         {authUser => 
-        authUser ? <SignOut UserEmail={authUser.email}/> : <SignInForm/>
+        authUser ? <SignOut UserEmail={authUser.email}/> : <SignInBase/>
         }
     </AuthUserContext.Consumer> );
 }
@@ -45,6 +47,30 @@ const INITIAL_STATE = {
     error: null,
 };
 
+class SignInBase extends Component {
+    constructor(props){
+        super(props)
+        this.state = {signUp : true}
+    }
+    handleClick = event => {
+        event.preventDefault();
+        if (this.state.signUp) {
+            this.setState({signUp: false})
+        } else {
+            this.setState({signUp:true})
+        }
+    }
+    render () {
+        const {signUp} = this.state
+        return (
+            <div>
+                
+                {signUp ? <SignInForm /> : <SignUpForm />} 
+                <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
+            </div>
+        )
+    }
+}
 
 class SignInFormBase extends Component {
 
@@ -94,6 +120,7 @@ class SignInFormBase extends Component {
                     Logga in
                         </button>
                 {error && <p>{error.message}</p>}
+                
             </MyForm>
         );
     }

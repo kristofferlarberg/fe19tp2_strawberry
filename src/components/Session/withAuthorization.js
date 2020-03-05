@@ -9,11 +9,14 @@ import * as ROUTES from '../../constants/routes';
 const withAuthorization = condition => Component => {
     class WithAuthorization extends React.Component {
         componentDidMount() {
-            this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-                if (!condition(authUser)) {
-                    this.props.history.push(ROUTES.SIGN_IN);
-                }
-            });
+            this.listener = this.props.firebase.onAuthUserListener(
+                authUser => {
+                    if (!condition(authUser)) {
+                        this.props.history.push(ROUTES.LANDING);
+                    }
+                },
+                () => this.props.history.push(ROUTES.LANDING),
+            );
         }
         componentWillUnmount() {
             this.listener();
@@ -22,7 +25,7 @@ const withAuthorization = condition => Component => {
             return (
                 <AuthUserContext.Consumer>
                     {authUser =>
-                        condition(authUser) ? <Component {...this.props} /> : null
+                        condition(authUser) ? <Component {...this.props} authUser={authUser} /> : <Component {...this.props} />
                     }
                 </AuthUserContext.Consumer>
             );
@@ -35,3 +38,7 @@ const withAuthorization = condition => Component => {
 };
 
 export default withAuthorization;
+/*
+function withAuth(condition) {
+    return function(Component)
+}*/
