@@ -13,11 +13,10 @@ const HomePage = ({ authUser }) => (
         {authUser &&
             authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
             <div>
-<Data>
-                <Renderer authUser={authUser} />
-            
-                <Admin />
-</Data>
+                <Data>
+                    <Renderer authUser={authUser} />
+                    <Admin />
+                </Data>
             </div>
             : <Data>
                 <Renderer authUser={authUser} />

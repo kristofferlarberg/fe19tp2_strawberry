@@ -58,9 +58,9 @@ class Popup extends React.Component {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: '55px', height: '55px', marginRight:'10px'}} />}
-                    <h1 style={{fontFamily: 'Roboto', fontWeight: '400', fontSize: '1.8em', color: 'black'}}>{this.props.party === '-' ? 'Partilösa' : parties[voteObject.parties.indexOf(this.props.party)]}</h1>
-        
+                    {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: '55px', height: '55px', marginRight: '10px' }} />}
+                    <h1 style={{ fontFamily: 'Roboto', fontWeight: '400', fontSize: '1.8em', color: 'black' }}>{this.props.party === '-' ? 'Partilösa' : parties[voteObject.parties.indexOf(this.props.party)]}</h1>
+
                 </div>
                 {
                     voteObject.votes.map((e, i) => {
@@ -73,12 +73,12 @@ class Popup extends React.Component {
                     })
                 }
                 <div >
-                    <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '15px', marginTop: '20px', width: '100%' }}>
-                        {labels.map((label, i) => <span style={{ color: backgroundColor[i], fontFamily: 'Roboto', fontSize: '1.4em', fontWeight: '400', display: 'inline-block' }}>{label}</span>)}
+                    <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1rem', marginBottom: '0.5rem', marginLeft: '4%', width: '94%' }}>
+                        {labels.map((label, i) => <span style={{ color: backgroundColor[i], fontFamily: 'Roboto', fontSize: '1.4em', fontWeight: '400', display: 'inline-block', width: '25%' }}>{label}</span>)}
                     </div>
-                    <div style={{ height: '279px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: '1em', fontWeight: '400', lineHeight: '1.5em' }}>
-                        {partyMembers.map(members => {
-                            return <ul style={{ width: '25%' }}>{members}</ul>
+                    <div style={{ height: '294px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: '1em', fontWeight: '400', lineHeight: '1.5em', width: '96%', marginLeft: '4%' }}>
+                        {partyMembers.map((members, i) => {
+                            return <ul style={{ width: '25%', padding: '0px', margin: '0' }}>{members}</ul>
                         })
                         }
                     </div>
