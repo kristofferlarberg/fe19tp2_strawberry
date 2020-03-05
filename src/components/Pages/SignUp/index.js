@@ -13,10 +13,9 @@ const INITIAL_STATE = {
 };
 
 const SignUpPage = () => {
-    return (<div>
-        <h1>SignUp</h1>
+    return (
         <SignUpForm />
-    </div>);
+        );
 }
 
 class SignUpFormBase extends Component {
@@ -39,7 +38,6 @@ class SignUpFormBase extends Component {
             })
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.HOME);
             })
             .catch(error => {
                 this.setState({ error });
@@ -104,12 +102,11 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
     <p>
-        Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+        Don't have an account?
     </p>
 );
 
 const SignUpForm = compose(
-    withRouter,
     withFirebase,
 )(SignUpFormBase);
 

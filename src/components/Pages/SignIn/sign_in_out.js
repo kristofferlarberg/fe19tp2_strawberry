@@ -4,12 +4,14 @@ import { compose } from 'recompose';
 import { withFirebase } from '../../Firebase';
 import { AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut';
+import SignUpForm from '../SignUp'
+import SignInPage from '.';
 
 
 const UserStatus = () => {
     return ( <AuthUserContext.Consumer>
         {authUser => 
-        authUser ? <SignOut UserEmail={authUser.email}/> : <SignInForm/>
+        authUser ? <SignOut UserEmail={authUser.email}/> : <SignInBase/>
         }
     </AuthUserContext.Consumer> );
 }
@@ -27,6 +29,29 @@ const INITIAL_STATE = {
     error: null,
 };
 
+class SignInBase extends Component {
+    constructor(props){
+        super(props)
+        this.state = {signUp : true}
+    }
+    handleClick = event => {
+        event.preventDefault();
+        if (this.state.signUp) {
+            this.setState({signUp: false})
+        } else {
+            this.setState({signUp:true})
+        }
+    }
+    render () {
+        const {signUp} = this.state
+        return (
+            <div>
+                <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
+                {signUp ? <SignInForm /> : <SignUpForm />} 
+            </div>
+        )
+    }
+}
 
 class SignInFormBase extends Component {
 

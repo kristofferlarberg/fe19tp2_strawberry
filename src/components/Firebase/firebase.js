@@ -17,7 +17,6 @@ var config = {
     measurementId: "G-6YHPZZ2BS5"
 };
 
-
 class Firebase {
     constructor() {
         app.initializeApp(config);
