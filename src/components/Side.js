@@ -64,6 +64,7 @@ const InputSearch = styled.input`
 
 const SomethingDiv = styled.div`
   color: ${props => props.theme.font_color};
+      margin: 50px;
 `
 const ULlist = styled.ul`
     list-style-type:none;

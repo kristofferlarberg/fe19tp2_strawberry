@@ -106,5 +106,4 @@ dist
 .DS_Store
 
 
-src/components/Firebase/firebase.js
 src/components/Pages/Admin/serviceAccountKey.json

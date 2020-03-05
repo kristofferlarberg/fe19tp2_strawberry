@@ -2,26 +2,27 @@ import React from 'react';
 import Renderer from '../../Data/Renderer';
 import Data from '../../Data';
 import Side from '../../Side';
-import { AuthUserContext } from '../../Session';
+import { withAuthorization, withAuthentication } from '../../Session';
 import Admin from '../Admin'
+import * as ROLES from '../../../constants/roles';
 
 
-
-const HomePage = () => (
+const HomePage = ({ authUser }) => (
     <div style={{ display: 'flex' }}>
         <Side />
-        <AuthUserContext.Consumer>
-            {authUser =>
-                authUser &&
-                    authUser.email.includes('admin') ?
-                    <div>
-                        <Admin />
-                    </div>
-                    : <Data>
-                        <Renderer />
-                    </Data>
-            }
-        </AuthUserContext.Consumer>
+        {authUser &&
+            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
+            <div>
+<Data>
+                <Renderer authUser={authUser} />
+            
+                <Admin />
+</Data>
+            </div>
+            : <Data>
+                <Renderer authUser={authUser} />
+            </Data>
+        }
 
     </div>
 );
@@ -29,6 +30,7 @@ const HomePage = () => (
 //const condition = authUser => !!authUser;
 
 
+const condition = authUser =>
+    authUser && !!authUser.roles[ROLES.ADMIN];
 
-
-export default HomePage;
+export default withAuthorization(condition)(HomePage);

@@ -1,33 +1,27 @@
 import React from 'react';
-import { defaultProps } from 'recompose';
-import { FirebaseContext, withFirebase } from '../../Firebase'
+import { Switch, Route } from 'react-router-dom';
+import { compose } from 'recompose';
 
-const AdminPage = () => {
-    // var admin = require("firebase-admin");
+import { withAuthorization } from '../../Session';
+import { UserList, UserItem } from '../Users';
+import * as ROLES from '../../../constants/roles';
+import * as ROUTES from '../../../constants/routes';
 
-    // var serviceAccount = require("./serviceAccountKey.json");
+const AdminPage = () => (
+  <div>
+    <h1>Admin</h1>
+    <p>The Admin Page is accessible by every signed in admin user.</p>
 
-    // admin.initializeApp({
-    //     credential: admin.credential.cert(serviceAccount),
-    //     databaseURL: "https://test-firebase-75c7c.firebaseio.com"
-    // });
-    // function listAllUsers(nextPageToken) {
-    //     // List batch of users, 1000 at a time.
-    //     admin.auth().listUsers(100)
-    //         .then(function (listUsersResult) {
-    //             listUsersResult.users.forEach(function (userRecord) {
-    //                 console.log('user', userRecord.toJSON());
-    //             });
-    //         })
-    //         .catch(function (error) {
-    //             console.log('Error listing users:', error);
-    //         });
-    // }
+    <Switch>
+      <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
+      <Route exact path={ROUTES.ADMIN} component={UserList} />
+    </Switch>
+  </div>
+);
 
-    return (<div>
-        <h1>Admin</h1>
-        {/* <button onClick={listAllUsers}>Klicka här!!!</button> */}
-    </div>);
-}
+const condition = authUser =>
+  authUser && !!authUser.roles[ROLES.ADMIN];
 
-export default AdminPage;
+export default compose(
+  withAuthorization(condition),
+)(AdminPage);
