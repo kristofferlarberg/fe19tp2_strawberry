@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import UserStatus from './Pages/SignIn/sign_in_out'
+import UserStatus from './Pages/UserStatus'
 import styled, { ThemeProvider } from 'styled-components';
 import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
