@@ -7,6 +7,7 @@ import { TextField } from '@material-ui/core';
 import DocPopup from './DocPopup';
 import Popup from '../Popup';
 import Search from '../Search';
+import LogPopup from '../LogPopup';
 
 const Span = styled.span`
     background: #0FCE56;
@@ -27,7 +28,7 @@ const DocH1 = styled.h1`
 const DocText = styled.h3`
 font-family:Roboto;
 line-height: 1.2rem;
-font-size:1.1rem;
+font-size:1.3rem;
 font-weight:400;
 margin: 0;
 `
@@ -212,16 +213,18 @@ class Renderer extends Component {
         const { data } = this.props;
 
         return (
-            <div style={{ width: '1000px', marginLeft: '50px', marginTop: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
+            <div style={{ width: '1200px', marginLeft: '50px', marginTop: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                     <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
                 </div >
-                {/* <button style={{ marginBottom: '20px' }} data-value='user' onClick={this.handleClick}>Logga {loggedIn ? 'ut' : 'in'} </button> */}
+            
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
 
                     <InfoIcon src={InfoCircle} data-value='link' onClick={this.handleClick} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} />
                 </div>
+
+                <div style={{ display: 'flex', width: '100%' }}>
                 {
                     data.rawData.length > 0 && data.rawData[this.state.votering_id].forEach((vote, i) => {
                         const colorIndex = data2.datasets.findIndex(value => value.label === vote.rost);
@@ -245,11 +248,12 @@ class Renderer extends Component {
                 {
                     totalVoteResult.map((e, i) => {
                         return loggedIn ?
-                            <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 898}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                            : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 898}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
+                            <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                            : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
                     })
-                }
-                <div style={{ display: 'flex', width: '900px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
+                }</div>
+
+                <div style={{ display: 'flex', width: '1000px', textAlign: 'center', overflow: 'hidden', cursor: loggedIn && 'pointer' }} >
 
                     <div style={{ width: '50%', fontSize: '8px', marginRight: '10px' }} >
 

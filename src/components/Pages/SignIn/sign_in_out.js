@@ -4,7 +4,25 @@ import { compose } from 'recompose';
 import { withFirebase } from '../../Firebase';
 import { AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut';
+import styled from 'styled-components';
 
+const MyForm = styled.form`
+width:200px;
+margin-top:10px;
+`
+
+const Input = styled.input`
+background:transparent;
+padding: 10px;
+width:180px;
+border:none;
+border-bottom: 1px solid #838383;
+/* border-radius:5px; */
+margin-bottom:10px;
+font-family:Roboto;
+font-size:1em;
+outline: none;
+`
 
 const UserStatus = () => {
     return ( <AuthUserContext.Consumer>
@@ -52,26 +70,31 @@ class SignInFormBase extends Component {
         const { email, password, error } = this.state;
         const isInvalid = password === '' || email === '';
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
+
+            <MyForm onSubmit={this.onSubmit}>
+                <Input
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Email Address"
                 />
-                <input
+                <Input
                     name="password"
                     value={password}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Password"
                 />
+{/*                 <div>
+                <span className="close" onClick={this.togglePop} >
+                    &times;
+          </span></div> */}
                 <button disabled={isInvalid} type="submit">
-                    Sign In
+                    Logga in
                         </button>
                 {error && <p>{error.message}</p>}
-            </form>
+            </MyForm>
         );
     }
 }

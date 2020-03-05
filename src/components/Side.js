@@ -6,6 +6,8 @@ import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
 import StarIcon from './icons/star-solid.svg'
 import LogIcon from './icons/sign-in-alt-solid.svg'
+import LogPopup from './LogPopup';
+import DN from './icons/dnLogo.png';
 
 import Search from './Search';
 // import { DataConsumer } from 'data/DataConsumer';
@@ -25,7 +27,7 @@ const UserDiv = styled.div`
 
 const SidenavDiv = styled.div`
     height:100vh;
-    min-width:200px;
+    min-width:270px;
     z-index:1;
     overflow-x:hidden;
     top: 0;
@@ -107,13 +109,25 @@ const LIWithImg = styled.li`
     padding: .3rem;
 `
 
-const Side = () => {
+export class Side extends React.Component {
+
+    state = {
+        seen: false
+    };
+
+    togglePop = () => {
+        this.setState({
+            seen: !this.state.seen
+        });
+    };
+render() {
     return (
         <ThemeProvider theme={theme}>
             <SidenavDiv>
-                <UserDiv>
+                <div style={{ backgroundColor: '#fff', minWidth: '270px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center'}}><img src={DN} style={{height:'95px'}}/></div>
+{/*                 <UserDiv>
                     <UserStatus />
-                </UserDiv>
+                </UserDiv> */}
                 {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
@@ -121,7 +135,8 @@ const Side = () => {
                 <SomethingDiv>
                     <ULlist>
                         <LIWithImg>
-                            <Icons src={LogIcon} padding />
+                            <Icons src={LogIcon} style={{cursor:'pointer'}}padding data-value='link' onClick={this.togglePop}/>
+                            {this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
                             <h3>Logga in</h3>
                         </LIWithImg>
                         <LIWithImg>
@@ -168,6 +183,7 @@ Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, 
         </ThemeProvider>
 
     );
+}
 }
 
 export default Side
