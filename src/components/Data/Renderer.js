@@ -8,6 +8,10 @@ import DocPopup from './DocPopup';
 import Popup from '../Popup';
 import Search from '../Search';
 import LogPopup from '../LogPopup';
+import ToggleDarkLight from '../ToggleDarkLight';
+import { ThemeProvider } from 'styled-components';
+
+
 
 const Span = styled.span`
     background: #0FCE56;
@@ -214,8 +218,8 @@ class Renderer extends Component {
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
                     {active && <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>}
+                    < ToggleDarkLight />
                 </div >
-
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
 
@@ -269,6 +273,7 @@ class Renderer extends Component {
             </div >
 
         );
+
     };
 };
 export default Renderer
