@@ -68,4 +68,20 @@ h3 {
 .img {
   width:28px;
   height:28px;
+  /* filter: grayscale(100%); */
 }
+
+.img2 {
+  width:28px;
+  height:28px;
+  filter: grayscale(100%);
+}
+
+.img path {
+ fill:#ddd;
+}
+
+/* .imgS {
+  width:28px;
+  height:28px;
+} */

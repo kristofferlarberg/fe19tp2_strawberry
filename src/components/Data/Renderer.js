@@ -10,6 +10,7 @@ import Search from '../Search';
 import LogPopup from '../LogPopup';
 import { ReactComponent as LogIcon } from '../icons/sign-in-alt-solid.svg';
 import S from '../images/partylogos/S.svg';
+/* import { ReactComponent as S } from '../images/partylogos/S.svg'; */
 import V from '../images/partylogos/V.svg';
 import C from '../images/partylogos/C.svg';
 import M from '../images/partylogos/M.svg';
@@ -325,7 +326,7 @@ class Renderer extends Component {
 
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', width: '90.5%', marginTop: '-20px' }}>
-                    <Logos>
+                    <Logos style={{ filter: !active && 'grayscale(100%)', opacity: !active && '0.5'}}>
                         <img src={S} alt="S" className="img" />
                         <img src={V} alt="V" className="img" />
                         <img src={C} alt="C" className="img" />
@@ -335,7 +336,9 @@ class Renderer extends Component {
                         <img src={MP} alt="MP" className="img" />
                         <img src={SD} alt="SD" className="img" />
                     </Logos>
-                </div>
+                </div> 
+
+               
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', width: '1000px' }}>
                     {active &&
                         popups.map((popup, i) => {

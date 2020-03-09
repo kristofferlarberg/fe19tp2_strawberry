@@ -158,10 +158,6 @@ render() {
                             <Icons src={EyeIcon} padding />
                             <h3>Bevakningar</h3>
                         </LIWithImg>
-                        <LIWithImg>
-                            <StarIcon style={{ height: '25px', cursor: 'pointer', padding: '0.5rem'}} padding />
-                            <h3>Favoriter</h3>
-                        </LIWithImg>
 
                     </ULlist>
                     <SearchHistoryDiv>
