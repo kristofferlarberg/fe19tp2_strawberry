@@ -14,7 +14,7 @@ const HomePage = ({ authUser }) => (
             authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
             <div>
                 <Data>
-                    <Renderer authUser={authUser} />
+                    {/* <Renderer authUser={authUser} /> */}
                     <Admin />
                 </Data>
             </div>

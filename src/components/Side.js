@@ -31,6 +31,7 @@ const UserDiv = styled.div`
 
 const SidenavDiv = styled.div`
     height:100vh;
+    position: fixed;
     min-width:270px;
     max-width:296px;
     z-index:1;
@@ -135,7 +136,7 @@ render() {
 {/*                 <UserDiv>
                     <UserStatus />
                 </UserDiv> */}
-                {/*                 <SearchBarDiv borded>
+                    {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
                 </SearchBarDiv> */}
