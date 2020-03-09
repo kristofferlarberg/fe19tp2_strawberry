@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import InfoCircle from '../icons/info-circle-solid.svg';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { DataContext, withData } from '.';
 import { TextField } from '@material-ui/core';
 import DocPopup from './DocPopup';
@@ -15,7 +15,7 @@ const Span = styled.span`
     display: inline-block;
     height: 11px;
     width: 11px;
-    margin: 1.8px;
+    margin: 2.5px;
 `;
 
 const DocH1 = styled.h1`
@@ -26,19 +26,40 @@ const DocH1 = styled.h1`
 `;
 
 const DocText = styled.h3`
-font-family:Roboto;
-line-height: 1.2rem;
-font-size:1.3rem;
-font-weight:400;
-margin: 0;
+    font-family:Roboto;
+    line-height: 1.2rem;
+    font-size:1.3rem;
+    font-weight:400;
+    margin: 0;
 `
 const InfoIcon = styled.img`
+    cursor: pointer;
     width:35px;
     margin-bottom: -12px;
     &:hover{
         filter: opacity(0.7);
     }
 `
+
+const options1 = {
+    scales: {
+        xAxes: [{
+            stacked: true
+        }],
+        yAxes: [{
+            stacked: true
+        }]
+    },
+    legend: {
+        onClick: null
+
+    },
+    maintainAspectRatio: true,
+    tooltips: {
+        enabled: false
+
+    }
+};
 
 const options2 = {
     scales: {
@@ -62,31 +83,6 @@ const options2 = {
         }
     }
 };
-const options1 = {
-    scales: {
-        xAxes: [{
-            stacked: true
-        }],
-        yAxes: [{
-            stacked: true
-        }]
-    },
-    legend: {
-        onClick: null
-
-    },
-    maintainAspectRatio: true,
-    tooltips: {
-        enabled: false
-
-    }
-};
-
-// const x = (amt) => {
-//     let arr = [];
-//     for (let i = 0; i < amt; i++) arr[i] = i
-//     return arr;
-// }
 
 class Renderer extends Component {
 
@@ -105,57 +101,73 @@ class Renderer extends Component {
         no: [],
         pass: [],
         absent: [],
-        selectedChart: 1,
         active: false,
         descriptiondata: '',
         dok_id: '',
-        popup: false,
+        popups: [],
         docPopup: false,
     }
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this.handlePopup = this.handlePopup.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.onChartClick = this.onChartClick.bind(this);
-    }
+    };
 
     componentDidMount() {
         this.setState(this.props.data.getVoteData(this.state.votering_id, this.state.party));
-    }
+    };
 
     handleSearchChange(event, values) {
         if (!values) {
-            this.setState({ active: false })
+            this.setState({ active: false });
             return;
-        }
+        };
 
         const index = this.state.titleDates.findIndex(i => i.title === values.title);
         let votering_id = index;
         this.setState({ ...this.props.data.getVoteData(votering_id, this.state.party), votering_id, active: true });
-    }
+    };
 
-    handleClick(event) {
-        if (event.target.dataset.value === 'user') {
-            this.setState({ active: !this.state.active, selectedChart: 1 })
-        } else if (event.target.dataset.value === 'link') {
-            this.setState({ docPopup: true });
+    handlePopup(i, event) {
+        let checkPopup = this.state.popups.filter(popup => popup.size === 'M');
+        if (i === 'link') {
+            this.setState({ docPopup: !this.state.docPopup });
+        } else if (event.target.dataset.value !== 'x') {
+            let popups = [...this.state.popups];
+            let popup = { ...popups[i] };
+            if (popup.size === 'M') {
+                popup.size = 'S';
+                popup.party = popup.party || this.state.party;
+                popups[i] = popup;
+                this.setState({ popups, docPopup: false });
+            } else if (!checkPopup.length) {
+                popup.size = 'M';
+                popup.party = popup.party || this.state.party;
+                popups[i] = popup;
+            }
+            this.setState({ popups, docPopup: false });
         } else {
-            this.setState({ popup: false, docPopup: false })
-        }
+            let popups = [...this.state.popups];
+            popups.splice(i, 1);
+            this.setState({ popups, docPopup: false });
+        };
     };
 
     onChartClick(chart) {
-        if (chart.length > 0) {
-            const party = this.state.parties[chart[0]._index]
-            this.setState({ popup: true })
+        let checkPopup = this.state.popups.filter(popup => popup.size === 'M');
+        if (chart.length > 0 && !checkPopup.length && !this.state.docPopup) {
+            const party = this.state.parties[chart[0]._index];
+            let popups = [...this.state.popups];
+            popups.push({ size: 'M', party: party });
+            this.setState({ popups, docPopup: false });
             this.setState({ ...this.props.data.getVoteData(this.state.votering_id, party), party: party });
-
-        }
-    }
+        };
+    };
 
     render() {
-        const { popup, yes, no, pass, absent, party, parties, date, title, titleDates, dok_id, votering_id } = this.state;
+        const { popups, yes, no, pass, absent, party, parties, date, title, titleDates, active, dok_id, votering_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
             '#FF6384',
@@ -168,9 +180,6 @@ class Renderer extends Component {
                         '#F5B700', */
 
         ]
-        let active = this.state.active
-        let loggedOut = !this.state.active
-        let chartNumber = this.state.selectedChart
         let totalVoteResult = [0, 0, 0, 0]
         let voteResult = []
         for (let i = 0; i < 4; i++) {
@@ -178,7 +187,7 @@ class Renderer extends Component {
         }
         const data2 = {
             labels: [
-                ...this.state.parties
+                ...parties
             ],
             datasets: [{
                 label: 'Ja',
@@ -189,7 +198,6 @@ class Renderer extends Component {
                 label: 'Nej',
                 data: voteResult[1],
                 backgroundColor: active ? backgroundColor[1] : '#ddd',
-
             },
             {
                 label: 'Avstår',
@@ -204,12 +212,14 @@ class Renderer extends Component {
 
             ]
         };
-        let voteRows = []
+
+        let voteRows = [];
 
         const { data } = this.props;
+        let checkPopup = popups.filter(popup => popup.size === 'M');
 
         return (
-            <div style={{ width: '1045px', marginLeft: '50px', height: '100vh', marginTop: '20px' }}>
+            <div style={{ width: '1045px', marginLeft: '340px', height: '100vh', paddingTop: '20px', boxSizing: 'border-box' }}>
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
@@ -219,24 +229,25 @@ class Renderer extends Component {
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
 
-                    <InfoIcon src={InfoCircle} data-value='link' onClick={active && !popup && this.handleClick} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} />
+                    <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} />
                 </div>
 
                 <div style={{ display: 'flex', width: '100%' }}>
                     {
-                        data.rawData.length > 0 && data.rawData[this.state.votering_id].forEach((vote, i) => {
+                        data.rawData.length > 0 && data.rawData[votering_id].forEach((vote, i) => {
                             const colorIndex = data2.datasets.findIndex(value => value.label === vote.rost);
                             voteRows.push(
                                 <Span
                                     key={i + vote.namn}
                                     title={active ? `${vote.namn} (${vote.parti}): ${vote.rost}` : null}
                                     style={{ transitionDuration: '0.5s', background: active ? backgroundColor[colorIndex] : '#ddd' }}
-                                />)
+                                />,
+                                i === 18 && <br key='br' />)
                         })
                     }
                     {
-                        this.state.parties.forEach((party, id) => {
-                            let voteObject = this.props.data.getVoteData(this.state.votering_id, party)
+                        parties.forEach((party, id) => {
+                            let voteObject = this.props.data.getVoteData(votering_id, party)
                             voteObject.votes.forEach((vote, i) => {
                                 voteResult[i][id] += vote.length;
                                 totalVoteResult[i] += vote.length;
@@ -253,19 +264,26 @@ class Renderer extends Component {
 
                 <div style={{ display: 'flex', width: '1000px', textAlign: 'center', overflow: 'hidden', cursor: active && 'pointer' }} >
 
-                    <div style={{ width: '50%', fontSize: '8px', marginRight: '10px' }} >
+                    <div style={{ width: '50%', fontSize: '5px', marginRight: '10px' }} >
 
                         {voteRows}
+                        {active && <span style={{ fontSize: '15px' }} > Ledamöternas respektive röster sorterade på bänknummer</span>}
                     </div>
                     <div style={{ width: '50%', marginTop: '-50px', marginLeft: '10px' }} >
 
                         <br /><br />
-                        <Bar data={data2} onElementsClick={active && this.onChartClick} options={active ? options2 : options1} />
+                        {!active && <Bar data={data2} options={options1} />}
+                        {active && <Bar data={data2} onElementsClick={this.onChartClick} options={options2} />}
                     </div>
                 </div>
-                {popup && !this.state.docPopup && <Popup handleClick={this.handleClick} id={votering_id} party={party} />}
-
-                {this.state.docPopup && <DocPopup handleClick={this.handleClick} dok_id={dok_id} />}
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', width: '1000px' }}>
+                    {active &&
+                        popups.map((popup, i) => {
+                            return popup.size && <Popup key={i} size={popup.size} clickedPopup={(event) => this.handlePopup(i, event)} id={votering_id} party={popup.party || party} />
+                        })
+                    }
+                </div>
+                {this.state.docPopup && !checkPopup.length && < DocPopup clickedPopup={() => this.handlePopup('link')} dok_id={dok_id} />}
             </div >
 
         );

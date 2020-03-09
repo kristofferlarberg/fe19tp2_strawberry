@@ -27,6 +27,7 @@ const UserDiv = styled.div`
 
 const SidenavDiv = styled.div`
     height:100vh;
+    position: fixed;
     min-width:270px;
     max-width:296px;
     z-index:1;
@@ -122,71 +123,71 @@ export class Side extends React.Component {
             seen: !this.state.seen
         });
     };
-render() {
-    return (
-        <ThemeProvider theme={theme}>
-            <SidenavDiv>
-                <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center'}}><img src={DN} style={{height:'95px'}}/></div>
-{/*                 <UserDiv>
+    render() {
+        return (
+            <ThemeProvider theme={theme}>
+                <SidenavDiv>
+                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
+                    {/*                 <UserDiv>
                     <UserStatus />
                 </UserDiv> */}
-                {/*                 <SearchBarDiv borded>
+                    {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
                 </SearchBarDiv> */}
-                <SomethingDiv>
-                    <ULlist>
-                        <LIWithImg>
-                            <Icons src={LogIcon} style={{cursor:'pointer'}}padding data-value='link' onClick={this.togglePop}/>
-                            <h3>Logga in</h3>
-                        </LIWithImg>
-                        <div>{this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
-                    </div>
-                        <LIWithImg>
-                            <Icons src={CogWheel} padding />
-                            <h3>Inställningar</h3>
-                        </LIWithImg>
-                        <LIWithImg>
-                            <Icons src={EyeIcon} padding />
-                            <h3>Bevakningar</h3>
-                        </LIWithImg>
-                        <LIWithImg>
-                            <Icons src={StarIcon} padding />
-                            <h3>Favoriter</h3>
-                        </LIWithImg>
-                    </ULlist>
-                    <SearchHistoryDiv>
-                        <SearchBarDiv>
-                            <Icons src={SearchIcon} />
-                            <InputSearch placeholder='Sök' />
-
-                        </SearchBarDiv>
+                    <SomethingDiv>
                         <ULlist>
-                            {/* Example List */}
-                            <li>
-                                <TextOverFlow>
-                                    SoU4
-Äldrefrågor, förslagspunkt 8 - 2020-02-13</TextOverFlow>
-                            </li>
-                            <li>
-                                <TextOverFlow>
-                                    JuU18
-Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, förslagspunkt 3 - 2020-02-13</TextOverFlow>
-                            </li>
-                            <li>
-                                <TextOverFlow>
-                                    TU6
-    Yrkestrafik och taxi, förslagspunkt 4 - 2020-02-05
-                                </TextOverFlow>
-                            </li>
+                            <LIWithImg>
+                                <Icons src={LogIcon} style={{ cursor: 'pointer' }} padding data-value='link' onClick={this.togglePop} />
+                                <h3>Logga in</h3>
+                            </LIWithImg>
+                            <div>{this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
+                            </div>
+                            <LIWithImg>
+                                <Icons src={CogWheel} padding />
+                                <h3>Inställningar</h3>
+                            </LIWithImg>
+                            <LIWithImg>
+                                <Icons src={EyeIcon} padding />
+                                <h3>Bevakningar</h3>
+                            </LIWithImg>
+                            <LIWithImg>
+                                <Icons src={StarIcon} padding />
+                                <h3>Favoriter</h3>
+                            </LIWithImg>
                         </ULlist>
-                    </SearchHistoryDiv>
-                </SomethingDiv>
-            </SidenavDiv>
-        </ThemeProvider>
+                        <SearchHistoryDiv>
+                            <SearchBarDiv>
+                                <Icons src={SearchIcon} />
+                                <InputSearch placeholder='Sök' />
 
-    );
-}
+                            </SearchBarDiv>
+                            <ULlist>
+                                {/* Example List */}
+                                <li>
+                                    <TextOverFlow>
+                                        SoU4
+Äldrefrågor, förslagspunkt 8 - 2020-02-13</TextOverFlow>
+                                </li>
+                                <li>
+                                    <TextOverFlow>
+                                        JuU18
+Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, förslagspunkt 3 - 2020-02-13</TextOverFlow>
+                                </li>
+                                <li>
+                                    <TextOverFlow>
+                                        TU6
+        Yrkestrafik och taxi, förslagspunkt 4 - 2020-02-05
+                                </TextOverFlow>
+                                </li>
+                            </ULlist>
+                        </SearchHistoryDiv>
+                    </SomethingDiv>
+                </SidenavDiv>
+            </ThemeProvider>
+
+        );
+    }
 }
 
 export default Side
