@@ -17,12 +17,15 @@ import L from '../images/partylogos/L.svg';
 import KD from '../images/partylogos/KD.svg';
 import MP from '../images/partylogos/MP.svg';
 import SD from '../images/partylogos/SD.svg';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const Logos = styled.div`
 display:flex;
 flex-direction:row;
 justify-content:space-around;
-width:43%;
+width:45%;
+    z-index:1;
+
 `;
 
 const Span = styled.span`
@@ -32,7 +35,6 @@ const Span = styled.span`
     height: 11px;
     width: 11px;
     margin: 2.5px;
-    z-index:1;
 `;
 
 const DocH1 = styled.h1`
@@ -62,17 +64,26 @@ const options1 = {
     scales: {
         xAxes: [{
             stacked: true,
-               ticks: {
+            ticks: {
                 fontColor: 'white'
+            },
+            gridLines: {
+                display: false
             }
         }],
         yAxes: [{
-            stacked: true
+            stacked: true,
+            ticks: {
+                display: false
+            },
+            gridLines: {
+                drawBorder: false,
+            },
         }]
     },
     legend: {
         onClick: null,
-    
+
 
     },
     maintainAspectRatio: true,
@@ -86,12 +97,21 @@ const options2 = {
     scales: {
         xAxes: [{
             stacked: true,
-              ticks: {
+            ticks: {
                 fontColor: 'white'
+            },
+            gridLines: {
+                display: false
             }
         }],
         yAxes: [{
-            stacked: true
+            stacked: true,
+            ticks: {
+                display: false
+            },
+            gridLines: {
+                drawBorder: false,
+            },
         }]
     },
     legend: {
@@ -267,9 +287,9 @@ class Renderer extends Component {
                                     style={{ transitionDuration: '0.5s', background: active ? backgroundColor[colorIndex] : '#ddd' }}
                                 />,
                                 i === 18 && <br key='br' />)
-                        
-                    })
-                }
+
+                        })
+                    }
 
                     {
                         parties.forEach((party, id) => {
@@ -281,20 +301,20 @@ class Renderer extends Component {
                         })
                     }
 
-                {
-                    totalVoteResult.map((e, i) => {
-                        return active ?
-                            <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white'  }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                            : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
-                    })
-                }</div>
+                    {
+                        totalVoteResult.map((e, i) => {
+                            return active ?
+                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
+                        })
+                    }</div>
 
                 <div style={{ display: 'flex', width: '1000px', textAlign: 'center', overflow: 'hidden', cursor: active && 'pointer' }} >
 
                     <div style={{ width: '50%', fontSize: '5px', marginRight: '10px' }} >
 
                         {voteRows}
-                        {active && <span style={{ fontSize: '15px', fontFamily:'Roboto', fontStyle:'italic' }} > Ledamöternas respektive röster sorterade på bänknummer</span>}
+                        {active && <span style={{ fontSize: '15px', fontFamily: 'Roboto', fontStyle: 'italic' }} > Ledamöternas respektive röster sorterade på bänknummer</span>}
                     </div>
                     <div style={{ width: '50%', marginTop: '-50px', marginLeft: '10px' }} >
 
@@ -302,19 +322,19 @@ class Renderer extends Component {
                         {!active && <Bar data={data2} options={options1} />}
                         {active && <Bar data={data2} onElementsClick={this.onChartClick} options={options2} />}
                     </div>
-                    
+
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', width: '91%', marginTop: '-9px'}}>
-                <Logos>
-                    <img src={S} alt="S" className="img" />
-                    <img src={V} alt="V" className="img" />
-                    <img src={C} alt="C" className="img" />
-                    <img src={M} alt="M" className="img" />
-                    <img src={L} alt="L" className="img" />
-                    <img src={KD} alt="KD" className="img" />
-                    <img src={MP} alt="MP" className="img" />
-                    <img src={SD} alt="SD" className="img" />
-                </Logos>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', width: '90.5%', marginTop: '-19px' }}>
+                    <Logos>
+                        <img src={S} alt="S" className="img" />
+                        <img src={V} alt="V" className="img" />
+                        <img src={C} alt="C" className="img" />
+                        <img src={M} alt="M" className="img" />
+                        <img src={L} alt="L" className="img" />
+                        <img src={KD} alt="KD" className="img" />
+                        <img src={MP} alt="MP" className="img" />
+                        <img src={SD} alt="SD" className="img" />
+                    </Logos>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', width: '1000px' }}>
                     {active &&
