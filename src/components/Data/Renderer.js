@@ -8,8 +8,9 @@ import DocPopup from './DocPopup';
 import Popup from '../Popup';
 import Search from '../Search';
 import LogPopup from '../LogPopup';
-import ToggleDarkLight from '../ToggleDarkLight';
 import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from '../Styles/global';
+
 
 
 
@@ -26,7 +27,8 @@ const DocH1 = styled.h1`
     font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;
-    
+    color: ${ props => props.theme.font_color};
+
 `;
 
 const DocText = styled.h3`
@@ -213,12 +215,12 @@ class Renderer extends Component {
         const { data } = this.props;
 
         return (
+
             <div style={{ width: '1045px', marginLeft: '50px', height: '100vh', marginTop: '20px' }}>
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
                     {active && <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>}
-                    < ToggleDarkLight />
                 </div >
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />

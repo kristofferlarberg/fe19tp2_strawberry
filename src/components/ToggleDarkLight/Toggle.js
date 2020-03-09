@@ -8,8 +8,10 @@ const Toggle = ({ theme, toggleTheme }) => {
   const isLight = theme === 'light';
   return (
     <>
+
       <CheckBox id="checkbox" type="checkbox" onClick={isLight} />
       <ToggleContainer htmlFor="checkbox" onClick={toggleTheme} />
+
     </>
   );
 };
