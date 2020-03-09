@@ -4,6 +4,25 @@ import { compose } from 'recompose';
 import { withFirebase } from '../../Firebase'
 import * as ROUTES from '../../../constants/routes'
 import * as ROLES from '../../../constants/roles';
+import styled from 'styled-components';
+
+const MyForm = styled.form`
+width:auto;
+/* margin-top:10px; */
+`
+
+const Input = styled.input`
+background:transparent;
+padding: 10px;
+width:180px;
+border:none;
+border-bottom: 1px solid #838383;
+/* border-radius:5px; */
+margin-bottom:10px;
+font-family:Roboto;
+font-size:1em;
+outline: none;
+`
 
 const INITIAL_STATE = {
     username: '',
@@ -74,34 +93,34 @@ class SignUpFormBase extends Component {
             username === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
+            <MyForm onSubmit={this.onSubmit}>
+                <Input
                     name="username"
                     value={username}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Fullständigt namn"
                 />
-                <input
+                <Input
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder="Mejladress"
                 />
-                <input
+                <Input
                     name="passwordOne"
                     value={passwordOne}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Password"
+                    placeholder="Lösenord"
                 />
-                <input
+                <Input
                     name="passwordTwo"
                     value={passwordTwo}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Confirm Password"
+                    placeholder="Bekräfta lösenord"
                 />
                 <label>
                     Admin:
@@ -116,7 +135,7 @@ class SignUpFormBase extends Component {
                     Sign Up
                 </button>
                 {error && <p>{error.message}</p>}
-            </form>
+            </MyForm>
         );
     }
 }
