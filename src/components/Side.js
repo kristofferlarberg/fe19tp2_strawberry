@@ -8,20 +8,11 @@ import EyeIcon from './icons/eye-solid.svg'
 /* import LogIcon from './icons/sign-in-alt-solid.svg' */
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
-<<<<<<< HEAD
 import ToggleDarkLight from './ToggleDarkLight';
 import { GlobalStyles } from './Styles/global';
-=======
 import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
 import { ReactComponent as StarIcon } from './icons/star-solid.svg';
 import { ReactComponent as CogWheel } from './icons/cog-solid.svg';
-
-
-import Search from './Search';
-// import { DataConsumer } from 'data/DataConsumer';
-// import { getVoteData } from '../functions/filter';
-import Renderer from './Data/Renderer';
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
 
 const theme = {
     font_color: '#797979',
@@ -103,27 +94,6 @@ const InputSearch = styled.input`
     font-size: 1rem;
 `
 
-<<<<<<< HEAD
-
-=======
-const SomethingDiv = styled.div`
-  color: ${props => props.theme.font_color};
-      margin: 20px;
-`
-const ULlist = styled.ul`
-    list-style-type:none;
-    padding:0;
-    display: flex;
-    align-itmes:center;
-    flex-direction: column;
-    > li{
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
-        
-  }
-`
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
 const SearchHistoryDiv = styled.div`
     padding:10px 0;
 `
@@ -169,7 +139,6 @@ export class Side extends React.Component {
         });
     };
 
-<<<<<<< HEAD
     render() {
         return (
             <ThemeProvider theme={theme}>
@@ -177,25 +146,16 @@ export class Side extends React.Component {
                 <SidenavDiv>
                     <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
                     {/*                 <UserDiv>
-=======
-render() {
-    return (
-        <ThemeProvider theme={theme}>
-            <SidenavDiv>
-                <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center'}}><img src={DN} style={{height:'95px'}}/></div>
-{/*                 <UserDiv>
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
                     <UserStatus />
                 </UserDiv> */}
                     {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
                 </SearchBarDiv> */}
-<<<<<<< HEAD
                     <SidenavMenu>
                         <ULlist>
                             <LIWithImg>
-                                <Icons src={LogIcon} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
+                                <LogIcon style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
                                 <h3>Logga in</h3>
                             </LIWithImg>
                             {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}
@@ -248,46 +208,6 @@ Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, 
 
         );
     }
-=======
-                <SomethingDiv>
-                    <ULlist>
-                        <LIWithImg>
-                            <LogIcon style={{ height: '25px', padding: '0.5rem', color: '#444444', cursor: 'pointer' }} padding data-value='link' onClick={this.togglePop} />
-                            {/* <Icons src={LogIcon} style={{ cursor: 'pointer', fill: '#fff'}}padding data-value='link' onClick={this.togglePop}/> */}
-                            <h3 data-value='link' onClick={this.togglePop}>Logga in</h3>
-                            
-                        </LIWithImg>
-                        <div>{this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
-                    </div>
-                        <LIWithImg>
-                            <CogWheel style={{ height: '25px', cursor: 'pointer', padding: '0.5rem' }}  padding />
-                            <h3>Inställningar</h3>
-                        </LIWithImg>
-                        <LIWithImg>
-                            <Icons src={EyeIcon} padding />
-                            <h3>Bevakningar</h3>
-                        </LIWithImg>
-
-                    </ULlist>
-                    <SearchHistoryDiv>
-                        <SearchBarDiv>
-                            <ULlist>
-                            <LIWithImg>
-                            <Icons src={SearchIcon} padding />
-                            <h3>Sökhistorik</h3>
-                            </LIWithImg>
-                            </ULlist>
-                        </SearchBarDiv>
-
-                    </SearchHistoryDiv>
-                    
-                </SomethingDiv>
-            </SidenavDiv>
-        </ThemeProvider>
-
-    );
-}
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
 }
 
 export default Side

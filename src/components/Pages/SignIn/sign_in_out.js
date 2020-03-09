@@ -9,13 +9,7 @@ import SignUpForm from '../SignUp'
 import SignInPage from '.';
 
 const MyForm = styled.form`
-<<<<<<< HEAD
-/* margin-top:10px; */
-=======
-width:auto;
-margin-top:5px;
-margin-bottom:5px;
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
+
 `
 
 const Input = styled.input`
@@ -68,16 +62,10 @@ class SignInBase extends Component {
         const { signUp } = this.state
         return (
             <div>
-<<<<<<< HEAD
 
                 {signUp ? <SignInForm /> : <SignUpForm />}
-                <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
-=======
-                
-                {signUp ? <SignInForm /> : <SignUpForm />}
                 <button onClick={this.handleClick} >{signUp ? 'Nytt konto' : 'Jag har ett konto'}</button>
-                
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
+
             </div>
         )
     }
@@ -128,17 +116,12 @@ class SignInFormBase extends Component {
                 <span className="close" onClick={this.togglePop} >
                     &times;
           </span></div> */}
-          
+
                 <button disabled={isInvalid} type="submit">
                     Logga in
                         </button>
-<<<<<<< HEAD
                 {error && <p>{error.message}</p>}
 
-=======
-                    {error && <p>{error.message}</p>}
-                
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
             </MyForm>
         );
     }

@@ -8,13 +8,11 @@ import DocPopup from './DocPopup';
 import Popup from '../Popup';
 import Search from '../Search';
 import LogPopup from '../LogPopup';
-<<<<<<< HEAD
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../Styles/global';
 
 
 
-=======
 import { ReactComponent as LogIcon } from '../icons/sign-in-alt-solid.svg';
 import S from '../images/partylogos/S.svg';
 /* import { ReactComponent as S } from '../images/partylogos/S.svg'; */
@@ -35,7 +33,6 @@ width:45%;
     z-index:1;
 
 `;
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
 
 const Span = styled.span`
     background: #0FCE56;
@@ -273,12 +270,7 @@ class Renderer extends Component {
         let checkPopup = popups.filter(popup => popup.size === 'M');
 
         return (
-<<<<<<< HEAD
-
-            <div style={{ width: '1045px', marginLeft: '50px', height: '100vh', marginTop: '20px' }}>
-=======
             <div style={{ width: '1045px', marginLeft: '340px', height: '100vh', paddingTop: '20px', boxSizing: 'border-box' }}>
->>>>>>> bbfd7f9312a9ec43aea730fd6ff2d7bdc5e8a918
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
@@ -339,7 +331,7 @@ class Renderer extends Component {
 
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', width: '90.5%', marginTop: '-20px' }}>
-                    <Logos style={{ filter: !active && 'grayscale(100%)', opacity: !active && '0.5'}}>
+                    <Logos style={{ filter: !active && 'grayscale(100%)', opacity: !active && '0.5' }}>
                         <img src={S} alt="S" className="img" />
                         <img src={V} alt="V" className="img" />
                         <img src={C} alt="C" className="img" />
@@ -349,9 +341,9 @@ class Renderer extends Component {
                         <img src={MP} alt="MP" className="img" />
                         <img src={SD} alt="SD" className="img" />
                     </Logos>
-                </div> 
+                </div>
 
-               
+
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', width: '1000px' }}>
                     {active &&
                         popups.map((popup, i) => {
