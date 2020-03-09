@@ -10,7 +10,8 @@ import SignInPage from '.';
 
 const MyForm = styled.form`
 width:auto;
-/* margin-top:10px; */
+margin-top:5px;
+margin-bottom:5px;
 `
 
 const Input = styled.input`
@@ -65,8 +66,9 @@ class SignInBase extends Component {
         return (
             <div>
                 
-                {signUp ? <SignInForm /> : <SignUpForm />} 
-                <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
+                {signUp ? <SignInForm /> : <SignUpForm />}
+                <button onClick={this.handleClick} >{signUp ? 'Nytt konto' : 'Jag har ett konto'}</button>
+                
             </div>
         )
     }
@@ -92,6 +94,7 @@ class SignInFormBase extends Component {
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
     render() {
         const { email, password, error } = this.state;
         const isInvalid = password === '' || email === '';
@@ -103,23 +106,24 @@ class SignInFormBase extends Component {
                     value={email}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder="Mejladress"
                 />
                 <Input
                     name="password"
                     value={password}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Password"
+                    placeholder="Lösenord"
                 />
 {/*                 <div>
                 <span className="close" onClick={this.togglePop} >
                     &times;
           </span></div> */}
+          
                 <button disabled={isInvalid} type="submit">
                     Logga in
                         </button>
-                {error && <p>{error.message}</p>}
+                    {error && <p>{error.message}</p>}
                 
             </MyForm>
         );

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/SignIn/sign_in_out'
 import styled, { ThemeProvider } from 'styled-components';
-import CogWheel from './icons/cog-solid.svg'
+/* import CogWheel from './icons/cog-solid.svg' */
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
-import StarIcon from './icons/star-solid.svg'
-import LogIcon from './icons/sign-in-alt-solid.svg'
+/* import StarIcon from './icons/star-solid.svg' */
+/* import LogIcon from './icons/sign-in-alt-solid.svg' */
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
+import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
+import { ReactComponent as StarIcon } from './icons/star-solid.svg';
+import { ReactComponent as CogWheel } from './icons/cog-solid.svg';
+
 
 import Search from './Search';
 // import { DataConsumer } from 'data/DataConsumer';
@@ -67,7 +71,7 @@ const InputSearch = styled.input`
 
 const SomethingDiv = styled.div`
   color: ${props => props.theme.font_color};
-      margin: 50px;
+      margin: 20px;
 `
 const ULlist = styled.ul`
     list-style-type:none;
@@ -83,7 +87,7 @@ const ULlist = styled.ul`
   }
 `
 const SearchHistoryDiv = styled.div`
-    padding:5px 0;
+    padding:10px 0;
 `
 
 const Icons = styled.img`
@@ -122,6 +126,7 @@ export class Side extends React.Component {
             seen: !this.state.seen
         });
     };
+
 render() {
     return (
         <ThemeProvider theme={theme}>
@@ -137,13 +142,15 @@ render() {
                 <SomethingDiv>
                     <ULlist>
                         <LIWithImg>
-                            <Icons src={LogIcon} style={{cursor:'pointer'}}padding data-value='link' onClick={this.togglePop}/>
-                            <h3>Logga in</h3>
+                            <LogIcon style={{ height: '25px', padding: '0.5rem', color: '#444444', cursor: 'pointer' }} padding data-value='link' onClick={this.togglePop} />
+                            {/* <Icons src={LogIcon} style={{ cursor: 'pointer', fill: '#fff'}}padding data-value='link' onClick={this.togglePop}/> */}
+                            <h3 data-value='link' onClick={this.togglePop}>Logga in</h3>
+                            
                         </LIWithImg>
                         <div>{this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}
                     </div>
                         <LIWithImg>
-                            <Icons src={CogWheel} padding />
+                            <CogWheel style={{ height: '25px', cursor: 'pointer', padding: '0.5rem' }}  padding />
                             <h3>Inställningar</h3>
                         </LIWithImg>
                         <LIWithImg>
@@ -151,36 +158,23 @@ render() {
                             <h3>Bevakningar</h3>
                         </LIWithImg>
                         <LIWithImg>
-                            <Icons src={StarIcon} padding />
+                            <StarIcon style={{ height: '25px', cursor: 'pointer', padding: '0.5rem'}} padding />
                             <h3>Favoriter</h3>
                         </LIWithImg>
+
                     </ULlist>
                     <SearchHistoryDiv>
                         <SearchBarDiv>
-                            <Icons src={SearchIcon} />
-                            <InputSearch placeholder='Sök' />
-
+                            <ULlist>
+                            <LIWithImg>
+                            <Icons src={SearchIcon} padding />
+                            <h3>Sökhistorik</h3>
+                            </LIWithImg>
+                            </ULlist>
                         </SearchBarDiv>
-                        <ULlist>
-                            {/* Example List */}
-                            <li>
-                                <TextOverFlow>
-                                    SoU4
-Äldrefrågor, förslagspunkt 8 - 2020-02-13</TextOverFlow>
-                            </li>
-                            <li>
-                                <TextOverFlow>
-                                    JuU18
-Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, förslagspunkt 3 - 2020-02-13</TextOverFlow>
-                            </li>
-                            <li>
-                                <TextOverFlow>
-                                    TU6
-    Yrkestrafik och taxi, förslagspunkt 4 - 2020-02-05
-                                </TextOverFlow>
-                            </li>
-                        </ULlist>
+
                     </SearchHistoryDiv>
+                    
                 </SomethingDiv>
             </SidenavDiv>
         </ThemeProvider>

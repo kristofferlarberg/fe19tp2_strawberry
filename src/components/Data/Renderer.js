@@ -8,6 +8,22 @@ import DocPopup from './DocPopup';
 import Popup from '../Popup';
 import Search from '../Search';
 import LogPopup from '../LogPopup';
+import { ReactComponent as LogIcon } from '../icons/sign-in-alt-solid.svg';
+import S from '../images/partylogos/S.svg';
+import V from '../images/partylogos/V.svg';
+import C from '../images/partylogos/C.svg';
+import M from '../images/partylogos/M.svg';
+import L from '../images/partylogos/L.svg';
+import KD from '../images/partylogos/KD.svg';
+import MP from '../images/partylogos/MP.svg';
+import SD from '../images/partylogos/SD.svg';
+
+const Logos = styled.div`
+display:flex;
+flex-direction:row;
+justify-content:space-around;
+width:46%;
+`;
 
 const Span = styled.span`
     background: #0FCE56;
@@ -182,7 +198,7 @@ class Renderer extends Component {
         };
         let data2 = {
             labels: [
-                ...this.state.parties
+                '', '', '', '', '', '', '', '',
             ],
             datasets: [{
                 label: 'Ja',
@@ -213,7 +229,7 @@ class Renderer extends Component {
         const { data } = this.props;
 
         return (
-            <div style={{ width: '1045px', marginLeft: '50px', height: '100vh', marginTop:'20px'}}>
+            <div style={{ width: '1045px', marginLeft: '50px', height: '100vh', paddingTop:'20px', boxSizing: 'border-box'}}>
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     <DocH1>{dok_id && dok_id.substr(4)}</DocH1> <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>
@@ -221,7 +237,7 @@ class Renderer extends Component {
             
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
-
+                    
                     <InfoIcon src={InfoCircle} data-value='link' onClick={this.handleClick} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} />
                 </div>
 
@@ -249,8 +265,8 @@ class Renderer extends Component {
                 {
                     totalVoteResult.map((e, i) => {
                         return loggedIn ?
-                            <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                            : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
+                            <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white'  }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                            : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
                     })
                 }</div>
 
@@ -265,11 +281,25 @@ class Renderer extends Component {
                         <br /><br />
                         <Bar data={data2} onElementsClick={this.onChartClick} options={options2} />
                     </div>
+                    
+                </div>
+                <div style={{display: 'flex', justifyContent: 'flex-end', width:'96%', marginTop:'-10px'}}>
+                <Logos>
+                    <img src={S} alt="S" className="img" />
+                    <img src={V} alt="V" className="img" />
+                    <img src={C} alt="C" className="img" />
+                    <img src={M} alt="M" className="img" />
+                    <img src={L} alt="L" className="img" />
+                    <img src={KD} alt="KD" className="img" />
+                    <img src={MP} alt="MP" className="img" />
+                    <img src={SD} alt="SD" className="img" />
+                </Logos>
                 </div>
                 {popup && <Popup handleClick={this.handleClick} id={votering_id} party={party} />}
 
                 {this.state.docPopup && <DocPopup handleClick={this.handleClick} dok_id={dok_id} />}
-            </div >
+            </div>
+
 
         );
     };

@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
+/* body{background-color:black;} */
 
 h1{
   font-family: 'Roboto';
 }
 h3{
 font-family: 'Roboto';
-font-size:1.2em;
+font-size:1.4em;
 font-weight:500;
 margin:10px !important;
+cursor:pointer;
 }
 /* 
 .App {
@@ -53,4 +55,17 @@ h3 {
  .close {
   color: Black;
   float: right;
+}
+
+.star path {
+  fill:#db3a30;
+}
+
+/* .star path:hover {
+  fill:#444444;
+} */
+
+.img {
+  width:28px;
+  height:28px;
 }

@@ -9,7 +9,7 @@ display:flex;
   width: 180px;
   height: auto;
   /* border-radius: 10px; */
-  padding: 15px;
+  /* padding: 15px; */
   background: #DDD;
   /* z-index:1; */
 
