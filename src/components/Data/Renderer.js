@@ -304,19 +304,19 @@ class Renderer extends Component {
                     {
                         totalVoteResult.map((e, i) => {
                             return active ?
-                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                                : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
+                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px' }}><br /><br /></div>
                         })
                     }</div>
 
                 <div style={{ display: 'flex', width: '1000px', textAlign: 'center', overflow: 'hidden', cursor: active && 'pointer' }} >
 
-                    <div style={{ width: '50%', fontSize: '5px', marginRight: '10px' }} >
+                    <div style={{ width: '50%', fontSize: '5px', marginRight: '10px', marginTop: '50px' }} >
 
                         {voteRows}
-                        {active && <span style={{ fontSize: '15px', fontFamily: 'Roboto', fontStyle: 'italic' }} > Ledamöternas respektive röster sorterade på bänknummer</span>}
+                        {active && <span style={{ display: 'inline-block', fontSize: '15px', fontFamily: 'Roboto', fontStyle: 'italic', marginTop: '5px' }} > Ledamöternas respektive röster sorterade på bänknummer</span>}
                     </div>
-                    <div style={{ width: '50%', marginTop: '-50px', marginLeft: '10px' }} >
+                    <div style={{ width: '50%', marginLeft: '10px' }} >
 
                         <br /><br />
                         {!active && <Bar data={data2} options={options1} />}
@@ -324,7 +324,7 @@ class Renderer extends Component {
                     </div>
 
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', width: '90.5%', marginTop: '-19px' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', width: '90.5%', marginTop: '-20px' }}>
                     <Logos>
                         <img src={S} alt="S" className="img" />
                         <img src={V} alt="V" className="img" />
