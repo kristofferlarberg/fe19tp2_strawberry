@@ -12,10 +12,10 @@ const withAuthorization = condition => Component => {
             this.listener = this.props.firebase.onAuthUserListener(
                 authUser => {
                     if (!condition(authUser)) {
-                        this.props.history.push(ROUTES.LANDING);
+                        this.props.history.push(ROUTES.HOME);
                     }
                 },
-                () => this.props.history.push(ROUTES.LANDING)
+                () => this.props.history.push(ROUTES.HOME),
             );
         }
 
@@ -41,7 +41,3 @@ const withAuthorization = condition => Component => {
 };
 
 export default withAuthorization;
-/*
-function withAuth(condition) {
-    return function(Component)
-}*/

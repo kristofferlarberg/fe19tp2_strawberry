@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { withFirebase } from '../../Firebase';
+import { withFirebase } from '../../Firebase'
 import * as ROLES from '../../../constants/roles';
 import styled from 'styled-components';
-
+import * as ROUTES from '../../../constants/routes'
 const MyForm = styled.form`
     width: auto;
 `;
@@ -21,6 +21,7 @@ const Input = styled.input`
     outline: none;
 `;
 
+
 const INITIAL_STATE = {
     username: '',
     email: '',
@@ -30,9 +31,11 @@ const INITIAL_STATE = {
     isAdmin: false
 };
 
-const SignUpPage = () => {
-    return <SignUpForm />;
-};
+const SignUpPage = (props) => {
+    return (
+        <SignUpForm {...props} />
+    );
+}
 
 class SignUpFormBase extends Component {
     constructor(props) {
@@ -48,6 +51,8 @@ class SignUpFormBase extends Component {
         const roles = {};
         if (isAdmin) {
             roles[ROLES.ADMIN] = ROLES.ADMIN;
+        } else {
+            roles[ROLES.ACCESS] = ROLES.ACCESS;
         }
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -61,6 +66,7 @@ class SignUpFormBase extends Component {
             })
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
+                this.props.history.push(ROUTES.HOME);
             })
             .catch(error => {
                 this.setState({ error });
@@ -116,18 +122,27 @@ class SignUpFormBase extends Component {
                     placeholder='Bekräfta lösenord'
                 />
                 <label>
-                    Admin:
-                    <input
-                        name='isAdmin'
-                        type='checkbox'
+   {/*                  Admin:
+          <input
+                        name="isAdmin"
+                        type="checkbox"
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
-                    />
+                    /> */}
                 </label>
-                <button disabled={isInvalid} type='submit'>
-                    Sign Up
+
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                <button disabled={isInvalid} type="submit" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
+                    marginRight: '5px'
+                }}>
+                    Skapa konto
                 </button>
+{/*                 <button type="button" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
+                }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
                 {error && <p>{error.message}</p>}
+                </div>
             </MyForm>
         );
     }

@@ -6,11 +6,10 @@ import { withAuthorization } from '../../Session';
 import Admin from '../Admin';
 import * as ROLES from '../../../constants/roles';
 
-const HomePage = ({ authUser }) => {
-    console.log(authUser)
+const HomePage = ({ authUser, firebase }) => {
     return (
         <div style={{ display: 'flex' }}>
-            <Side />
+            <Side authUser={authUser} firebase={firebase} />
             <Data>
                 {authUser && authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
                     <Admin />

@@ -7,16 +7,19 @@ const allTitles = [];
 const allDates = [];
 const cached_voteData = {};
 
-let today = new Date();
-let dd = String(today.getDate()).padStart(2, '0');
-let mm = String(today.getMonth() + 1).padStart(2, '0');
-let yyyy = today.getFullYear();
 
-today = `${yyyy}-${mm}-${dd}`;
+const date = ((days = 0) => {
+    let today = new Date();
+    today.setDate(today.getDate() - days);
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+})
 
 let bet = [];
 let votingData = JSON.parse(localStorage.getItem('votingData'));
-const API_QUERY = `http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=${yyyy}-01-01&tom=${today}&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff`;
+const API_QUERY = `http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=${date(14)}&tom=${date()}&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff`
 
 const DataContext = createContext(null);
 

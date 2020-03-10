@@ -119,9 +119,13 @@ export class Side extends Component {
     };
 
     toggleLogin = () => {
-        this.setState({
-            login: !this.state.login
-        });
+        if(this.props.authUser) {
+            this.props.firebase.doSignOut();
+        } else {
+            this.setState({
+                login: !this.state.login
+            });
+        }
     };
 
     toggleSettings = () => {
@@ -141,28 +145,12 @@ export class Side extends Component {
             <ThemeProvider theme={theme}>
                 <GlobalStyles />
                 <SidenavDiv>
-                    <div
-                        style={{
-                            backgroundColor: '#fff',
-                            minWidth: '296px',
-                            height: '100px',
-                            borderTop: '5px solid red',
-                            display: 'flex',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        <img src={DN} alt='' style={{ height: '95px' }} />
-                    </div>
+                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
                     <SidenavMenu>
                         <ULlist>
                             <LIWithImg>
-                                <Icons
-                                    src={LogIcon}
-                                    style={{ cursor: 'pointer' }}
-                                    data-value='link'
-                                    onClick={this.toggleLogin}
-                                />
-                                <h3 onClick={this.toggleLogin}>Logga in</h3>
+                                <Icons src={LogIcon} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
+                                <h3 onClick={this.toggleLogin}>{this.props.authUser ? "Logga ut" : "Logga in"}</h3>
                             </LIWithImg>
                             {this.state.login ? (
                                 <SettingsBox>

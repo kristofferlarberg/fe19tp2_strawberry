@@ -119,7 +119,7 @@ class Popup extends Component {
                                 display: 'inline-flex',
                                 transitionDuration: '0.3s',
                                 alignItems: 'center',
-                                height: '12%',
+                                height: e.length > 0 && '12%',
                                 boxSizing: 'border-box',
                                 width: `${(e.length / totalVotes) * 100}%`,
                                 justifyContent: 'center',

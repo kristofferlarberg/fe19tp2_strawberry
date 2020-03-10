@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import * as ROLES from '../../constants/roles';
+import { withAuthorization } from '../Session';
+import { compose } from 'recompose';
 import styled from 'styled-components';
 import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar } from 'react-chartjs-2';
@@ -16,11 +19,11 @@ import MP from '../images/partylogos/MP.svg';
 import SD from '../images/partylogos/SD.svg';
 
 const Logos = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 45%;
-    z-index: 1;
+display:flex;
+flex-direction:row;
+justify-content:space-around;
+width:45%;
+    z-index:1;
 `;
 
 const Span = styled.span`
@@ -36,7 +39,7 @@ const DocH1 = styled.h1`
     font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;
-    color: ${props => props.theme.font_color};
+    color: ${ props => props.theme.font_color};
 `;
 
 const DocText = styled.h3`
@@ -244,11 +247,6 @@ class Renderer extends Component {
             '#FF6384',
             '#FFCE56',
             '#85a8d3'
-
-            /*             '#04E762',
-                        '#EF3054',
-                        '#F5B700',
-                        '#F5B700', */
         ];
         let totalVoteResult = [0, 0, 0, 0];
         let voteResult = [];
@@ -540,6 +538,8 @@ class Renderer extends Component {
                 )}
             </div>
         );
-    }
-}
+
+    };
+};
+
 export default Renderer;
