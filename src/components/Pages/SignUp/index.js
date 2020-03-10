@@ -33,10 +33,10 @@ const INITIAL_STATE = {
     isAdmin: false,
 };
 
-const SignUpPage = () => {
+const SignUpPage = (props) => {
     return (
-        <SignUpForm />
-        );
+        <SignUpForm {...props} />
+    );
 }
 
 class SignUpFormBase extends Component {
@@ -122,7 +122,7 @@ class SignUpFormBase extends Component {
                     type="password"
                     placeholder="Bekräfta lösenord"
                 />
-                <label>
+{/*                 <label>
                     Admin:
           <input
                         name="isAdmin"
@@ -130,10 +130,11 @@ class SignUpFormBase extends Component {
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
                     />
-                </label>
+                </label> */}
                 <button disabled={isInvalid} type="submit">
                     Sign Up
                 </button>
+                <button type="button" style={{padding:'5px', fontFamily:'Roboto', textTransform:'uppercase'}}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>
                 {error && <p>{error.message}</p>}
             </MyForm>
         );

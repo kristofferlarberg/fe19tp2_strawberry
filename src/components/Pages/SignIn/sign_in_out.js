@@ -11,7 +11,7 @@ import SignInPage from '.';
 const MyForm = styled.form`
 width:auto;
 margin-top:5px;
-margin-bottom:5px;
+margin-bottom:10px;
 `
 
 const Input = styled.input`
@@ -28,20 +28,20 @@ outline: none;
 `
 
 const UserStatus = () => {
-    return ( <AuthUserContext.Consumer>
-        {authUser => 
-        authUser ? <SignOut UserEmail={authUser.email}/> : <SignInBase/>
+    return (<AuthUserContext.Consumer>
+        {authUser =>
+            authUser ? <SignOut UserEmail={authUser.email} /> : <SignInBase />
         }
-    </AuthUserContext.Consumer> );
+    </AuthUserContext.Consumer>);
 }
- 
-const SignOut = ({UserEmail}) => {
-    return ( <div >
+
+const SignOut = ({ UserEmail }) => {
+    return (<div >
         Hello user {UserEmail}
         <SignOutButton />
-    </div> );
+    </div>);
 }
- 
+
 const INITIAL_STATE = {
     email: '',
     password: '',
@@ -49,26 +49,32 @@ const INITIAL_STATE = {
 };
 
 class SignInBase extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {signUp : true}
+        this.state = { signUp: true }
+        this.handleClick = this.handleClick.bind(this);
     }
     handleClick = event => {
+        console.log("YO")
         event.preventDefault();
         if (this.state.signUp) {
-            this.setState({signUp: false})
+            this.setState({ signUp: false })
         } else {
-            this.setState({signUp:true})
+            this.setState({ signUp: true })
         }
+        // this.setState({signUp: !this.state.signUp})
     }
-    render () {
-        const {signUp} = this.state
+    render() {
+        const { signUp } = this.state
         return (
             <div>
-                
-                {signUp ? <SignInForm /> : <SignUpForm />}
+
+                {/*     {signUp ? <SignInForm /> : <SignUpForm />}
                 <button onClick={this.handleClick} >{signUp ? 'Nytt konto' : 'Jag har ett konto'}</button>
-                
+ */}
+                {signUp ? <SignInForm title={'Nytt konto'} handleClick={this.handleClick} /> : <SignUpForm title={'Jag har ett konto'} handleClick={this.handleClick} />}
+                {/* <button onClick={this.handleClick} >{signUp ? 'Nytt konto' : 'Jag har ett konto'}</button> */}
+
             </div>
         )
     }
@@ -115,16 +121,20 @@ class SignInFormBase extends Component {
                     type="password"
                     placeholder="Lösenord"
                 />
-{/*                 <div>
+                {/*                 <div>
                 <span className="close" onClick={this.togglePop} >
                     &times;
           </span></div> */}
-          
-                <button disabled={isInvalid} type="submit">
+
+                <div style={{marginBottom:'15px', marginTop:'15px'}}><button disabled={isInvalid} type="submit" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                marginRight:'5px'}}>
                     Logga in
                         </button>
-                    {error && <p>{error.message}</p>}
-                
+                <button type="button" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight:'500', fontSize: '0.8em',color:'white', textTransform: 'uppercase'  }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>
+                    {error && <p>{error.message}</p>}</div>
+
             </MyForm>
         );
     }
