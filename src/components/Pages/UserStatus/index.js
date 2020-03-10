@@ -20,7 +20,10 @@ const UserLoggedIn = ({ UserEmail, userRoles }) => {
     return (<div >
         Hello user {UserEmail}
         <SignOutButton />
-        {userRoles[ROLES.ADMIN] ? <Link to={ROUTES.ADMIN} >Admin</Link> : null}
+        {userRoles[ROLES.ADMIN] ? <Link to={ROUTES.ADMIN} style={{
+            border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+            marginRight: '5px', background: 'red', textDecoration: 'none'
+        }}>Admin</Link> : null}
     </div>);
 }
 

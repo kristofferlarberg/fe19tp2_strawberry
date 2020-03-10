@@ -48,8 +48,13 @@ class SignUpFormBase extends Component {
         super(props);
         this.state = { ...INITIAL_STATE }
     }
-    onChangeCheckbox = event => {
-        this.setState({ [event.target.name]: event.target.checked });
+    onChangeAdmin = event => {
+        event.preventDefault();
+        if (this.state.isAdmin) {
+            this.setState({ [event.target.name]: false });
+        } else {
+            this.setState({ [event.target.name]: true });
+        }
     };
 
     onSubmit = event => {
@@ -130,19 +135,22 @@ class SignUpFormBase extends Component {
                     type="password"
                     placeholder="Bekräfta lösenord"
                 />
-                Admin:<Input
+                <ButtonColor
                     name="isAdmin"
-                    type="checkbox"
-                    checked={isAdmin}
-                    onChange={this.onChangeCheckbox}
-                />
+                    type="submit"
+                    onClick={this.onChangeAdmin}
+                    style={{
+                        border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                        marginRight: '5px'
+                    }}
+                > Admin</ButtonColor>
                 <label>
    {/*                  Admin:
           <input
                         name="isAdmin"
                         type="checkbox"
                         checked={isAdmin}
-                        onChange={this.onChangeCheckbox}
+                        onChange={this.onChangeAdmin}
                     /> */}
                 </label>
 

@@ -28,8 +28,14 @@ class AdminPage extends Component {
     return (  <div>
     <h1>Admin</h1>
     <p>The Admin Page is accessible by every signed in admin user.</p>
-    <Link to={ROUTES.HOME} >Home</Link>
-    <button onClick={this.StateBolean} >Add User</button>
+      <Link to={ROUTES.HOME} style={{
+        border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+        marginRight: '5px', background: 'red', textDecoration: 'none'
+      }} >Home</Link>
+      <button style={{
+        border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+        marginRight: '5px', background: 'red'
+      }} onClick={this.StateBolean} >Add User</button>
     {addUser ?  <SignUpPage2 /> : null }
     <AdminList />
   </div> 
