@@ -22,12 +22,11 @@ const theme = {
 
 
 
-
 const SidenavDiv = styled.div`
+    grid-column-start: 1;
     height:100vh;
     position: fixed;
-    min-width:270px;
-    max-width:296px;
+    width: 300px;
     z-index:1;
     overflow-x:hidden;
     background-color: #DDD;

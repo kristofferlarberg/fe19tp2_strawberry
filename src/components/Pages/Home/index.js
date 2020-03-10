@@ -5,10 +5,16 @@ import Side from '../../Side';
 import { withAuthorization, withAuthentication } from '../../Session';
 import Admin from '../Admin'
 import * as ROLES from '../../../constants/roles';
+import styled from 'styled-components'
 
+const Main = styled.div`
+    display: grid;
+    grid-template-columns: 300px 10fr;
+`
 
 const HomePage = ({ authUser }) => (
-    <div style={{ display: 'flex' }}>
+
+    <Main>
         <Side />
         {authUser &&
             authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
@@ -22,8 +28,7 @@ const HomePage = ({ authUser }) => (
                 <Renderer authUser={authUser} />
             </Data>
         }
-
-    </div>
+    </Main>
 );
 
 //const condition = authUser => !!authUser;
