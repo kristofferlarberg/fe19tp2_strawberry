@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/UserStatus'
 import styled, { ThemeProvider } from 'styled-components';
-/* import CogWheel from './icons/cog-solid.svg' */
+import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
-/* import StarIcon from './icons/star-solid.svg' */
-/* import LogIcon from './icons/sign-in-alt-solid.svg' */
+import StarIcon from './icons/star-solid.svg'
+import LogIcon2 from './icons/sign-in-alt-solid.svg'
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import ToggleDarkLight from './ToggleDarkLight';
 import { GlobalStyles } from './Styles/global';
-import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
-import { ReactComponent as StarIcon } from './icons/star-solid.svg';
-import { ReactComponent as CogWheel } from './icons/cog-solid.svg';
+/* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg'; */
+/* import { ReactComponent as StarIcon } from './icons/star-solid.svg'; */
+/* import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
 
 const theme = {
     font_color: '#797979',
@@ -145,9 +145,9 @@ export class Side extends React.Component {
                 <GlobalStyles />
                 <SidenavDiv>
                     <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
-                                    <UserDiv>
+          {/*                           <UserDiv>
                     <UserStatus />
-                </UserDiv>
+                </UserDiv> */}
                     {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
@@ -155,7 +155,7 @@ export class Side extends React.Component {
                     <SidenavMenu>
                         <ULlist>
                             <LIWithImg>
-                                <LogIcon style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
+                                <Icons src={LogIcon2} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
                                 <h3>Logga in</h3>
                             </LIWithImg>
                             {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}

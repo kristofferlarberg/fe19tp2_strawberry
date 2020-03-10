@@ -31,7 +31,6 @@ const HomePage = ({ authUser }) => (
 //const condition = authUser => !!authUser;
 
 
-const condition = authUser =>
-    authUser && !!authUser.roles[ROLES.ACCESS];
 
-export default withAuthorization(condition)(HomePage);
+
+export default HomePage;

@@ -360,9 +360,6 @@ class Renderer extends Component {
 
     };
 };
-const condition = authUser =>
-    authUser && !!authUser.roles[ROLES.ACCESS];
 
-export default compose(
-    withAuthorization(condition),
-)(Renderer);
+
+export default Renderer;
