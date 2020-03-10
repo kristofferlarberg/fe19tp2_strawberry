@@ -30,7 +30,6 @@ const INITIAL_STATE = {
     passwordOne: '',
     passwordTwo: '',
     error: null,
-    isAdmin: false,
 };
 
 const SignUpPage = (props) => {
@@ -87,7 +86,6 @@ class SignUpFormBase extends Component {
             passwordOne,
             passwordTwo,
             error,
-            isAdmin
         } = this.state;
         const isInvalid =
             passwordOne !== passwordTwo ||
@@ -147,6 +145,7 @@ class SignUpFormBase extends Component {
                 }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
                 {error && <p>{error.message}</p>}
                 </div>
+                {error && console.error(error.message)}
             </MyForm>
         );
     }
@@ -162,6 +161,5 @@ const SignUpForm = compose(
     withFirebase,
 )(SignUpFormBase);
 
-export { SignUpForm, SignUpLink };
 
 export default SignUpPage;

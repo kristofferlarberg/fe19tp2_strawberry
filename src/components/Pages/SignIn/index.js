@@ -81,6 +81,7 @@ class SignInFormBase extends Component {
                         outline: 'none', background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
                     }} onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>
                     {error && <p>{error.message}</p>}</div>
+                {error && console.error(error.message)}
 
             </MyForm>
         );

@@ -14,7 +14,7 @@ const INITIAL_STATE = {
     isAdmin: false,
 };
 
-const SignUpPage = () => {
+const SignUpPage2 = () => {
     return (
         <SignUpForm2 />
     );
@@ -119,22 +119,16 @@ class SignUpFormBase extends Component {
                 <button disabled={isInvalid} type="submit">
                     Sign Up
                 </button>
-                {error && <p>{error.message}</p>}
+                {error &&  console.error(error.message)}
             </form>
         );
     }
 }
 
-const SignUpLink = () => (
-    <p>
-        Don't have an account?
-    </p>
-);
 
 const SignUpForm2 = compose(
     withFirebase,
 )(SignUpFormBase);
 
-export { SignUpForm2, SignUpLink };
 
-export default SignUpPage;
+export default SignUpPage2;

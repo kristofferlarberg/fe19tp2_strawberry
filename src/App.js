@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 // import LandingPage from './components/Pages/Landing';
 // import NoAccessPage from './components/Pages/No-Acces'
 import { UserList, UserItem } from './components/Pages/Users';
+import AdminPage from './components/Pages/Admin'
 //import SignUpPage from './components/Pages/SignUp'
 import './App.css'
 import HomePage from './components/Pages/Home'
@@ -24,9 +25,8 @@ class App extends React.Component {
       <Router>
         <div>
           <Route exact path={ROUTES.HOME} component={HomePage} />
-          <Route path={ROUTES.ADMIN_DETAILS} component={UserItem} />
-          <Route path={ROUTES.ADMIN} component={UserList} />
-      {/*     <Route path={ROUTES.NO_ACCESS_USER} component={NoAccessPage} />    */}     
+          <Route path={ROUTES.ADMIN} component={AdminPage} />          
+          <Route path={ROUTES.ADMIN_DETAILS} component={UserItem} />        
         </div>
       </Router>
     );
