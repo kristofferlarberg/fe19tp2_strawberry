@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../../Firebase'
-import * as ROUTES from '../../../constants/routes'
+import { withFirebase } from '../../Firebase';
 import * as ROLES from '../../../constants/roles';
 import styled from 'styled-components';
 
 const MyForm = styled.form`
-width:auto;
-/* margin-top:10px; */
-`
+    width: auto;
+`;
 
 const Input = styled.input`
-background:transparent;
-padding: 10px;
-width:180px;
-border:none;
-border-bottom: 1px solid #838383;
-/* border-radius:5px; */
-margin-bottom:10px;
-font-family:Roboto;
-font-size:1em;
-outline: none;
-`
+    background: transparent;
+    padding: 10px;
+    width: 180px;
+    border: none;
+    border-bottom: 1px solid #838383;
+    /* border-radius:5px; */
+    margin-bottom: 10px;
+    font-family: Roboto;
+    font-size: 1em;
+    outline: none;
+`;
 
 const INITIAL_STATE = {
     username: '',
@@ -30,19 +27,17 @@ const INITIAL_STATE = {
     passwordOne: '',
     passwordTwo: '',
     error: null,
-    isAdmin: false,
+    isAdmin: false
 };
 
 const SignUpPage = () => {
-    return (
-        <SignUpForm />
-        );
-}
+    return <SignUpForm />;
+};
 
 class SignUpFormBase extends Component {
     constructor(props) {
         super(props);
-        this.state = { ...INITIAL_STATE }
+        this.state = { ...INITIAL_STATE };
     }
     onChangeCheckbox = event => {
         this.setState({ [event.target.name]: event.target.checked });
@@ -58,13 +53,11 @@ class SignUpFormBase extends Component {
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
                 // Create a user in your Firebase realtime database
-                return this.props.firebase
-                    .user(authUser.user.uid)
-                    .set({
-                        username,
-                        email,
-                        roles,
-                    });
+                return this.props.firebase.user(authUser.user.uid).set({
+                    username,
+                    email,
+                    roles
+                });
             })
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
@@ -73,7 +66,7 @@ class SignUpFormBase extends Component {
                 this.setState({ error });
             });
         event.preventDefault();
-    }
+    };
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
@@ -95,43 +88,43 @@ class SignUpFormBase extends Component {
         return (
             <MyForm onSubmit={this.onSubmit}>
                 <Input
-                    name="username"
+                    name='username'
                     value={username}
                     onChange={this.onChange}
-                    type="text"
-                    placeholder="Fullständigt namn"
+                    type='text'
+                    placeholder='Fullständigt namn'
                 />
                 <Input
-                    name="email"
+                    name='email'
                     value={email}
                     onChange={this.onChange}
-                    type="text"
-                    placeholder="Mejladress"
+                    type='text'
+                    placeholder='Mejladress'
                 />
                 <Input
-                    name="passwordOne"
+                    name='passwordOne'
                     value={passwordOne}
                     onChange={this.onChange}
-                    type="password"
-                    placeholder="Lösenord"
+                    type='password'
+                    placeholder='Lösenord'
                 />
                 <Input
-                    name="passwordTwo"
+                    name='passwordTwo'
                     value={passwordTwo}
                     onChange={this.onChange}
-                    type="password"
-                    placeholder="Bekräfta lösenord"
+                    type='password'
+                    placeholder='Bekräfta lösenord'
                 />
                 <label>
                     Admin:
-          <input
-                        name="isAdmin"
-                        type="checkbox"
+                    <input
+                        name='isAdmin'
+                        type='checkbox'
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
                     />
                 </label>
-                <button disabled={isInvalid} type="submit">
+                <button disabled={isInvalid} type='submit'>
                     Sign Up
                 </button>
                 {error && <p>{error.message}</p>}
@@ -140,15 +133,9 @@ class SignUpFormBase extends Component {
     }
 }
 
-const SignUpLink = () => (
-    <p>
-        Don't have an account?
-    </p>
-);
+const SignUpLink = () => <p>Don't have an account?</p>;
 
-const SignUpForm = compose(
-    withFirebase,
-)(SignUpFormBase);
+const SignUpForm = compose(withFirebase)(SignUpFormBase);
 
 export { SignUpForm, SignUpLink };
 

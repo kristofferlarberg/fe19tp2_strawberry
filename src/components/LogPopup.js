@@ -1,17 +1,13 @@
-import React, { Component } from 'react'
-import UserStatus from './Pages/SignIn/sign_in_out'
-import styled from 'styled-components';
-import SettingsBox from './Styles/settingsBox';
+import React, { Component } from 'react';
+import UserStatus from './Pages/SignIn/sign_in_out';
 
 export class LogPopup extends Component {
     handleClick = () => {
         this.props.toggle();
     };
     render() {
-        return (
-            <UserStatus />
-        )
+        return <UserStatus />;
     }
 }
 
-export default LogPopup
+export default LogPopup;

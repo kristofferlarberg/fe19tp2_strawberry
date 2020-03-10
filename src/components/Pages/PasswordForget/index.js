@@ -10,7 +10,7 @@ const PasswordForgetPage = () => (
 );
 const INITIAL_STATE = {
     email: '',
-    error: null,
+    error: null
 };
 class PasswordForgetFormBase extends Component {
     constructor(props) {
@@ -38,13 +38,13 @@ class PasswordForgetFormBase extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <input
-                    name="email"
+                    name='email'
                     value={this.state.email}
                     onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
+                    type='text'
+                    placeholder='Email Address'
                 />
-                <button disabled={isInvalid} type="submit">
+                <button disabled={isInvalid} type='submit'>
                     Reset My Password
                 </button>
                 {error && <p>{error.message}</p>}

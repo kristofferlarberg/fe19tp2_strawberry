@@ -15,26 +15,29 @@ const withAuthorization = condition => Component => {
                         this.props.history.push(ROUTES.LANDING);
                     }
                 },
-                () => this.props.history.push(ROUTES.LANDING),
+                () => this.props.history.push(ROUTES.LANDING)
             );
         }
+
         componentWillUnmount() {
             this.listener();
         }
+
         render() {
             return (
                 <AuthUserContext.Consumer>
                     {authUser =>
-                        condition(authUser) ? <Component {...this.props} authUser={authUser} /> : <Component {...this.props} />
+                        condition(authUser) ? (
+                            <Component {...this.props} authUser={authUser} />
+                        ) : (
+                            <Component {...this.props} />
+                        )
                     }
                 </AuthUserContext.Consumer>
             );
         }
     }
-    return compose(
-        withRouter,
-        withFirebase,
-    )(WithAuthorization);
+    return compose(withRouter, withFirebase)(WithAuthorization);
 };
 
 export default withAuthorization;

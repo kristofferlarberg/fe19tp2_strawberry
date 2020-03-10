@@ -1,32 +1,50 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-//  import Members from './components/Data/members';
-//  import Data from './components/Data';
-//import LandingPage from './components/Pages/Landing'
-//import SignUpPage from './components/Pages/SignUp'
-import './App.css'
-import HomePage from './components/Pages/Home'
-
-// import * as ROUTES from './constants/routes';
-import { withAuthentication } from './components/Session';
-
-import Side from './components/Side';
-import DocPopup from './components/Data/DocPopup';
-import { findAllByDisplayValue } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
+import HomePage from './components/Pages/Home';
+import { withAuthentication, AuthUserContext } from './components/Session';
+import LoadingDots from './components/LoadingDots';
 
 class App extends React.Component {
-  render() {
+    state = {
+        totalAuthCalls: 0,
+        isAfterAuth: false
+    };
 
-    return (
-      <Router>
-      <div>
-        <HomePage />
-        
-      </div>
-      </Router>
-    );
-  }
+    componentDidUpdate() {
+        if (this.state.totalAuthCalls === 5 && !this.state.isAfterAuth) {
+            this.setState({ isAfterAuth: true });
+        } else {
+            if (!this.state.isAfterAuth) {
+                this.setState({
+                    totalAuthCalls: this.state.totalAuthCalls + 1
+                });
+            }
+        }
+    }
+
+    render() {
+        return (
+            <Router>
+                <AuthUserContext.Consumer>
+                    {authUser =>
+                        this.state.isAfterAuth ? (
+                            <HomePage authUser={authUser} />
+                        ) : (
+                            <div
+                                style={{
+                                    marginLeft: '50vw',
+                                    marginTop: '50vh'
+                                }}
+                            >
+                                <LoadingDots />
+                            </div>
+                        )
+                    }
+                </AuthUserContext.Consumer>
+            </Router>
+        );
+    }
 }
 
 export default withAuthentication(App);

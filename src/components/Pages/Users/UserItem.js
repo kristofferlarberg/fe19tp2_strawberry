@@ -9,7 +9,7 @@ class UserItem extends Component {
         this.state = {
             loading: false,
             user: null,
-            ...props.location.state,
+            ...props.location.state
         };
     }
 
@@ -25,7 +25,7 @@ class UserItem extends Component {
             .on('value', snapshot => {
                 this.setState({
                     user: snapshot.val(),
-                    loading: false,
+                    loading: false
                 });
             });
     }
@@ -59,11 +59,11 @@ class UserItem extends Component {
                         </span>
                         <span>
                             <button
-                                type="button"
+                                type='button'
                                 onClick={this.onSendPasswordResetEmail}
                             >
                                 Send Password Reset
-              </button>
+                            </button>
                         </span>
                     </div>
                 )}
