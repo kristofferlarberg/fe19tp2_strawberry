@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { compose } from 'recompose';
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
+import {withAuthorization} from '../../Session';
+
 
 
 
@@ -117,4 +119,9 @@ let uid = user.uid;
   }
 }
 
-export default withFirebase(UserList);
+const condition = authUser =>
+  authUser && !!authUser.roles[ROLES.ADMIN];
+export default compose(
+  withAuthorization(condition),
+  withFirebase,
+)(UserList)
