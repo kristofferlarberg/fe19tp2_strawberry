@@ -145,9 +145,9 @@ export class Side extends React.Component {
                 <GlobalStyles />
                 <SidenavDiv>
                     <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
-                    {/*                 <UserDiv>
+                                    <UserDiv>
                     <UserStatus />
-                </UserDiv> */}
+                </UserDiv>
                     {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>

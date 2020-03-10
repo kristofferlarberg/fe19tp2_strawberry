@@ -9,18 +9,22 @@ import * as ROLES from '../../../constants/roles';
 
 const HomePage = ({ authUser }) => (
     <div style={{ display: 'flex' }}>
+        {console.log('Home')
+        }
         <Side />
         {authUser &&
             authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
             <div>
                 <Data>
-                    {/* <Renderer authUser={authUser} /> */}
-                    <Admin />
+                    <Renderer authUser={authUser} />
                 </Data>
             </div>
-            : <Data>
+            : 
+            <div>
+            <Data>
                 <Renderer authUser={authUser} />
             </Data>
+            </div>
         }
 
     </div>

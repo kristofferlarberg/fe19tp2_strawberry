@@ -7,3 +7,4 @@ export const ADMIN = '/admin';
 export const ADMIN_DETAILS = '/admin/:id';
 export const PASSWORD_FORGET = '/pw-forget';
 export const VOTERING = '/votering'
+export const NO_ACCESS_USER = '/no-access'

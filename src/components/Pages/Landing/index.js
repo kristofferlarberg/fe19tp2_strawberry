@@ -5,6 +5,7 @@ import {SignUpForm} from '../SignUp'
 import { AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../../constants/routes';
+import * as ROLES from '../../../constants/roles';
 
 const instialState = {
     noAccont: true,
@@ -25,7 +26,7 @@ class LandingPage extends Component {
         this.setState({...instialState})
     }
     componentWillUnmount () {
-        this.setState({})
+        this.setState({noAccont:null,showSignInForm:null})
     }
     showSignIn (event) {
         event.preventDefault();
@@ -45,7 +46,8 @@ class LandingPage extends Component {
             {authUser =>
                 authUser ?
                 <div>
-                    <Link to={ROUTES.HOME}>Home</Link>
+                        {authUser.roles[ROLES.ACCESS] ?  <Link to={ROUTES.HOME}>Home</Link> : 
+                        <Link to={ROUTES.NO_ACCESS_USER}>No Access</Link>}
                         <SignOutButton />
                 </div>
                

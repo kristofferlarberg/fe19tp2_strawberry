@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import * as ROLES from '../../constants/roles';
+import { withAuthorization } from '../Session';
+import { compose } from 'recompose';
 import styled from 'styled-components';
 import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar } from 'react-chartjs-2';
@@ -10,10 +13,6 @@ import Search from '../Search';
 import LogPopup from '../LogPopup';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../Styles/global';
-import { compose } from 'recompose';
-import * as ROLES from '../../constants/roles';
-
-import { withAuthorization } from '../Session';
 
 
 
@@ -35,9 +34,7 @@ flex-direction:row;
 justify-content:space-around;
 width:45%;
     z-index:1;
-
 `;
-
 
 const Span = styled.span`
     background: #0FCE56;
@@ -53,7 +50,6 @@ const DocH1 = styled.h1`
     margin: 0px;
     margin-right: 0.7rem;
     color: ${ props => props.theme.font_color};
-
 `;
 
 const DocText = styled.h3`
@@ -223,6 +219,8 @@ class Renderer extends Component {
     };
 
     render() {
+        console.log('Render');
+        
         const { popups, yes, no, pass, absent, party, parties, date, title, titleDates, active, dok_id, votering_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
@@ -275,7 +273,7 @@ class Renderer extends Component {
         let checkPopup = popups.filter(popup => popup.size === 'M');
 
         return (
-            <div style={{ width: '1045px', marginLeft: '50px', height: '100vh', marginTop: '20px' }}>
+            <div style={{ width: '1045px', marginLeft: '340px', height: '100vh', paddingTop: '20px', boxSizing: 'border-box' }}>
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
                     {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
@@ -289,32 +287,28 @@ class Renderer extends Component {
 
                 <div style={{ display: 'flex', width: '100%' }}>
                     {
-                        data.rawData.length > 0 && data.rawData[this.state.votering_id].forEach((vote, i) => {
+                        data.rawData.length > 0 && data.rawData[votering_id].forEach((vote, i) => {
                             const colorIndex = data2.datasets.findIndex(value => value.label === vote.rost);
                             voteRows.push(
                                 <Span
                                     key={i + vote.namn}
-                                    title={loggedIn ? `${vote.namn} (${vote.parti}): ${vote.rost}` : null}
-                                    style={{ transitionDuration: '0.5s', background: loggedIn ? backgroundColor[colorIndex] : '#ddd' }}
-                                />)
+                                    title={active ? `${vote.namn} (${vote.parti}): ${vote.rost}` : null}
+                                    style={{ transitionDuration: '0.5s', background: active ? backgroundColor[colorIndex] : '#ddd' }}
+                                />,
+                                i === 18 && <br key='br' />)
+
                         })
                     }
+
                     {
-                        this.state.parties.forEach((party, id) => {
-                            let voteObject = this.props.data.getVoteData(this.state.votering_id, party)
+                        parties.forEach((party, id) => {
+                            let voteObject = this.props.data.getVoteData(votering_id, party)
                             voteObject.votes.forEach((vote, i) => {
                                 voteResult[i][id] += vote.length;
                                 totalVoteResult[i] += vote.length;
                             })
                         })
                     }
-                    {
-                        totalVoteResult.map((e, i) => {
-                            return loggedIn ?
-                                <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', background: backgroundColor[i], border: e > 0 && '1px solid white', marginTop: '9px', marginBottom: '24px' }}> {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br /> {e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
-                                : <div key={i + 'a'} style={{ display: 'inline-block', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px', marginBottom: '24px' }}><br /><br /></div>
-                        })
-                    }</div>
 
                     {
                         totalVoteResult.map((e, i) => {
@@ -367,8 +361,6 @@ class Renderer extends Component {
 
     };
 };
-//export default Renderer
-
 const condition = authUser =>
     authUser && !!authUser.roles[ROLES.ACCESS];
 
