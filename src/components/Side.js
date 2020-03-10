@@ -9,8 +9,6 @@ import LogIcon from './icons/sign-in-alt-solid.svg'
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import ToggleDarkLight from './ToggleDarkLight';
-import { GlobalStyles } from './Styles/global';
-import { lightTheme, darkTheme } from './Styles/theme';
 /* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
 import { ReactComponent as StarIcon } from './icons/star-solid.svg';
 import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
@@ -23,16 +21,14 @@ const theme = {
 
 
 
-const SidenavDiv = styled.div`
+export const SidenavDiv = styled.div`
     grid-column-start: 1;
     height:100vh;
     position: fixed;
     width: 300px;
     z-index:1;
     overflow-x:hidden;
-    background-color: ${({ theme }) => theme.side};
     overflow-x: hidden;
-    color: ${({ theme }) => theme.text};
 `
 
 const SidenavMenu = styled.div`
@@ -75,7 +71,7 @@ const DataDiv = styled.div`
 
 const SearchBarDiv = styled.div`
     display: flex;
-    color: ${props => props.theme.font_color};
+    color: ${props => props.theme.color};
     margin-top:2rem;
     justify-content: flex-start;
     flex-direction: row;
@@ -111,7 +107,7 @@ const TextOverFlow = styled.h3`
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
-    color: ${props => props.theme.font_color};
+    color: ${props => props.text};
 `
 
 const LIWithImg = styled.li`
@@ -140,7 +136,7 @@ export class Side extends React.Component {
 
     render() {
         return (
-            <SidenavDiv>
+            <SidenavDiv className="side">
                 <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
                 <SidenavMenu>
                     <ULlist>
@@ -155,7 +151,7 @@ export class Side extends React.Component {
                             <h3>Inställningar</h3>
                         </LIWithImg>
 
-                        {this.state.settings ? <SettingsBox><ToggleDarkLight /></SettingsBox> : null}
+                        {this.state.settings ? <SettingsBox><ToggleDarkLight theme={this.props.theme} toggleTheme={this.props.toggleTheme} /></SettingsBox> : null}
 
                         <LIWithImg>
                             <Icons src={EyeIcon} />
