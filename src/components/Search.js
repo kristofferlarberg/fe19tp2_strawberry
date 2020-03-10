@@ -4,30 +4,22 @@ import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withData } from './Data';
 import { makeStyles } from "@material-ui/core/styles";
-
-/* const useStyles = makeStyles(theme => ({
+import styled, { ThemeProvider } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+/* 
+ const useStyles = makeStyles(theme => ({
     inputRoot: {
-        color: "purple",
+         color: ${({ theme }) => theme.text},
         "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "green"
+             borderColor: $({ theme }) => theme.text},
         },
         "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "red"
+    borderColor: ${ ({ theme }) => theme.text },
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "purple"
+    borderColor: ${ ({ theme }) => theme.text },
         },
 
-        overrides: {
-            MuiFormLabel: { // Name of the component ⚛️ / style sheet
-                root: { // Name of the rule
-                    color: "orange",
-                    "&$focused": { // increase the specificity for the pseudo class
-                        color: "red"
-                    }
-                }
-            }
-        }
     }
 
 

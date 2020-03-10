@@ -345,7 +345,7 @@ class Renderer extends Component {
                     </div>
 
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', width: '94.5%', marginTop: '-20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', width: '94.5%', marginTop: '-20px'}}>
                     <Logos style={{ filter: !active && 'grayscale(100%)', opacity: !active && '0.5' }}>
                         <img src={S} alt="S" className="img" />
                         <img src={V} alt="V" className="img" />

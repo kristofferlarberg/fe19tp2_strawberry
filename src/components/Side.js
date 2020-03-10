@@ -14,11 +14,9 @@ import { ReactComponent as StarIcon } from './icons/star-solid.svg';
 import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
 
 const theme = {
-    font_color: '#797979',
+    font_color: '#444444',
     darker_font: '#707070'
 }
-
-
 
 
 export const SidenavDiv = styled.div`
@@ -32,7 +30,9 @@ export const SidenavDiv = styled.div`
 `
 
 const SidenavMenu = styled.div`
-    margin: 0 2rem;
+    margin: 0 3rem;
+    /* margin-top:10px; */
+    padding-top:1rem;
 `
 
 export const ULlist = styled.ul`
@@ -72,12 +72,14 @@ const DataDiv = styled.div`
 const SearchBarDiv = styled.div`
     display: flex;
     color: ${props => props.theme.color};
-    margin-top:2rem;
+    /* margin-top:2rem; */
     justify-content: flex-start;
+    align-items:center;
     flex-direction: row;
     font-size: 1rem;
     font-weight: bold;
     padding: .3rem;
+    margin-bottom:-15px;
 `
 
 const InputSearch = styled.input`
@@ -90,7 +92,7 @@ const InputSearch = styled.input`
 `
 
 const SearchHistoryDiv = styled.div`
-    padding:10px 0;
+    /* padding:10px 0; */
 `
 
 const Icons = styled.img`
@@ -101,9 +103,12 @@ const Icons = styled.img`
 
 const TextOverFlow = styled.h3`
     text-overflow: ellipsis;
+    margin-top:-5px;
     width: 11rem;
+    font-size:1em;
+    color:#858585;
     font-style: italic;
-    margin:.5rem;
+    /* margin:.5rem; */
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -161,8 +166,7 @@ export class Side extends React.Component {
                     <SearchHistoryDiv>
                         <SearchBarDiv>
                             <Icons src={SearchIcon} />
-                            <InputSearch placeholder='Sök' />
-
+                            <h3>Sökhistorik</h3>
                         </SearchBarDiv>
                         <ULlist>
                             {/* Example List */}
