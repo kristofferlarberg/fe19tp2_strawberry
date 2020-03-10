@@ -74,7 +74,6 @@ class Popup extends React.Component {
                     padding: '4%',
                     display: 'flex',
                     borderRadius: '5px 5px 0 0',
-                    /* backgroundImage: 'linear-gradient(to right, #385858, #8cb5b5)', */
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
@@ -92,17 +91,17 @@ class Popup extends React.Component {
                                 display: 'inline-flex',
                                 transitionDuration: '0.3s',
                                 alignItems: 'center',
-                                height: '12%',
+                                height: e.length > 0 && '12%',
                                 boxSizing: 'border-box',
                                 width: `${e.length / totalVotes * 100}%`,
                                 justifyContent: 'center',
                                 background: backgroundColor[i],
-                                borderTop: e.length > 0 && '2px solid white',
-                                borderRight: i === 0 && e.length > 0 && (e.length / totalVotes) !== 1 && '2px solid white' || (e.length / totalVotes) > 0.5 && (e.length / totalVotes) !== 1 && '2px solid white',
+                                borderRight: e.length > 0 && i !== 3 && '1px solid white',
                                 color: 'white',
                                 fontSize: small ? '1em' : '1.5em'
                             }}>
-                            <span>{e.length > 0 && `${(e.length / totalVotes * 100).toFixed(1)}%`}</span>
+
+                            {e.length > 0 && <span style={{ color: e.length / totalVotes < 0.06 && backgroundColor[i] }}>{e.length / totalVotes > 0.06 ? `${(e.length / totalVotes * 100).toFixed(1).replace(/.0+$/, '')}%` : '.'}</span>}
                         </div>
                     })
                 }
@@ -115,7 +114,7 @@ class Popup extends React.Component {
                     <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1rem', marginBottom: '0.5rem', marginLeft: '4%', width: '94%' }}>
                         {labels.map((label, i) => <span key={i} style={{ color: backgroundColor[i], fontFamily: 'Roboto', fontSize: small ? '1em' : '1.4em', fontWeight: '400', display: 'inline-block', width: '25%' }}>{label}</span>)}
                     </div>
-                    <div style={{ height: small ? '150px' : '270px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: small ? '0.6em' : '1em', fontWeight: '400', lineHeight: small ? '1.1em' : '1.5em', width: '96%', marginLeft: '4%' }}>
+                    <div style={{ height: small ? '158px' : '282px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: small ? '0.6em' : '1em', fontWeight: '400', lineHeight: small ? '1.1em' : '1.5em', width: '96%', marginLeft: '4%' }}>
                         {partyMembers.map((members, i) => {
                             return <ul key={i} style={{ width: '25%', padding: '0px', margin: '0' }}>{members}</ul>
                         })

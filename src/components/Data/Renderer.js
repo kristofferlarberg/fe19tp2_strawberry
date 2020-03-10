@@ -305,7 +305,7 @@ class Renderer extends Component {
                     {
                         totalVoteResult.map((e, i) => {
                             return active ?
-                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1).replace(/.0+$/, '')}%`}</div>
                                 : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px' }}><br /><br /></div>
                         })
                     }</div>
@@ -326,7 +326,7 @@ class Renderer extends Component {
 
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', width: '90.5%', marginTop: '-20px' }}>
-                    <Logos style={{ filter: !active && 'grayscale(100%)', opacity: !active && '0.5'}}>
+                    <Logos style={{ filter: !active && 'grayscale(100%)', opacity: !active && '0.5' }}>
                         <img src={S} alt="S" className="img" />
                         <img src={V} alt="V" className="img" />
                         <img src={C} alt="C" className="img" />
@@ -336,9 +336,9 @@ class Renderer extends Component {
                         <img src={MP} alt="MP" className="img" />
                         <img src={SD} alt="SD" className="img" />
                     </Logos>
-                </div> 
+                </div>
 
-               
+
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', width: '1000px' }}>
                     {active &&
                         popups.map((popup, i) => {
