@@ -59,8 +59,8 @@ const DocText = styled.h3`
     margin: 0;
 `
 const InfoIcon = styled.img`
-    width: 40px;
-    margin-left: 2.5rem;
+    width: 35px;
+    margin-left: 0.7rem;;
     cursor: pointer;
     &:hover{
     filter: opacity(0.7);
@@ -280,8 +280,7 @@ class Renderer extends Component {
 
         return (
             <Main>
-                {/*             <div style={{ marginLeft: '340px', marginRight: '20px', height: '100vh', paddingTop: '20px', boxSizing: 'border-box' }}>
-*/}                {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
+                {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '1000px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', width: '60%' }}>
                         {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
@@ -291,7 +290,7 @@ class Renderer extends Component {
                         {active && <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block' }} />}
                     </div>
                 </div >
-                <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: '100%', margin: '1.5rem 0', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
 
                 </div>
