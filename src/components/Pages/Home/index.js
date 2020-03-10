@@ -5,7 +5,10 @@ import Side from '../../Side';
 import { withAuthorization, withAuthentication } from '../../Session';
 import Admin from '../Admin'
 import * as ROLES from '../../../constants/roles';
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
+import { GlobalStyles } from '../../Styles/global';
+import { lightTheme, darkTheme } from '../../Styles/theme';
+
 
 const Main = styled.div`
     display: grid;
@@ -15,19 +18,22 @@ const Main = styled.div`
 const HomePage = ({ authUser }) => (
 
     <Main>
-        <Side />
-        {authUser &&
-            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
-            <div>
-                <Data>
-                    {/* <Renderer authUser={authUser} /> */}
-                    <Admin />
+        <ThemeProvider theme={lightTheme}>
+            <GlobalStyles />
+            <Side />
+            {authUser &&
+                authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
+                <div>
+                    <Data>
+                        {/* <Renderer authUser={authUser} /> */}
+                        <Admin />
+                    </Data>
+                </div>
+                : <Data>
+                    <Renderer authUser={authUser} />
                 </Data>
-            </div>
-            : <Data>
-                <Renderer authUser={authUser} />
-            </Data>
-        }
+            }
+        </ThemeProvider>
     </Main>
 );
 

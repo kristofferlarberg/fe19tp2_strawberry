@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/SignIn/sign_in_out'
-import styled, { ThemeProvider } from 'styled-components/macro';
+import styled, { ThemeProvider } from 'styled-components';
 import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
@@ -9,6 +9,7 @@ import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import ToggleDarkLight from './ToggleDarkLight';
 import { GlobalStyles } from './Styles/global';
+import { lightTheme, darkTheme } from './Styles/theme';
 /* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
 import { ReactComponent as StarIcon } from './icons/star-solid.svg';
 import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
@@ -29,9 +30,9 @@ const SidenavDiv = styled.div`
     width: 300px;
     z-index:1;
     overflow-x:hidden;
-    background-color: #DDD;
+    background-color: ${({ theme }) => theme.side};
     overflow-x: hidden;
-    color: ${ props => props.theme.font_color};
+    color: ${({ theme }) => theme.text};
 `
 
 const SidenavMenu = styled.div`
@@ -139,67 +140,65 @@ export class Side extends React.Component {
 
     render() {
         return (
-            <ThemeProvider theme={theme}>
-                <GlobalStyles />
-                <SidenavDiv>
-                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
-                    {/*                 <UserDiv>
+
+
+            <SidenavDiv>
+                <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
+                {/*                 <UserDiv>
                     <UserStatus />
                 </UserDiv> */}
-                    {/*                 <SearchBarDiv borded>
+                {/*                 <SearchBarDiv borded>
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
                 </SearchBarDiv> */}
-                    <SidenavMenu>
+                <SidenavMenu>
+                    <ULlist>
+                        <LIWithImg>
+                            <Icons src={LogIcon} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
+                            <h3>Logga in</h3>
+                        </LIWithImg>
+                        {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}
+                        <LIWithImg>
+
+                            <Icons src={CogWheel} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleSettings} />
+                            <h3>Inställningar</h3>
+                        </LIWithImg>
+
+                        {this.state.settings ? <SettingsBox><ToggleDarkLight /></SettingsBox> : null}
+
+                        <LIWithImg>
+                            <Icons src={EyeIcon} />
+                            <h3>Bevakningar</h3>
+                        </LIWithImg>
+                    </ULlist>
+                    <SearchHistoryDiv>
+                        <SearchBarDiv>
+                            <Icons src={SearchIcon} />
+                            <InputSearch placeholder='Sök' />
+
+                        </SearchBarDiv>
                         <ULlist>
-                            <LIWithImg>
-                                <Icons src={LogIcon} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
-                                <h3>Logga in</h3>
-                            </LIWithImg>
-                            {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}
-                            <LIWithImg>
-
-                                <Icons src={CogWheel} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleSettings} />
-                                <h3>Inställningar</h3>
-                            </LIWithImg>
-
-                            {this.state.settings ? <SettingsBox><ToggleDarkLight toggle={this.toggleSettings} /></SettingsBox> : null}
-
-                            <LIWithImg>
-                                <Icons src={EyeIcon} />
-                                <h3>Bevakningar</h3>
-                            </LIWithImg>
-                        </ULlist>
-                        <SearchHistoryDiv>
-                            <SearchBarDiv>
-                                <Icons src={SearchIcon} />
-                                <InputSearch placeholder='Sök' />
-
-                            </SearchBarDiv>
-                            <ULlist>
-                                {/* Example List */}
-                                <li>
-                                    <TextOverFlow>
-                                        SoU4
+                            {/* Example List */}
+                            <li>
+                                <TextOverFlow>
+                                    SoU4
 Äldrefrågor, förslagspunkt 8 - 2020-02-13</TextOverFlow>
-                                </li>
-                                <li>
-                                    <TextOverFlow>
-                                        JuU18
+                            </li>
+                            <li>
+                                <TextOverFlow>
+                                    JuU18
 Samarbete mellan svenska och norska särskilda insatsgrupper i krissituationer, förslagspunkt 3 - 2020-02-13</TextOverFlow>
-                                </li>
-                                <li>
-                                    <TextOverFlow>
-                                        TU6
-        Yrkestrafik och taxi, förslagspunkt 4 - 2020-02-05
+                            </li>
+                            <li>
+                                <TextOverFlow>
+                                    TU6
+    Yrkestrafik och taxi, förslagspunkt 4 - 2020-02-05
                                 </TextOverFlow>
-                                </li>
-                            </ULlist>
-                        </SearchHistoryDiv>
-                    </SidenavMenu>
-                </SidenavDiv>
-            </ThemeProvider>
-
+                            </li>
+                        </ULlist>
+                    </SearchHistoryDiv>
+                </SidenavMenu>
+            </SidenavDiv>
         );
     }
 }
