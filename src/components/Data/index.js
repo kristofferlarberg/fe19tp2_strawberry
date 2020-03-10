@@ -166,7 +166,6 @@ export default class Data extends Component {
 
     render() {
         const { hasData } = this.state;
-        console.log(hasData)
         return (
             <DataContext.Provider value={this}>
                 {hasData ? (

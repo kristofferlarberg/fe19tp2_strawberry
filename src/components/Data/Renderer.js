@@ -174,7 +174,6 @@ class Renderer extends Component {
         );
         if (index !== -1) {
             let votering_id = index;
-            console.log(index);
             const votingData = this.props.data.getVoteData(
                 votering_id,
                 this.state.party

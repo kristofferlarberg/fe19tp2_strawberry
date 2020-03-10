@@ -19,7 +19,9 @@ const SidenavDiv = styled.div`
 `;
 
 const SidenavMenu = styled.div`
-    margin: 0 2rem;
+    margin: 0 3rem;
+    /* margin-top:10px; */
+    padding-top: 1rem;
 `;
 
 export const ULlist = styled.ul`
@@ -42,25 +44,18 @@ const SettingsBox = styled.section`
 const SearchBarDiv = styled.div`
     display: flex;
     color: ${props => props.theme.color};
-    margin-top: 2rem;
+    /* margin-top:2rem; */
     justify-content: flex-start;
+    align-items: center;
     flex-direction: row;
     font-size: 1rem;
     font-weight: bold;
     padding: 0.3rem;
-`;
-
-const InputSearch = styled.input`
-    background-color: transparent;
-    border: none;
-    outline: none;
-    padding-left: 0.5rem;
-    width: 150px;
-    font-size: 1rem;
+    margin-bottom: -15px;
 `;
 
 const SearchHistoryDiv = styled.div`
-    padding: 10px 0;
+    /* padding:10px 0; */
 `;
 
 const Icons = styled.img`
@@ -71,9 +66,12 @@ const Icons = styled.img`
 
 const TextOverFlow = styled.h3`
     text-overflow: ellipsis;
+    margin-top: -5px;
     width: 11rem;
+    font-size: 1em;
+    color: #858585;
     font-style: italic;
-    margin: 0.5rem;
+    /* margin:.5rem; */
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -93,7 +91,6 @@ export class Side extends Component {
     };
 
     toggleLogin = () => {
-        console.log(this.props);
         if (this.props.authUser && this.props.firebase) {
             this.props.firebase.doSignOut();
         } else {
@@ -171,7 +168,7 @@ export class Side extends Component {
                     <SearchHistoryDiv>
                         <SearchBarDiv>
                             <Icons src={SearchIcon} />
-                            <InputSearch placeholder='Sök' />
+                            <h3>Sökhistorik</h3>
                         </SearchBarDiv>
                         <ULlist>
                             {localStorage.getItem('search-history') &&

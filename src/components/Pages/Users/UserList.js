@@ -43,14 +43,12 @@ class UserList extends Component {
 
     addAccess(user) {
         if (!user) {
-            console.log('User needed!');
             return;
         }
         let uid = user.uid;
         //let roles = user.roles;
         user.roles[ROLES.NO_ACCESS] = null;
         user.roles[ROLES.ACCESS] = ROLES.ACCESS;
-        //console.log(user);
         user.uid = null;
         this.props.firebase.user(uid).set({
             ...user
@@ -58,7 +56,6 @@ class UserList extends Component {
     }
     removeAccess(user) {
         if (!user) {
-            console.log('User needed!');
             return;
         }
         let uid = user.uid;
@@ -66,7 +63,6 @@ class UserList extends Component {
         //let roles = user.roles;
         user.roles[ROLES.ACCESS] = null;
         user.roles[ROLES.NO_ACCESS] = ROLES.NO_ACCESS;
-        //console.log(user);
         user.uid = null;
         this.props.firebase.user(uid).set({
             ...user

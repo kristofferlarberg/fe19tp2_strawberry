@@ -58,7 +58,6 @@ class UserHaveAccount extends Component {
     }
 
     handleClick = event => {
-        console.log('YO');
         event.preventDefault();
         if (this.state.signUp) {
             this.setState({ signUp: false });
