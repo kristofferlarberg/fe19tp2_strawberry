@@ -33,10 +33,10 @@ const INITIAL_STATE = {
     isAdmin: false,
 };
 
-const SignUpPage = () => {
+const SignUpPage = (props) => {
     return (
-        <SignUpForm />
-        );
+        <SignUpForm {...props} />
+    );
 }
 
 class SignUpFormBase extends Component {
@@ -134,10 +134,19 @@ class SignUpFormBase extends Component {
                         onChange={this.onChangeCheckbox}
                     /> */}
                 </label>
-                <button disabled={isInvalid} type="submit">
-                    Sign Up
+
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                <button disabled={isInvalid} type="submit" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
+                    marginRight: '5px'
+                }}>
+                    Skapa konto
                 </button>
+{/*                 <button type="button" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
+                }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
                 {error && <p>{error.message}</p>}
+                </div>
             </MyForm>
         );
     }

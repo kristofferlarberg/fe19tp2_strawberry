@@ -22,8 +22,6 @@ const theme = {
 
 
 
-
-
 const SidenavDiv = styled.div`
     height:100vh;
     position: fixed;
@@ -156,7 +154,7 @@ export class Side extends React.Component {
                         <ULlist>
                             <LIWithImg>
                                 <Icons src={LogIcon2} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
-                                <h3>Logga in</h3>
+                                {this.props.authUser ? <h3>Logga ut</h3> : <h3>Logga in</h3>}
                             </LIWithImg>
                             {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}
                             <LIWithImg>

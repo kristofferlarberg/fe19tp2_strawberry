@@ -77,11 +77,13 @@ class Popup extends React.Component {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: small ? '40px' : '80px' }} />}
-                    <h1 style={{ fontFamily: 'Roboto', fontWeight: '400', fontSize: small ? '1.5em' : '2.5em', color: 'black' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems:'center', height:'auto' }}>
+                    {this.props.party !== '-' && <img src={`img/${this.props.party}.svg`} style={{ width: small ? '40px' : '60px', height: small ? '40px' : '60px', marginRight:'15px'}} />}
+                    <h1 style={{ fontFamily: 'Roboto', fontWeight: '300', fontSize: small ? '1.5em' : '2.3em', color: 'black' }}>
                         {this.props.party === '-' ? 'Partilösa' : parties[voteObject.parties.indexOf(this.props.party)]}&nbsp;
-                        {!small && <img style={{ height: '25px', cursor: 'pointer' }} onClick={this.props.clickedPopup} src={EyeIcon} />}
-                        <Xspan onClick={this.props.clickedPopup} data-value='x'> ×</Xspan></h1>
+                        {!small && <img style={{ height: '25px', cursor: 'pointer' }} onClick={this.props.clickedPopup} src={EyeIcon} title="Bevaka" />}</h1>
+                        </div>
+                    <h1 style={{ fontFamily: 'Roboto', fontWeight: '300', fontSize: small ? '1.5em' : '2.4em', color: 'black' }}> <Xspan onClick={this.props.clickedPopup} data-value='x'> ×</Xspan></h1>
 
                 </div>
                 {
