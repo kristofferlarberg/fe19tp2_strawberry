@@ -3,15 +3,14 @@ import { func, string } from 'prop-types';
 import { ToggleContainer, CheckBox } from './Toggle.styled';
 
 const Toggle = ({ theme, toggleTheme }) => {
-    return (
-        <>
-            <CheckBox id='toggleThemeCheckbox' type='checkbox' />
-            <ToggleContainer
-                htmlFor='toggleThemeCheckbox'
-                onClick={toggleTheme}
-            />
-        </>
-    );
+  const isChecked = theme === 'dark';
+  return (
+    <>
+      <CheckBox id="checkbox" type="checkbox" defaultChecked={isChecked} />
+      <ToggleContainer htmlFor="checkbox" onClick={toggleTheme} />
+
+    </>
+  );
 };
 
 Toggle.propTypes = {

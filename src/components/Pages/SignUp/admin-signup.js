@@ -2,6 +2,29 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { withFirebase } from '../../Firebase'
 import * as ROLES from '../../../constants/roles';
+import styled from 'styled-components';
+
+const MyForm = styled.form`
+width:auto;
+/* margin-top:10px; */
+`
+
+const Input = styled.input`
+background:transparent;
+padding: 10px;
+width:180px;
+border:none;
+border-bottom: 1px solid #838383;
+/* border-radius:5px; */
+margin-bottom:10px;
+font-family:Roboto;
+font-size:1em;
+outline: none;
+`
+const ButtonColor = styled.button`
+background: ${props =>
+    props.disabled ? '#ff6681' : 'red'} ;
+`
 
 const INITIAL_STATE = {
     username: '',
@@ -12,7 +35,7 @@ const INITIAL_STATE = {
     isAdmin: false,
 };
 
-const SignUpPage = () => {
+const SignUpPage2 = () => {
     return (
         <SignUpForm2 />
     );
@@ -23,8 +46,13 @@ class SignUpFormBase extends Component {
         super(props);
         this.state = { ...INITIAL_STATE }
     }
-    onChangeCheckbox = event => {
-        this.setState({ [event.target.name]: event.target.checked });
+    onChangeAdmin = event => {
+        event.preventDefault();
+        if (this.state.isAdmin) {
+            this.setState({ [event.target.name]: false });
+        } else {
+            this.setState({ [event.target.name]: true });
+        }
     };
 
     onSubmit = event => {
@@ -76,63 +104,76 @@ class SignUpFormBase extends Component {
             username === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
+            <MyForm onSubmit={this.onSubmit}>
+                <Input
                     name="username"
                     value={username}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Fullständigt namn"
                 />
-                <input
+                <Input
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder="Mejladress"
                 />
-                <input
+                <Input
                     name="passwordOne"
                     value={passwordOne}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Password"
+                    placeholder="Lösenord"
                 />
-                <input
+                <Input
                     name="passwordTwo"
                     value={passwordTwo}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Confirm Password"
+                    placeholder="Bekräfta lösenord"
                 />
+                <ButtonColor
+                    name="isAdmin"
+                    type="submit"
+                    onClick={this.onChangeAdmin}
+                    style={{
+                        border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                        marginRight: '5px'
+                    }}
+                > Admin</ButtonColor>
                 <label>
-                    Admin:
+   {/*                  Admin:
           <input
                         name="isAdmin"
                         type="checkbox"
                         checked={isAdmin}
-                        onChange={this.onChangeCheckbox}
-                    />
+                        onChange={this.onChangeAdmin}
+                    /> */}
                 </label>
-                <button disabled={isInvalid} type="submit">
-                    Sign Up
-                </button>
+
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                <ButtonColor disabled={isInvalid} type="submit" style={{
+                 border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
+                    marginRight: '5px'
+                }}>
+                    Skapa konto
+                </ButtonColor>
+{/*                 <button type="button" style={{
+                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
+                }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
                 {error && <p>{error.message}</p>}
-            </form>
+                </div>
+                {error && console.error(error.message)}
+            </MyForm>
         );
     }
 }
 
-const SignUpLink = () => (
-    <p>
-        Don't have an account?
-    </p>
-);
 
 const SignUpForm2 = compose(
     withFirebase,
 )(SignUpFormBase);
 
-export { SignUpForm2, SignUpLink };
 
-export default SignUpPage;
+export default SignUpPage2;

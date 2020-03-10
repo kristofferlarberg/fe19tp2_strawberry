@@ -9,7 +9,6 @@ import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import SvD from './icons/SvDlogo.svg';
 import ToggleDarkLight from './ToggleDarkLight';
-import { GlobalStyles } from './Styles/global';
 
 const theme = {
     font_color: '#797979',
@@ -17,15 +16,13 @@ const theme = {
 };
 
 const SidenavDiv = styled.div`
+    grid-column-start: 1;
     height: 100vh;
     position: fixed;
-    min-width: 270px;
-    max-width: 296px;
+    width: 300px;
     z-index: 1;
     overflow-x: hidden;
-    background-color: #ddd;
     overflow-x: hidden;
-    color: ${props => props.theme.font_color};
 `;
 
 const SidenavMenu = styled.div`
@@ -49,26 +46,9 @@ const SettingsBox = styled.section`
     margin: 0 0.5rem 2rem 0.5rem;
 `;
 
-/* margin - left: 0;
-width: 100px;
-height: auto;
-padding: 15px;
-background: #DDD; */
-
-// const UserDiv = styled.div`
-//     height: 4rem;
-//     width: 200px;
-//     padding:10px;
-// `
-
-// const DataDiv = styled.div`
-//     margin-left:150px;
-//     padding:0 10px;
-// `
-
 const SearchBarDiv = styled.div`
     display: flex;
-    color: ${props => props.theme.font_color};
+    color: ${props => props.theme.color};
     margin-top: 2rem;
     justify-content: flex-start;
     flex-direction: row;
@@ -104,7 +84,7 @@ const TextOverFlow = styled.h3`
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
-    color: ${props => props.theme.font_color};
+    color: ${props => props.text};
 `;
 
 const LIWithImg = styled.li`
@@ -120,7 +100,7 @@ export class Side extends Component {
     };
 
     toggleLogin = () => {
-        if(this.props.authUser) {
+        if (this.props.authUser) {
             this.props.firebase.doSignOut();
         } else {
             this.setState({
@@ -139,72 +119,89 @@ export class Side extends Component {
         const { authUser } = this.props;
         const { login, settings } = this.state;
         return (
-            <ThemeProvider theme={theme}>
-                <GlobalStyles />
-                <SidenavDiv>
-                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}>
-                        <img alt="" src={authUser && authUser.branding.SVD ? SvD : authUser && authUser.branding.DN ? DN : ''} style={{ height: '95px' }} />
-                    </div>
-                    <SidenavMenu>
-                        <ULlist>
-                            <LIWithImg>
-                                <Icons src={LogIcon} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
-                                <h3 onClick={this.toggleLogin}>{authUser ? "Logga ut" : "Logga in"}</h3>
-                            </LIWithImg>
-                            {login ? (
-                                <SettingsBox>
-                                    <LogPopup toggle={this.toggleLogin} />
-                                </SettingsBox>
-                            ) : null}
-                            <LIWithImg>
-                                <Icons
-                                    src={CogWheel}
-                                    style={{ cursor: 'pointer' }}
-                                    data-value='link'
-                                    onClick={this.toggleSettings}
+            <SidenavDiv className='side'>
+                <div
+                    style={{
+                        backgroundColor: '#fff',
+                        minWidth: '296px',
+                        height: '100px',
+                        borderTop: '5px solid red',
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <img src={DN} style={{ height: '95px' }} />
+                </div>
+                <SidenavMenu>
+                    <ULlist>
+                        <LIWithImg>
+                            <Icons
+                                src={LogIcon}
+                                style={{ cursor: 'pointer' }}
+                                data-value='link'
+                                onClick={this.toggleLogin}
+                            />
+                            <h3>Logga in</h3>
+                        </LIWithImg>
+                        {this.state.login ? (
+                            <SettingsBox>
+                                <LogPopup toggle={this.toggleLogin} />
+                            </SettingsBox>
+                        ) : null}
+                        <LIWithImg>
+                            <Icons
+                                src={CogWheel}
+                                style={{ cursor: 'pointer' }}
+                                data-value='link'
+                                onClick={this.toggleSettings}
+                            />
+                            <h3>Inställningar</h3>
+                        </LIWithImg>
+
+                        {this.state.settings ? (
+                            <SettingsBox>
+                                <ToggleDarkLight
+                                    theme={this.props.theme}
+                                    toggleTheme={this.props.toggleTheme}
                                 />
-                                <h3 onClick={this.toggleSettings}>
-                                    Inställningar
-                                </h3>
-                            </LIWithImg>
+                            </SettingsBox>
+                        ) : null}
 
-                            {settings ? (
-                                <SettingsBox>
-                                    <ToggleDarkLight />
-                                </SettingsBox>
-                            ) : null}
-
-                            <LIWithImg>
-                                <Icons src={EyeIcon} />
-                                <h3>Bevakningar</h3>
-                            </LIWithImg>
-                            <LIWithImg>
-                                <Icons src={StarIcon} />
-                                <h3>Favoriter</h3>
-                            </LIWithImg>
+                        <LIWithImg>
+                            <Icons src={EyeIcon} />
+                            <h3>Bevakningar</h3>
+                        </LIWithImg>
+                    </ULlist>
+                    <SearchHistoryDiv>
+                        <SearchBarDiv>
+                            <Icons src={SearchIcon} />
+                            <InputSearch placeholder='Sök' />
+                        </SearchBarDiv>
+                        <ULlist>
+                            {/* Example List */}
+                            <li>
+                                <TextOverFlow>
+                                    SoU4 Äldrefrågor, förslagspunkt 8 -
+                                    2020-02-13
+                                </TextOverFlow>
+                            </li>
+                            <li>
+                                <TextOverFlow>
+                                    JuU18 Samarbete mellan svenska och norska
+                                    särskilda insatsgrupper i krissituationer,
+                                    förslagspunkt 3 - 2020-02-13
+                                </TextOverFlow>
+                            </li>
+                            <li>
+                                <TextOverFlow>
+                                    TU6 Yrkestrafik och taxi, förslagspunkt 4 -
+                                    2020-02-05
+                                </TextOverFlow>
+                            </li>
                         </ULlist>
-                        <SearchHistoryDiv>
-                            <SearchBarDiv>
-                                <Icons src={SearchIcon} />
-                                <InputSearch placeholder='Sök' />
-                            </SearchBarDiv>
-                            <ULlist>
-                                {
-                                    localStorage.getItem('search-history') && JSON.parse(localStorage.getItem('search-history')).slice(0, 5).map((v, i) => (
-                                        <li key={i}>
-                                            <TextOverFlow onClick={() => {
-
-                                            }}>
-                                                {v}
-                                            </TextOverFlow>
-                                        </li>
-                                    ))
-                                }
-                            </ULlist>
-                        </SearchHistoryDiv>
-                    </SidenavMenu>
-                </SidenavDiv>
-            </ThemeProvider>
+                    </SearchHistoryDiv>
+                </SidenavMenu>
+            </SidenavDiv>
         );
     }
 }

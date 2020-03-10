@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { UserList, UserItem } from './components/Pages/Users';
 import './App.css';
 import HomePage from './components/Pages/Home';
 import { withAuthentication, AuthUserContext } from './components/Session';
 import LoadingDots from './components/LoadingDots';
-
 import * as ROUTES from './constants/routes';
-import { UserItem, UserList } from './components/Pages/Users';
 
 class App extends React.Component {
     state = {
@@ -37,19 +36,28 @@ class App extends React.Component {
                                     exact
                                     path={ROUTES.HOME}
                                     component={() => (
-                                        <HomePage authUser={authUser} firebase={this.props.firebase} />
+                                        <HomePage
+                                            authUser={authUser}
+                                            firebase={this.props.firebase}
+                                        />
                                     )}
                                 />
                                 <Route
                                     path={ROUTES.ADMIN_DETAILS}
                                     component={() => (
-                                        <UserItem authUser={authUser} firebase={this.props.firebase} />
+                                        <UserItem
+                                            authUser={authUser}
+                                            firebase={this.props.firebase}
+                                        />
                                     )}
                                 />
                                 <Route
                                     path={ROUTES.ADMIN}
                                     component={() => (
-                                        <UserList authUser={authUser} firebase={this.props.firebase} />
+                                        <UserList
+                                            authUser={authUser}
+                                            firebase={this.props.firebase}
+                                        />
                                     )}
                                 />
                             </>

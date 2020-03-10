@@ -4,20 +4,13 @@ import { lightTheme, darkTheme } from '../Styles/theme';
 import { GlobalStyles } from '../Styles/global';
 import Toggle from './Toggle';
 
-const ToggleDarkLight = () => {
-    const [theme, setTheme] = useState('light');
-
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
-    };
-
-    return (
-        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-            <GlobalStyles />
-            <p>{`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}</p>
-            <Toggle theme={theme} toggleTheme={toggleTheme} />
-        </ThemeProvider>
-    );
-};
+const ToggleDarkLight = ({ theme, toggleTheme }) => {
+  return (
+    <>
+      <p>{theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}</p>
+      <Toggle theme={theme} toggleTheme={toggleTheme} />
+    </>
+  );
+}
 
 export default ToggleDarkLight;

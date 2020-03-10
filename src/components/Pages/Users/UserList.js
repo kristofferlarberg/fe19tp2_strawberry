@@ -88,7 +88,7 @@ let uid = user.uid;
 
         <ul>
           {users.map(user => (
-            <li key={user.uid}>
+            <li style={{padding:'5px'}}key={user.uid}>
               <span>
                 <strong>ID:</strong> {user.uid}
               </span>
@@ -99,7 +99,13 @@ let uid = user.uid;
                 <strong>Username:</strong> {user.username}
               </span>
               <span>
-                <strong>Access:</strong> {user.roles ? user.roles[ROLES.ACCESS] ? (<button onClick={() => this.removeAccess(user)}>REVOKE</button>) : (<button onClick={() => this.addAccess(user)}>GRANT</button>) : 'noRoles'}
+                <strong>Access:</strong> {user.roles ? user.roles[ROLES.ACCESS] ? (<button style={{
+                  border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                  marginRight: '5px', background: 'red'
+                }} onClick={() => this.removeAccess(user)}>REVOKE</button>) : (<button style={{
+                  border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                  marginRight: '5px', background: 'green'
+                }} onClick={() => this.addAccess(user)}>GRANT</button>) : 'noRoles'}
               </span>
               <span>
                 <Link

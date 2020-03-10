@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { SidenavDiv } from '../Side'
 
 export const GlobalStyles = createGlobalStyle`
   *,
@@ -16,4 +17,15 @@ export const GlobalStyles = createGlobalStyle`
     font-family: Roboto, sans-serif;
   }
 
-`;
+  h1 {
+    color: ${({ theme }) => theme.text};
+  }
+
+  .side {
+    background: ${({ theme }) => theme.side};
+
+  }
+ 
+`
+
+

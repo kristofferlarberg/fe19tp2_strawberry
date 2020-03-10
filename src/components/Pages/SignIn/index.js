@@ -20,7 +20,10 @@ font-family:Roboto;
 font-size:1em;
 outline: none;
 `
-
+const ButtonColor = styled.button`
+background: ${props =>
+    props.disabled ? '#ff6681' : 'red'} ;
+`
 
 const INITIAL_STATE = {
     email: '',
@@ -71,16 +74,17 @@ class SignInFormBase extends Component {
                 <span className="close" onClick={this.togglePop} >
                     &times;
           </span></div> */}
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}><button disabled={isInvalid} type="submit" style={{
-                    outline: 'none', background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}><ButtonColor disabled={isInvalid} type="submit" style={{
+                    outline: 'none', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
                     marginRight: '5px'
                 }}>
                     Logga in
-                        </button>
+                        </ButtonColor>
                     <button type="button" style={{
                         outline: 'none', background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
                     }} onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>
                     {error && <p>{error.message}</p>}</div>
+                {error && console.error(error.message)}
 
             </MyForm>
         );

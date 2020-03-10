@@ -9,18 +9,21 @@ const MyForm = styled.form`
 `;
 
 const Input = styled.input`
-    background: transparent;
-    padding: 10px;
-    width: 180px;
-    border: none;
-    border-bottom: 1px solid #838383;
-    /* border-radius:5px; */
-    margin-bottom: 10px;
-    font-family: Roboto;
-    font-size: 1em;
-    outline: none;
-`;
-
+background:transparent;
+padding: 10px;
+width:180px;
+border:none;
+border-bottom: 1px solid #838383;
+/* border-radius:5px; */
+margin-bottom:10px;
+font-family:Roboto;
+font-size:1em;
+outline: none;
+`
+const ButtonColor = styled.button`
+background: ${props =>
+    props.disabled ? '#ff6681' : 'red'} ;
+`
 
 const INITIAL_STATE = {
     username: '',
@@ -28,7 +31,6 @@ const INITIAL_STATE = {
     passwordOne: '',
     passwordTwo: '',
     error: null,
-    isAdmin: false
 };
 
 const SignUpPage = (props) => {
@@ -131,17 +133,18 @@ class SignUpFormBase extends Component {
                 </label>
 
                 <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                <button disabled={isInvalid} type="submit" style={{
-                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
+                <ButtonColor disabled={isInvalid} type="submit" style={{
+                 border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
                     marginRight: '5px'
                 }}>
                     Skapa konto
-                </button>
+                </ButtonColor>
 {/*                 <button type="button" style={{
                     background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
                 }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
                 {error && <p>{error.message}</p>}
                 </div>
+                {error && console.error(error.message)}
             </MyForm>
         );
     }
@@ -151,6 +154,5 @@ const SignUpLink = () => <p>Don't have an account?</p>;
 
 const SignUpForm = compose(withFirebase)(SignUpFormBase);
 
-export { SignUpForm, SignUpLink };
 
 export default SignUpPage;

@@ -2,7 +2,8 @@ import React , {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
-import SignUpForm2 from '../SignUp/admin-signup'
+import { UserList } from '../Users';
+import SignUpPage2 from '../SignUp/admin-signup'
 import * as ROLES from '../../../constants/roles';
 import * as ROUTES from '../../../constants/routes';
 
@@ -27,8 +28,15 @@ class AdminPage extends Component {
     return (  <div>
     <h1>Admin</h1>
     <p>The Admin Page is accessible by every signed in admin user.</p>
-    <button onClick={this.StateBolean} >Add User</button>
-    {addUser ?  <SignUpForm2 /> : null }
+      <Link to={ROUTES.HOME} style={{
+        border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+        marginRight: '5px', background: 'red', textDecoration: 'none'
+      }} >Home</Link>
+      <button style={{
+        border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+        marginRight: '5px', background: 'red'
+      }} onClick={this.StateBolean} >Add User</button>
+    {addUser ?  <SignUpPage2 /> : null }
     <AdminList />
   </div> 
   );
@@ -37,11 +45,7 @@ class AdminPage extends Component {
  
 const AdminList = () => (
   <div>
-    <Link to={ROUTES.ADMIN}>Användarlista</Link>
-  {/*   <Switch>
-      <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
-      <Route exact path={ROUTES.ADMIN} component={UserList} />
-    </Switch> */}
+   <UserList />
   </div>
 );
 

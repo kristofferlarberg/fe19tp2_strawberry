@@ -36,7 +36,7 @@ const DocH1 = styled.h1`
     font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;
-    color: ${props => props.theme.font_color};
+    color: ${props => props.theme.text};
 `;
 
 const DocText = styled.h3`
@@ -47,12 +47,20 @@ const DocText = styled.h3`
     margin: 0;
 `;
 const InfoIcon = styled.img`
-    cursor: pointer;
     width: 35px;
-    margin-bottom: -12px;
+    margin-right: 0.7rem;
+    cursor: pointer;
     &:hover {
         filter: opacity(0.7);
     }
+`;
+
+const Main = styled.div`
+    grid-column-start: 2;
+    height: 100vh;
+    padding-top: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
 `;
 
 const options1 = {
@@ -484,7 +492,7 @@ class Renderer extends Component {
                     style={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        width: '90.5%',
+                        width: '94.5%',
                         marginTop: '-20px'
                     }}
                 >
@@ -509,6 +517,8 @@ class Renderer extends Component {
                     style={{
                         display: 'flex',
                         flexWrap: 'wrap',
+                        marginTop: '30px',
+                        marginBottom: '30px',
                         justifyContent: 'space-between',
                         width: '1000px'
                     }}
