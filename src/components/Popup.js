@@ -70,7 +70,7 @@ class Popup extends React.Component {
         return (
             <div key={this.props.party} style={small ? smallPopup : mediumPopup} onClick={small ? this.props.clickedPopup : undefined}>
                 <div key={'chart'} style={{
-                    height: '8%',
+                    height: '20%',
                     padding: '4%',
                     display: 'flex',
                     borderRadius: '5px 5px 0 0',
@@ -114,7 +114,7 @@ class Popup extends React.Component {
                     <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1rem', marginBottom: '0.5rem', marginLeft: '4%', width: '94%' }}>
                         {labels.map((label, i) => <span key={i} style={{ color: backgroundColor[i], fontFamily: 'Roboto', fontSize: small ? '1em' : '1.4em', fontWeight: '400', display: 'inline-block', width: '25%' }}>{label}</span>)}
                     </div>
-                    <div style={{ height: small ? '158px' : '282px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: small ? '0.6em' : '1em', fontWeight: '400', lineHeight: small ? '1.1em' : '1.5em', width: '96%', marginLeft: '4%' }}>
+                    <div style={{ height: small ? '160px' : '290px', display: 'flex', overflowY: 'scroll', fontFamily: 'Roboto', fontSize: small ? '0.6em' : '1em', fontWeight: '400', lineHeight: small ? '1.1em' : '1.5em', width: '96%', marginLeft: '4%' }}>
                         {partyMembers.map((members, i) => {
                             return <ul key={i} style={{ width: '25%', padding: '0px', margin: '0' }}>{members}</ul>
                         })
