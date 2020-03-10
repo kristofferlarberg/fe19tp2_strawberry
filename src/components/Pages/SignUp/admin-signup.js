@@ -25,7 +25,7 @@ outline: none;
 `
 const ButtonColor = styled.button`
 background: ${props =>
-        props.disabled ? 'pink' : 'red'} ;
+    props.disabled ? '#ff6681' : 'red'} ;
 `
 
 const INITIAL_STATE = {
