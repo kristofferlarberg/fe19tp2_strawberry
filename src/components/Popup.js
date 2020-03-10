@@ -39,7 +39,7 @@ const smallPopup = {
 
 class Popup extends React.Component {
 
-    render(props) {
+    render() {
         const voteObject = this.props.data.getVoteData(this.props.id || 0, this.props.party);
         let totalVotes = 0
         voteObject.votes.forEach(e => totalVotes += e.length)
