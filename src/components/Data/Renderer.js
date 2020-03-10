@@ -59,9 +59,8 @@ const DocText = styled.h3`
     margin: 0;
 `
 const InfoIcon = styled.img`
+    margin-left: 2.5rem;
     cursor: pointer;
-    width:35px;
-    margin-bottom: -12px;
     &:hover{
         filter: opacity(0.7);
     }
@@ -273,13 +272,17 @@ class Renderer extends Component {
             <div style={{ width: '1045px', marginLeft: '340px', height: '100vh', paddingTop: '20px', boxSizing: 'border-box' }}>
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '900px' }}>
-                    {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
-                    {active && <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 'auto' }}>
+                        {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
+                        {active && <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>}
+                    </div>
+                    <div>
+                        {active && <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block' }} />}
+                    </div>
                 </div >
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: '1rem', }}>
                     <Search data={data} handleChange={this.handleSearchChange} />
 
-                    <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block', marginTop: '1rem', marginBottom: '0.5rem' }} />
                 </div>
 
                 <div style={{ display: 'flex', width: '100%' }}>

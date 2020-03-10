@@ -47,5 +47,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.7"
+  }
 }

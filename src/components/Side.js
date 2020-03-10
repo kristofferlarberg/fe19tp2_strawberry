@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/SignIn/sign_in_out'
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components/macro';
 /* import CogWheel from './icons/cog-solid.svg' */
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
@@ -160,13 +160,10 @@ export class Side extends React.Component {
                             </LIWithImg>
                             {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}
                             <LIWithImg>
-
                                 <Icons src={CogWheel} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleSettings} />
                                 <h3>Inställningar</h3>
                             </LIWithImg>
-
                             {this.state.settings ? <SettingsBox><ToggleDarkLight toggle={this.toggleSettings} /></SettingsBox> : null}
-
                             <LIWithImg>
                                 <Icons src={EyeIcon} />
                                 <h3>Bevakningar</h3>
