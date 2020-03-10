@@ -7,19 +7,20 @@ const allTitles = [];
 const allDates = [];
 const cached_voteData = {};
 
-
-const date = ((days = 0) => {
+const date = (days = 0) => {
     let today = new Date();
     today.setDate(today.getDate() - days);
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     return `${yyyy}-${mm}-${dd}`;
-})
+};
 
 let bet = [];
 let votingData = JSON.parse(localStorage.getItem('votingData'));
-const API_QUERY = `http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=${date(14)}&tom=${date()}&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff`
+const API_QUERY = `http://data.riksdagen.se/dokumentlista/?sok=&doktyp=votering&rm=&sz=50&from=${date(
+    14
+)}&tom=${date()}&ts=&bet=&tempbet=&nr=&org=&iid=&webbtv=&talare=&exakt=&planering=&sort=datum&sortorder=desc&rapport=&utformat=json&a=s#soktraff`;
 
 const DataContext = createContext(null);
 
@@ -110,13 +111,11 @@ export default class Data extends Component {
             }
         }
 
-        let titleDateArray = allTitles.map((title, index) => {
-            return { title, date: allDates[index] };
-        });
+        let titleDateArray = allTitles.map((title, index) => ({ title, date: allDates[index] }));
 
         let dataOut = {};
         let voting = votingData && votingData[currentId];
-
+        
         if (voting && voting.length) {
             if (!parties.length) {
                 voting.map(party => {

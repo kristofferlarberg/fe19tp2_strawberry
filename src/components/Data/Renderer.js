@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import * as ROLES from '../../constants/roles';
-import { withAuthorization } from '../Session';
-import { compose } from 'recompose';
 import styled from 'styled-components';
 import InfoCircle from '../icons/info-circle-solid.svg';
 import { Bar } from 'react-chartjs-2';
@@ -19,11 +16,11 @@ import MP from '../images/partylogos/MP.svg';
 import SD from '../images/partylogos/SD.svg';
 
 const Logos = styled.div`
-display:flex;
-flex-direction:row;
-justify-content:space-around;
-width:45%;
-    z-index:1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 45%;
+    z-index: 1;
 `;
 
 const Span = styled.span`
@@ -39,7 +36,7 @@ const DocH1 = styled.h1`
     font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;
-    color: ${ props => props.theme.font_color};
+    color: ${props => props.theme.font_color};
 `;
 
 const DocText = styled.h3`
@@ -175,20 +172,29 @@ class Renderer extends Component {
         const index = this.state.titleDates.findIndex(
             i => i.title === values.title
         );
-        let votering_id = index;
-        const votingData = this.props.data.getVoteData(votering_id, this.state.party);
-        this.setState({
-            ...votingData,
-            votering_id,
-            active: true
-        });
-        const _s = 'search-history';
-        if (!localStorage.getItem(_s)) {
-            localStorage.setItem(_s, '[]');
+        if (index !== -1) {
+            let votering_id = index;
+            console.log(index);
+            const votingData = this.props.data.getVoteData(
+                votering_id,
+                this.state.party
+            );
+            this.setState({
+                ...votingData,
+                votering_id,
+                active: true
+            });
+            const _s = 'search-history';
+            if (!localStorage.getItem(_s)) {
+                localStorage.setItem(_s, '[]');
+            }
+            const searchHistory = JSON.parse(
+                localStorage.getItem('search-history')
+            );
+
+            searchHistory.unshift(votingData.titleDates[votering_id].title);
+            localStorage.setItem(_s, JSON.stringify(searchHistory));
         }
-        const searchHistory = JSON.parse(localStorage.getItem('search-history'));
-        searchHistory.unshift(votingData.titleDates[votering_id].title)
-        localStorage.setItem(_s, JSON.stringify(searchHistory))
     }
 
     handlePopup(i, event) {
@@ -242,12 +248,7 @@ class Renderer extends Component {
             dok_id,
             votering_id
         } = this.state;
-        const backgroundColor = [
-            '#0FCE56',
-            '#FF6384',
-            '#FFCE56',
-            '#85a8d3'
-        ];
+        const backgroundColor = ['#0FCE56', '#FF6384', '#FFCE56', '#85a8d3'];
         let totalVoteResult = [0, 0, 0, 0];
         let voteResult = [];
         for (let i = 0; i < 4; i++) {
@@ -538,8 +539,7 @@ class Renderer extends Component {
                 )}
             </div>
         );
-
-    };
-};
+    }
+}
 
 export default Renderer;

@@ -43,6 +43,10 @@ class Firebase {
                             dbUser.roles = {};
                         }
 
+                        if (!dbUser.branding) {
+                            dbUser.branding = {};
+                        }
+
                         if (!dbUser.search) {
                             dbUser.search = {};
                         }

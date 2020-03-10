@@ -7,6 +7,7 @@ import StarIcon from './icons/star-solid.svg';
 import LogIcon from './icons/sign-in-alt-solid.svg';
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
+import SvD from './icons/SvDlogo.svg';
 import ToggleDarkLight from './ToggleDarkLight';
 import { GlobalStyles } from './Styles/global';
 
@@ -134,25 +135,23 @@ export class Side extends Component {
         });
     };
 
-    componentDidMount() {
-        window.addEventListener('storage', () => {
-            console.log('something changed')
-        });
-    }
-
     render() {
+        const { authUser } = this.props;
+        const { login, settings } = this.state;
         return (
             <ThemeProvider theme={theme}>
                 <GlobalStyles />
                 <SidenavDiv>
-                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
+                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}>
+                        <img alt="" src={authUser && authUser.branding.SVD ? SvD : authUser && authUser.branding.DN ? DN : ''} style={{ height: '95px' }} />
+                    </div>
                     <SidenavMenu>
                         <ULlist>
                             <LIWithImg>
                                 <Icons src={LogIcon} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
-                                <h3 onClick={this.toggleLogin}>{this.props.authUser ? "Logga ut" : "Logga in"}</h3>
+                                <h3 onClick={this.toggleLogin}>{authUser ? "Logga ut" : "Logga in"}</h3>
                             </LIWithImg>
-                            {this.state.login ? (
+                            {login ? (
                                 <SettingsBox>
                                     <LogPopup toggle={this.toggleLogin} />
                                 </SettingsBox>
@@ -169,7 +168,7 @@ export class Side extends Component {
                                 </h3>
                             </LIWithImg>
 
-                            {this.state.settings ? (
+                            {settings ? (
                                 <SettingsBox>
                                     <ToggleDarkLight />
                                 </SettingsBox>
@@ -191,9 +190,11 @@ export class Side extends Component {
                             </SearchBarDiv>
                             <ULlist>
                                 {
-                                    localStorage.getItem('search-history') && JSON.parse(localStorage.getItem('search-history')).map((v, i) => (
+                                    localStorage.getItem('search-history') && JSON.parse(localStorage.getItem('search-history')).slice(0, 5).map((v, i) => (
                                         <li key={i}>
-                                            <TextOverFlow>
+                                            <TextOverFlow onClick={() => {
+
+                                            }}>
                                                 {v}
                                             </TextOverFlow>
                                         </li>

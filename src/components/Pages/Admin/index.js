@@ -1,8 +1,7 @@
 import React , {Component} from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
-import { UserList, UserItem } from '../Users';
 import SignUpForm2 from '../SignUp/admin-signup'
 import * as ROLES from '../../../constants/roles';
 import * as ROUTES from '../../../constants/routes';

@@ -5,7 +5,6 @@ import { AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut';
 import styled from 'styled-components';
 import SignUpForm from '../SignUp'
-import SignInPage from '.';
 
 const MyForm = styled.form`
 width:auto;

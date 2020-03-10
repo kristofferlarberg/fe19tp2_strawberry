@@ -82,8 +82,7 @@ class SignUpFormBase extends Component {
             email,
             passwordOne,
             passwordTwo,
-            error,
-            isAdmin
+            error
         } = this.state;
         const isInvalid =
             passwordOne !== passwordTwo ||
