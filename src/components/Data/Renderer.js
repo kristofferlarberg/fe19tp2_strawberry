@@ -49,7 +49,7 @@ const DocH1 = styled.h1`
     font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;
-    color: ${ props => props.theme.font_color};
+    color: ${ props => props.theme.text};
 `;
 
 const DocText = styled.h3`
@@ -61,7 +61,7 @@ const DocText = styled.h3`
 `
 const InfoIcon = styled.img`
     width: 35px;
-    margin-left: 0.7rem;;
+    margin-right: 0.7rem;;
     cursor: pointer;
     &:hover{
     filter: opacity(0.7);
@@ -228,7 +228,7 @@ class Renderer extends Component {
     };
 
     render() {
-        
+
         const { popups, yes, no, pass, absent, party, parties, date, title, titleDates, active, dok_id, votering_id } = this.state;
         const backgroundColor = [
             '#0FCE56',
@@ -284,12 +284,12 @@ class Renderer extends Component {
             <Main>
                 {this.props.authUser && this.props.authUser.branding ? 'AFTONBLADET' : null}
                 <div style={{ display: 'flex', alignItems: 'center', width: '1000px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', width: '60%' }}>
-                        {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
-                        {active && <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>}
-                    </div>
                     <div>
                         {active && <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block' }} />}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', width: '85%' }}>
+                        {active ? <DocH1>{dok_id && dok_id.substr(4)}</DocH1> : <DocH1>Riksdagskollen</DocH1>}
+                        {active && <DocText>{title && title.substr(title.indexOf(dok_id.substr(4)) + dok_id.substr(4).length)} - {date}</DocText>}
                     </div>
                 </div >
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', margin: '1.5rem 0', }}>
@@ -359,7 +359,7 @@ class Renderer extends Component {
                 </div>
 
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', width: '1000px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '30px', marginBottom: '30px', justifyContent: 'space-between', width: '1000px' }}>
                     {active &&
                         popups.map((popup, i) => {
                             return popup.size && <Popup key={i} size={popup.size} clickedPopup={(event) => this.handlePopup(i, event)} id={votering_id} party={popup.party || party} />

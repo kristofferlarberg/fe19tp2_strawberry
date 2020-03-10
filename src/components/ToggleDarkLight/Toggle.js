@@ -5,11 +5,10 @@ import { ToggleContainer, CheckBox } from './Toggle.styled';
 
 
 const Toggle = ({ theme, toggleTheme }) => {
-  const isLight = theme === 'light';
+  const isChecked = theme === 'dark';
   return (
     <>
-
-      <CheckBox id="checkbox" type="checkbox" onClick={isLight} />
+      <CheckBox id="checkbox" type="checkbox" checked={isChecked} />
       <ToggleContainer htmlFor="checkbox" onClick={toggleTheme} />
 
     </>
