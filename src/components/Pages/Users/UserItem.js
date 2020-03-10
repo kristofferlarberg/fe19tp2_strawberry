@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
+import * as ROUTES from '../../../constants/routes';
 import { withFirebase } from '../../Firebase';
+import { compose } from 'recompose';
 
 class UserItem extends Component {
     constructor(props) {
@@ -37,6 +38,25 @@ class UserItem extends Component {
     onSendPasswordResetEmail = () => {
         this.props.firebase.doPasswordReset(this.state.user.email);
     };
+    onChangeAcces = () => {
+        const userID = this.state.user.uid
+        console.log(userID)
+
+
+        /* this.props.firebase.SecondSignIn(this.state.user.email,this.state.user.password).then(() => {
+             this.props.firebase.isCurrentUser().delete().then(() => {
+            this.props.firebase.db.ref('/users/'+ userID).remove()
+        }).then(()=> {
+            this.props.history.push(ROUTES.ADMIN);
+        }).then(() => {
+            console.log('User deleted');
+        }).catch(function (error) {
+            console.error(error)
+        });
+        }).catch(function (error) {
+            console.log(error.message)
+        } ) */
+    }
 
     render() {
         const { user, loading } = this.state;
@@ -63,7 +83,11 @@ class UserItem extends Component {
                                 onClick={this.onSendPasswordResetEmail}
                             >
                                 Send Password Reset
-              </button>
+                            </button>
+                            <button type='button'
+                            onClick={this.onChangeAcces}>
+                                Give User Access
+                            </button>
                         </span>
                     </div>
                 )}
@@ -71,5 +95,6 @@ class UserItem extends Component {
         );
     }
 }
+
 
 export default withFirebase(UserItem);

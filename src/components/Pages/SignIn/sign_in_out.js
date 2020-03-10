@@ -9,38 +9,36 @@ import SignUpForm from '../SignUp'
 import SignInPage from '.';
 
 const MyForm = styled.form`
-width:auto;
-/* margin-top:10px; */
+
 `
 
 const Input = styled.input`
-background:transparent;
+background: transparent;
 padding: 10px;
-width:180px;
-border:none;
+width: 100%;
+border: none;
 border-bottom: 1px solid #838383;
-/* border-radius:5px; */
-margin-bottom:10px;
-font-family:Roboto;
-font-size:1em;
+margin-bottom: 10px;
+font-family: Roboto;
+font-size: 1em;
 outline: none;
 `
 
 const UserStatus = () => {
-    return ( <AuthUserContext.Consumer>
-        {authUser => 
-        authUser ? <SignOut UserEmail={authUser.email}/> : <SignInBase/>
+    return (<AuthUserContext.Consumer>
+        {authUser =>
+            authUser ? <SignOut UserEmail={authUser.email} /> : <SignInBase />
         }
-    </AuthUserContext.Consumer> );
+    </AuthUserContext.Consumer>);
 }
- 
-const SignOut = ({UserEmail}) => {
-    return ( <div >
+
+const SignOut = ({ UserEmail }) => {
+    return (<div >
         Hello user {UserEmail}
         <SignOutButton />
-    </div> );
+    </div>);
 }
- 
+
 const INITIAL_STATE = {
     email: '',
     password: '',
@@ -48,25 +46,26 @@ const INITIAL_STATE = {
 };
 
 class SignInBase extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {signUp : true}
+        this.state = { signUp: true }
     }
     handleClick = event => {
         event.preventDefault();
         if (this.state.signUp) {
-            this.setState({signUp: false})
+            this.setState({ signUp: false })
         } else {
-            this.setState({signUp:true})
+            this.setState({ signUp: true })
         }
     }
-    render () {
-        const {signUp} = this.state
+    render() {
+        const { signUp } = this.state
         return (
             <div>
-                
-                {signUp ? <SignInForm /> : <SignUpForm />} 
-                <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
+
+                {signUp ? <SignInForm /> : <SignUpForm />}
+                <button onClick={this.handleClick} >{signUp ? 'Nytt konto' : 'Jag har ett konto'}</button>
+
             </div>
         )
     }
@@ -92,6 +91,7 @@ class SignInFormBase extends Component {
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
     render() {
         const { email, password, error } = this.state;
         const isInvalid = password === '' || email === '';
@@ -103,24 +103,25 @@ class SignInFormBase extends Component {
                     value={email}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder="Mejladress"
                 />
                 <Input
                     name="password"
                     value={password}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Password"
+                    placeholder="Lösenord"
                 />
-{/*                 <div>
+                {/*                 <div>
                 <span className="close" onClick={this.togglePop} >
                     &times;
           </span></div> */}
+
                 <button disabled={isInvalid} type="submit">
                     Logga in
                         </button>
                 {error && <p>{error.message}</p>}
-                
+
             </MyForm>
         );
     }

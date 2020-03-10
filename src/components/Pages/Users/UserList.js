@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../../constants/routes';
+import * as ROLES from '../../../constants/roles';
+
+
+
 
 class UserList extends Component {
   constructor(props) {
@@ -12,6 +16,9 @@ class UserList extends Component {
       loading: false,
       users: [],
     };
+    this.addAccess = this.addAccess.bind(this);
+
+    this.removeAccess = this.removeAccess.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +43,39 @@ class UserList extends Component {
     this.props.firebase.users().off();
   }
 
+  addAccess(user) {
+    if (!user) {
+      console.log("User needed!")
+      return;
+    }
+let uid = user.uid;
+    //let roles = user.roles;
+    user.roles[ROLES.NO_ACCESS] = null;
+    user.roles[ROLES.ACCESS] = ROLES.ACCESS;
+    //console.log(user);
+    user.uid = null;
+    this.props.firebase.user(uid).set({
+      ...user,
+    });
+
+  }
+  removeAccess(user) {
+    if (!user) {
+      console.log("User needed!")
+      return;
+    }
+    let uid = user.uid;
+
+    //let roles = user.roles;
+    user.roles[ROLES.ACCESS] = null;
+    user.roles[ROLES.NO_ACCESS] = ROLES.NO_ACCESS;
+    //console.log(user);
+    user.uid = null;
+    this.props.firebase.user(uid).set({
+      ...user,
+    });
+
+  }
   render() {
     const { users, loading } = this.state;
 
@@ -43,6 +83,7 @@ class UserList extends Component {
       <div>
         <h2>Users</h2>
         {loading && <div>Loading ...</div>}
+
         <ul>
           {users.map(user => (
             <li key={user.uid}>
@@ -54,6 +95,9 @@ class UserList extends Component {
               </span>
               <span>
                 <strong>Username:</strong> {user.username}
+              </span>
+              <span>
+                <strong>Access:</strong> {user.roles ? user.roles[ROLES.ACCESS] ? (<button onClick={() => this.removeAccess(user)}>REVOKE</button>) : (<button onClick={() => this.addAccess(user)}>GRANT</button>) : 'noRoles'}
               </span>
               <span>
                 <Link

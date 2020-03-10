@@ -2,27 +2,8 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../../Firebase'
-import * as ROLES from '../../../constants/roles';
-import styled from 'styled-components';
 import * as ROUTES from '../../../constants/routes'
-const MyForm = styled.form`
-width:auto;
-/* margin-top:10px; */
-`
-
-const Input = styled.input`
-background:transparent;
-padding: 10px;
-width:180px;
-border:none;
-border-bottom: 1px solid #838383;
-/* border-radius:5px; */
-margin-bottom:10px;
-font-family:Roboto;
-font-size:1em;
-outline: none;
-`
-
+import * as ROLES from '../../../constants/roles';
 
 const INITIAL_STATE = {
     username: '',
@@ -35,8 +16,8 @@ const INITIAL_STATE = {
 
 const SignUpPage = () => {
     return (
-        <SignUpForm />
-        );
+        <SignUpForm2 />
+    );
 }
 
 class SignUpFormBase extends Component {
@@ -57,7 +38,7 @@ class SignUpFormBase extends Component {
             roles[ROLES.ACCESS] = ROLES.ACCESS;
         }
         this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
+            .AdminCreateUser(email, passwordOne)
             .then(authUser => {
                 // Create a user in your Firebase realtime database
                 return this.props.firebase
@@ -70,7 +51,8 @@ class SignUpFormBase extends Component {
             })
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.HOME);
+            }).then(() => {
+                this.props.firebase.SignOutNewUser();
             })
             .catch(error => {
                 this.setState({ error });
@@ -96,49 +78,49 @@ class SignUpFormBase extends Component {
             username === '';
 
         return (
-            <MyForm onSubmit={this.onSubmit}>
-                <Input
+            <form onSubmit={this.onSubmit}>
+                <input
                     name="username"
                     value={username}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Fullständigt namn"
+                    placeholder="Full Name"
                 />
-                <Input
+                <input
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Mejladress"
+                    placeholder="Email Address"
                 />
-                <Input
+                <input
                     name="passwordOne"
                     value={passwordOne}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Lösenord"
+                    placeholder="Password"
                 />
-                <Input
+                <input
                     name="passwordTwo"
                     value={passwordTwo}
                     onChange={this.onChange}
                     type="password"
-                    placeholder="Bekräfta lösenord"
+                    placeholder="Confirm Password"
                 />
                 <label>
-   {/*                  Admin:
+                    Admin:
           <input
                         name="isAdmin"
                         type="checkbox"
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
-                    /> */}
+                    />
                 </label>
                 <button disabled={isInvalid} type="submit">
                     Sign Up
                 </button>
                 {error && <p>{error.message}</p>}
-            </MyForm>
+            </form>
         );
     }
 }
@@ -149,10 +131,10 @@ const SignUpLink = () => (
     </p>
 );
 
-const SignUpForm = compose(
+const SignUpForm2 = compose(
     withFirebase,
 )(SignUpFormBase);
 
-export { SignUpForm, SignUpLink };
+export { SignUpForm2, SignUpLink };
 
 export default SignUpPage;

@@ -2,7 +2,7 @@ import React from 'react';
 import Renderer from '../../Data/Renderer';
 import Data from '../../Data';
 import Side from '../../Side';
-import { withAuthorization, withAuthentication } from '../../Session';
+import { withAuthorization} from '../../Session';
 import Admin from '../Admin'
 import * as ROLES from '../../../constants/roles';
 
@@ -14,7 +14,7 @@ const HomePage = ({ authUser }) => (
             authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
             <div>
                 <Data>
-                    <Renderer authUser={authUser} />
+                    {/* <Renderer authUser={authUser} /> */}
                     <Admin />
                 </Data>
             </div>
@@ -30,6 +30,6 @@ const HomePage = ({ authUser }) => (
 
 
 const condition = authUser =>
-    authUser && !!authUser.roles[ROLES.ADMIN];
+    authUser && !!authUser.roles[ROLES.ACCESS];
 
 export default withAuthorization(condition)(HomePage);
