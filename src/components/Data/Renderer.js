@@ -219,7 +219,6 @@ class Renderer extends Component {
     };
 
     render() {
-        console.log('Render');
         
         const { popups, yes, no, pass, absent, party, parties, date, title, titleDates, active, dok_id, votering_id } = this.state;
         const backgroundColor = [

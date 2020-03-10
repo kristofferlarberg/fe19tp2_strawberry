@@ -9,8 +9,6 @@ import * as ROLES from '../../../constants/roles';
 
 const HomePage = ({ authUser }) => (
     <div style={{ display: 'flex' }}>
-        {console.log('Home')
-        }
         <Side />
         {authUser &&
             authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
