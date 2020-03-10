@@ -4,15 +4,26 @@ import styled, { ThemeProvider } from 'styled-components';
 import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
+<<<<<<< HEAD
 import LogIcon from './icons/sign-in-alt-solid.svg'
+=======
+import StarIcon from './icons/star-solid.svg'
+import LogIcon2 from './icons/sign-in-alt-solid.svg'
+>>>>>>> bed4e56572e492583947bcd59c7de177eed5e83e
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import ToggleDarkLight from './ToggleDarkLight';
 import { GlobalStyles } from './Styles/global';
+<<<<<<< HEAD
 import { lightTheme, darkTheme } from './Styles/theme';
 /* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
 import { ReactComponent as StarIcon } from './icons/star-solid.svg';
 import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
+=======
+/* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg'; */
+/* import { ReactComponent as StarIcon } from './icons/star-solid.svg'; */
+/* import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
+>>>>>>> bed4e56572e492583947bcd59c7de177eed5e83e
 
 const theme = {
     font_color: '#797979',
@@ -22,7 +33,10 @@ const theme = {
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bed4e56572e492583947bcd59c7de177eed5e83e
 const SidenavDiv = styled.div`
     grid-column-start: 1;
     height:100vh;
@@ -140,12 +154,23 @@ export class Side extends React.Component {
 
     render() {
         return (
+<<<<<<< HEAD
             <SidenavDiv>
                 <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
                 <UserDiv>
                     <UserStatus />
                 </UserDiv>
                 {/*                 <SearchBarDiv borded>
+=======
+            <ThemeProvider theme={theme}>
+                <GlobalStyles />
+                <SidenavDiv>
+                    <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
+          {/*                           <UserDiv>
+                    <UserStatus />
+                </UserDiv> */}
+                    {/*                 <SearchBarDiv borded>
+>>>>>>> bed4e56572e492583947bcd59c7de177eed5e83e
                     <InputSearch placeholder='Sök'></InputSearch>
                     <Icons src={SearchIcon} right/>
                 </SearchBarDiv> */}
@@ -176,10 +201,46 @@ export class Side extends React.Component {
 
                         </SearchBarDiv>
                         <ULlist>
+<<<<<<< HEAD
                             {/* Example List */}
                             <li>
                                 <TextOverFlow>
                                     SoU4
+=======
+                            <LIWithImg>
+                                <Icons src={LogIcon2} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleLogin} />
+                                {this.props.authUser ? <h3>Logga ut</h3> : <h3>Logga in</h3>}
+                            </LIWithImg>
+                            {this.state.login ? <SettingsBox><LogPopup toggle={this.toggleLogin} /></SettingsBox> : null}
+                            <LIWithImg>
+
+                                <Icons src={CogWheel} style={{ cursor: 'pointer' }} data-value='link' onClick={this.toggleSettings} />
+                                <h3>Inställningar</h3>
+                            </LIWithImg>
+
+                            {this.state.settings ? <SettingsBox><ToggleDarkLight toggle={this.toggleSettings} /></SettingsBox> : null}
+
+                            <LIWithImg>
+                                <Icons src={EyeIcon} />
+                                <h3>Bevakningar</h3>
+                            </LIWithImg>
+                            <LIWithImg>
+                                <Icons src={StarIcon} />
+                                <h3>Favoriter</h3>
+                            </LIWithImg>
+                        </ULlist>
+                        <SearchHistoryDiv>
+                            <SearchBarDiv>
+                                <Icons src={SearchIcon} />
+                                <InputSearch placeholder='Sök' />
+
+                            </SearchBarDiv>
+                            <ULlist>
+                                {/* Example List */}
+                                <li>
+                                    <TextOverFlow>
+                                        SoU4
+>>>>>>> bed4e56572e492583947bcd59c7de177eed5e83e
 Äldrefrågor, förslagspunkt 8 - 2020-02-13</TextOverFlow>
                             </li>
                             <li>

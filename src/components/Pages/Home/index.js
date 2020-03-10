@@ -16,6 +16,7 @@ const Main = styled.div`
 `
 
 const HomePage = ({ authUser }) => (
+<<<<<<< HEAD
 
     <Main>
         <ThemeProvider theme={lightTheme}>
@@ -35,12 +36,31 @@ const HomePage = ({ authUser }) => (
             }
         </ThemeProvider>
     </Main>
+=======
+    <div style={{ display: 'flex' }}>
+        <Side authUser={authUser} />
+        {authUser &&
+            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ?
+            <div>
+                <Data>
+                    <Renderer authUser={authUser} />
+                </Data>
+            </div>
+            :
+            <div>
+                <Data>
+                    <Renderer authUser={authUser} />
+                </Data>
+            </div>
+        }
+
+    </div>
+>>>>>>> bed4e56572e492583947bcd59c7de177eed5e83e
 );
 
 //const condition = authUser => !!authUser;
 
 
-const condition = authUser =>
-    authUser && !!authUser.roles[ROLES.ACCESS];
 
-export default withAuthorization(condition)(HomePage);
+
+export default HomePage;

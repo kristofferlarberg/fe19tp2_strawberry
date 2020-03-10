@@ -28,21 +28,29 @@ class UserHaveAccount extends Component {
     constructor(props) {
         super(props)
         this.state = { signUp: true }
+        this.handleClick = this.handleClick.bind(this);
     }
+
     handleClick = event => {
+        console.log("YO")
         event.preventDefault();
         if (this.state.signUp) {
             this.setState({ signUp: false })
         } else {
             this.setState({ signUp: true })
         }
+        // this.setState({signUp: !this.state.signUp})
     }
+
     render() {
         const { signUp } = this.state
         return (
             <div>
-                <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
-                {signUp ? <SignInForm /> : <SignUpForm />}
+                {/* <button onClick={this.handleClick} >{signUp ? 'No Account' : 'Have an Accont'}</button>
+                {signUp ? <SignInForm /> : <SignUpForm />} */}
+
+                {signUp ? <SignInForm title={'Nytt konto'} handleClick={this.handleClick} /> : <SignUpForm title={'Jag har ett konto'} handleClick={this.handleClick} />}
+
             </div>
         )
     }

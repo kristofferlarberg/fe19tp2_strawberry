@@ -325,7 +325,7 @@ class Renderer extends Component {
                     {
                         totalVoteResult.map((e, i) => {
                             return active ?
-                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1)}%`}</div>
+                                <div key={i + 'a'} style={{ display: 'inline-flex', alignItems: 'center', transition: 'width 0.5s', boxSizing: 'border-box', width: `${e / 349 * 1000}px`, height: '50px', textAlign: 'center', justifyContent: 'center', background: backgroundColor[i], borderRight: e > 0 && '1px solid white', marginTop: '9px', fontFamily: 'Roboto Condensed', fontSize: '20px', fontWeight: '500', color: 'white' }}> {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}{e >= 10 && `${(e / 349 * 100).toFixed(1).replace(/.0+$/, '')}%`}</div>
                                 : <div key={i + 'a'} style={{ display: 'inline-flex', transition: 'width 0.5s', boxSizing: 'border-box', width: `${0.25 * 1000}px`, height: '50px', textAlign: 'center', background: '#eee', border: '1px solid white', marginTop: '9px' }}><br /><br /></div>
                         })
                     }</div>
@@ -374,9 +374,6 @@ class Renderer extends Component {
 
     };
 };
-const condition = authUser =>
-    authUser && !!authUser.roles[ROLES.ACCESS];
 
-export default compose(
-    withAuthorization(condition),
-)(Renderer);
+
+export default Renderer;

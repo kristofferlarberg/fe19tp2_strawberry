@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 //  import Members from './components/Data/members';
 //  import Data from './components/Data';
-import LandingPage from './components/Pages/Landing';
-import NoAccessPage from './components/Pages/No-Acces'
+// import LandingPage from './components/Pages/Landing';
+// import NoAccessPage from './components/Pages/No-Acces'
 import { UserList, UserItem } from './components/Pages/Users';
 //import SignUpPage from './components/Pages/SignUp'
 import './App.css'
@@ -23,11 +23,10 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Route exact path={ROUTES.LANDING} component={LandingPage} />
-          <Route path={ROUTES.HOME} component={HomePage} />
-          <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
-          <Route exact path={ROUTES.ADMIN} component={UserList} />
-          <Route exact path={ROUTES.NO_ACCESS_USER} component={NoAccessPage} />        
+          <Route exact path={ROUTES.HOME} component={HomePage} />
+          <Route path={ROUTES.ADMIN_DETAILS} component={UserItem} />
+          <Route path={ROUTES.ADMIN} component={UserList} />
+      {/*     <Route path={ROUTES.NO_ACCESS_USER} component={NoAccessPage} />    */}     
         </div>
       </Router>
     );

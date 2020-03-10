@@ -71,10 +71,16 @@ class SignInFormBase extends Component {
                 <span className="close" onClick={this.togglePop} >
                     &times;
           </span></div> */}
-                <button disabled={isInvalid} type="submit">
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}><button disabled={isInvalid} type="submit" style={{
+                    outline: 'none', background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase',
+                    marginRight: '5px'
+                }}>
                     Logga in
                         </button>
-                {error && <p>{error.message}</p>}
+                    <button type="button" style={{
+                        outline: 'none', background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
+                    }} onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>
+                    {error && <p>{error.message}</p>}</div>
 
             </MyForm>
         );

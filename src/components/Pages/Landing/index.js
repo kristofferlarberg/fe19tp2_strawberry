@@ -68,6 +68,5 @@ class LandingPage extends Component {
     }
 }
  
-//const condition = authUser => !!authUser;
 
 export default LandingPage;
