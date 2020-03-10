@@ -55,14 +55,6 @@ const InfoIcon = styled.img`
     }
 `;
 
-const Main = styled.div`
-    grid-column-start: 2;
-    height: 100vh;
-    padding-top: 20px;
-    box-sizing: border-box;
-    margin: 0 auto;
-`;
-
 const options1 = {
     scales: {
         xAxes: [

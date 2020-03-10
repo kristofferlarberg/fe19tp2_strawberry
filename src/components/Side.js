@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import CogWheel from './icons/cog-solid.svg';
 import SearchIcon from './icons/search-solid.svg';
 import EyeIcon from './icons/eye-solid.svg';
-import StarIcon from './icons/star-solid.svg';
 import LogIcon from './icons/sign-in-alt-solid.svg';
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
-import SvD from './icons/SvDlogo.svg';
 import ToggleDarkLight from './ToggleDarkLight';
-
-const theme = {
-    font_color: '#797979',
-    darker_font: '#707070'
-};
 
 const SidenavDiv = styled.div`
     grid-column-start: 1;
@@ -100,7 +93,8 @@ export class Side extends Component {
     };
 
     toggleLogin = () => {
-        if (this.props.authUser) {
+        console.log(this.props);
+        if (this.props.authUser && this.props.firebase) {
             this.props.firebase.doSignOut();
         } else {
             this.setState({
@@ -130,7 +124,7 @@ export class Side extends Component {
                         justifyContent: 'center'
                     }}
                 >
-                    <img src={DN} style={{ height: '95px' }} />
+                    <img alt='' src={DN} style={{ height: '95px' }} />
                 </div>
                 <SidenavMenu>
                     <ULlist>
@@ -141,9 +135,11 @@ export class Side extends Component {
                                 data-value='link'
                                 onClick={this.toggleLogin}
                             />
-                            <h3>Logga in</h3>
+                            <h3 onClick={this.toggleLogin}>
+                                Logga {authUser ? 'ut' : 'in'}
+                            </h3>
                         </LIWithImg>
-                        {this.state.login ? (
+                        {login ? (
                             <SettingsBox>
                                 <LogPopup toggle={this.toggleLogin} />
                             </SettingsBox>
@@ -155,10 +151,10 @@ export class Side extends Component {
                                 data-value='link'
                                 onClick={this.toggleSettings}
                             />
-                            <h3>Inställningar</h3>
+                            <h3 onClick={this.toggleSettings}>Inställningar</h3>
                         </LIWithImg>
 
-                        {this.state.settings ? (
+                        {settings ? (
                             <SettingsBox>
                                 <ToggleDarkLight
                                     theme={this.props.theme}
@@ -178,26 +174,14 @@ export class Side extends Component {
                             <InputSearch placeholder='Sök' />
                         </SearchBarDiv>
                         <ULlist>
-                            {/* Example List */}
-                            <li>
-                                <TextOverFlow>
-                                    SoU4 Äldrefrågor, förslagspunkt 8 -
-                                    2020-02-13
-                                </TextOverFlow>
-                            </li>
-                            <li>
-                                <TextOverFlow>
-                                    JuU18 Samarbete mellan svenska och norska
-                                    särskilda insatsgrupper i krissituationer,
-                                    förslagspunkt 3 - 2020-02-13
-                                </TextOverFlow>
-                            </li>
-                            <li>
-                                <TextOverFlow>
-                                    TU6 Yrkestrafik och taxi, förslagspunkt 4 -
-                                    2020-02-05
-                                </TextOverFlow>
-                            </li>
+                            {localStorage.getItem('search-history') &&
+                                JSON.parse(
+                                    localStorage.getItem('search-history')
+                                ).map((v, i) => (
+                                    <li key={i}>
+                                        <TextOverFlow>{v}</TextOverFlow>
+                                    </li>
+                                ))}
                         </ULlist>
                     </SearchHistoryDiv>
                 </SidenavMenu>

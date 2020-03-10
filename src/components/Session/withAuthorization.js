@@ -15,7 +15,7 @@ const withAuthorization = condition => Component => {
                         this.props.history.push(ROUTES.HOME);
                     }
                 },
-                () => this.props.history.push(ROUTES.HOME),
+                () => this.props.history.push(ROUTES.HOME)
             );
         }
 

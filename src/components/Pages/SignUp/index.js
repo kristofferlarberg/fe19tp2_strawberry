@@ -1,43 +1,40 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { withFirebase } from '../../Firebase'
+import { withFirebase } from '../../Firebase';
 import * as ROLES from '../../../constants/roles';
 import styled from 'styled-components';
-import * as ROUTES from '../../../constants/routes'
+import * as ROUTES from '../../../constants/routes';
 const MyForm = styled.form`
     width: auto;
 `;
 
 const Input = styled.input`
-background:transparent;
-padding: 10px;
-width:180px;
-border:none;
-border-bottom: 1px solid #838383;
-/* border-radius:5px; */
-margin-bottom:10px;
-font-family:Roboto;
-font-size:1em;
-outline: none;
-`
+    background: transparent;
+    padding: 10px;
+    width: 180px;
+    border: none;
+    border-bottom: 1px solid #838383;
+    /* border-radius:5px; */
+    margin-bottom: 10px;
+    font-family: Roboto;
+    font-size: 1em;
+    outline: none;
+`;
 const ButtonColor = styled.button`
-background: ${props =>
-    props.disabled ? '#ff6681' : 'red'} ;
-`
+    background: ${props => (props.disabled ? '#ff6681' : 'red')};
+`;
 
 const INITIAL_STATE = {
     username: '',
     email: '',
     passwordOne: '',
     passwordTwo: '',
-    error: null,
+    error: null
 };
 
-const SignUpPage = (props) => {
-    return (
-        <SignUpForm {...props} />
-    );
-}
+const SignUpPage = props => {
+    return <SignUpForm {...props} />;
+};
 
 class SignUpFormBase extends Component {
     constructor(props) {
@@ -79,13 +76,7 @@ class SignUpFormBase extends Component {
         this.setState({ [event.target.name]: event.target.value });
     };
     render() {
-        const {
-            username,
-            email,
-            passwordOne,
-            passwordTwo,
-            error
-        } = this.state;
+        const { username, email, passwordOne, passwordTwo, error } = this.state;
         const isInvalid =
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
@@ -123,7 +114,7 @@ class SignUpFormBase extends Component {
                     placeholder='Bekräfta lösenord'
                 />
                 <label>
-   {/*                  Admin:
+                    {/*                  Admin:
           <input
                         name="isAdmin"
                         type="checkbox"
@@ -133,16 +124,26 @@ class SignUpFormBase extends Component {
                 </label>
 
                 <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                <ButtonColor disabled={isInvalid} type="submit" style={{
-                 border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
-                    marginRight: '5px'
-                }}>
-                    Skapa konto
-                </ButtonColor>
-{/*                 <button type="button" style={{
+                    <ButtonColor
+                        disabled={isInvalid}
+                        type='submit'
+                        style={{
+                            border: 'none',
+                            padding: '10px',
+                            fontFamily: 'Roboto',
+                            fontWeight: '500',
+                            fontSize: '0.8em',
+                            color: 'white',
+                            textTransform: 'uppercase',
+                            marginRight: '5px'
+                        }}
+                    >
+                        Skapa konto
+                    </ButtonColor>
+                    {/*                 <button type="button" style={{
                     background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
                 }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
-                {error && <p>{error.message}</p>}
+                    {error && <p>{error.message}</p>}
                 </div>
                 {error && console.error(error.message)}
             </MyForm>
@@ -150,9 +151,8 @@ class SignUpFormBase extends Component {
     }
 }
 
-const SignUpLink = () => <p>Don't have an account?</p>;
+// const SignUpLink = () => <p>Don't have an account?</p>;
 
 const SignUpForm = compose(withFirebase)(SignUpFormBase);
-
 
 export default SignUpPage;

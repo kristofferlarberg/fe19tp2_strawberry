@@ -111,11 +111,14 @@ export default class Data extends Component {
             }
         }
 
-        let titleDateArray = allTitles.map((title, index) => ({ title, date: allDates[index] }));
+        let titleDateArray = allTitles.map((title, index) => ({
+            title,
+            date: allDates[index]
+        }));
 
         let dataOut = {};
         let voting = votingData && votingData[currentId];
-        
+
         if (voting && voting.length) {
             if (!parties.length) {
                 voting.map(party => {
@@ -163,7 +166,7 @@ export default class Data extends Component {
 
     render() {
         const { hasData } = this.state;
-
+        console.log(hasData)
         return (
             <DataContext.Provider value={this}>
                 {hasData ? (
@@ -179,8 +182,7 @@ export default class Data extends Component {
                     </DataContext.Consumer>
                 ) : (
                     <p style={{ marginLeft: '50vw', marginTop: '50vh' }}>
-                        {' '}
-                        <LoadingDots />{' '}
+                        <LoadingDots />
                     </p>
                 )}
             </DataContext.Provider>
