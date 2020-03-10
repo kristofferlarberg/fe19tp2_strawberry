@@ -22,7 +22,10 @@ font-family:Roboto;
 font-size:1em;
 outline: none;
 `
-
+const ButtonColor = styled.button`
+background: ${props =>
+        props.disabled ? 'pink' : 'red'} ;
+`
 
 const INITIAL_STATE = {
     username: '',
@@ -134,12 +137,12 @@ class SignUpFormBase extends Component {
                 </label>
 
                 <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                <button disabled={isInvalid} type="submit" style={{
-                    background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
+                <ButtonColor disabled={isInvalid} type="submit" style={{
+                 border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase', 
                     marginRight: '5px'
                 }}>
                     Skapa konto
-                </button>
+                </ButtonColor>
 {/*                 <button type="button" style={{
                     background: 'red', border: 'none', padding: '10px', fontFamily: 'Roboto', fontWeight: '500', fontSize: '0.8em', color: 'white', textTransform: 'uppercase'
                 }}onClick={(e) => this.props.handleClick(e)} >{this.props.title}</button>  */}
