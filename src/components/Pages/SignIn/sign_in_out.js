@@ -23,7 +23,7 @@ border-bottom: 1px solid #838383;
 /* border-radius:5px; */
 margin-bottom:10px;
 font-family:Roboto;
-font-size:1em;
+font-size:1.1em;
 outline: none;
 `
 

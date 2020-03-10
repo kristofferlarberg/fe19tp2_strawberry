@@ -145,7 +145,7 @@ render() {
                         <LIWithImg>
                             <LogIcon style={{ height: '25px', padding: '0.5rem', color: '#444444', cursor: 'pointer' }} padding data-value='link' onClick={this.togglePop} />
                             {/* <Icons src={LogIcon} style={{ cursor: 'pointer', fill: '#fff'}}padding data-value='link' onClick={this.togglePop}/> */}
-                            <h3 data-value='link' onClick={this.togglePop}>Logga in</h3>
+                            <h3 data-value='link' onClick={this.togglePop}>{this.state.seen ? 'Logga ut' : 'Logga in'}</h3>
                             
                         </LIWithImg>
                         <div>{this.state.seen ? <LogPopup toggle={this.togglePop} /> : null}

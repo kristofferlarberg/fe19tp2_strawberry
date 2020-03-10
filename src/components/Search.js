@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withData } from './Data';
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+/* const useStyles = makeStyles(theme => ({
     inputRoot: {
         color: "purple",
         "& .MuiOutlinedInput-notchedOutline": {
@@ -31,21 +31,21 @@ const useStyles = makeStyles(theme => ({
     }
 
 
-}));
+})); */
 
 const Search = (props) => {
     const voteData = props.data.getVoteData(3);
-    const classes = useStyles();
+    /* const classes = useStyles(); */
     return (
     <>
         <Autocomplete
             id="combo-box-demo"
-            classes={classes}
+            /* classes={classes} */
             onChange={props.handleChange}
             options={voteData.titleDates}
             getOptionLabel={option => option.title}
             style={{ width: '90%', marginRight: '20px'}}
-                renderInput={params => <TextField classes={classes}{...params} label="Välj votering.."  variant="outlined" />}
+                renderInput={params => <TextField /* classes={classes} */{...params} label="Välj votering.."  variant="outlined" />}
         />
     </>)
 }
