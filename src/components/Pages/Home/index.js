@@ -40,12 +40,12 @@ const HomePage = ({ authUser, firebase }) => {
                 />
                 <Data>
                     {authUser && authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
-                        <div>
-                            <Admin />
-                        </div>
+                        <>
+                        </>
                     ) : (
-                        <Renderer authUser={authUser} />
+                        <></>
                     )}
+                    <Renderer authUser={authUser} />
                 </Data>
             </Main>
         </ThemeProvider>

@@ -6,6 +6,7 @@ import EyeIcon from './icons/eye-solid.svg';
 import LogIcon from './icons/sign-in-alt-solid.svg';
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
+import AdminLink from './AdminLink'
 import ToggleDarkLight from './ToggleDarkLight';
 
 const SidenavDiv = styled.div`
@@ -110,6 +111,7 @@ export class Side extends Component {
         const { authUser } = this.props;
         const { login, settings } = this.state;
         return (
+           
             <SidenavDiv className='side'>
                 <div
                     style={{
@@ -164,6 +166,9 @@ export class Side extends Component {
                             <Icons src={EyeIcon} />
                             <h3>Bevakningar</h3>
                         </LIWithImg>
+                        <LIWithImg>
+                            <AdminLink/>
+                        </LIWithImg>
                     </ULlist>
                     <SearchHistoryDiv>
                         <SearchBarDiv>
@@ -183,6 +188,7 @@ export class Side extends Component {
                     </SearchHistoryDiv>
                 </SidenavMenu>
             </SidenavDiv>
+            
         );
     }
 }
