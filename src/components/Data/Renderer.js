@@ -121,10 +121,10 @@ const options2 = {
     tooltips: {
         mode: 'label',
         callbacks: {
-            label: function(tooltipItem, data) {
+            label: function (tooltipItem, data) {
                 return ` ${data.datasets[tooltipItem.datasetIndex].label}: ${
                     tooltipItem.yLabel
-                } st `;
+                    } st `;
             }
         }
     }
@@ -307,14 +307,14 @@ class Renderer extends Component {
                     {active ? (
                         <DocH1>{dok_id && dok_id.substr(4)}</DocH1>
                     ) : (
-                        <DocH1>Riksdagskollen</DocH1>
-                    )}
+                            <DocH1>Riksdagskollen</DocH1>
+                        )}
                     {active && (
                         <DocText>
                             {title &&
                                 title.substr(
                                     title.indexOf(dok_id.substr(4)) +
-                                        dok_id.substr(4).length
+                                    dok_id.substr(4).length
                                 )}{' '}
                             - {date}
                         </DocText>
@@ -408,27 +408,27 @@ class Renderer extends Component {
                             >
                                 {' '}
                                 {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}
-                                {e >= 10 && `${((e / 349) * 100).toFixed(1)}%`}
+                                {e >= 10 && `${((e / 349) * 100).toFixed(1).replace(/.0+$/, '')}%`}
                             </div>
                         ) : (
-                            <div
-                                key={i + 'a'}
-                                style={{
-                                    display: 'inline-flex',
-                                    transition: 'width 0.5s',
-                                    boxSizing: 'border-box',
-                                    width: `${0.25 * 1000}px`,
-                                    height: '50px',
-                                    textAlign: 'center',
-                                    background: '#eee',
-                                    border: '1px solid white',
-                                    marginTop: '9px'
-                                }}
-                            >
-                                <br />
-                                <br />
-                            </div>
-                        );
+                                <div
+                                    key={i + 'a'}
+                                    style={{
+                                        display: 'inline-flex',
+                                        transition: 'width 0.5s',
+                                        boxSizing: 'border-box',
+                                        width: `${0.25 * 1000}px`,
+                                        height: '50px',
+                                        textAlign: 'center',
+                                        background: '#eee',
+                                        border: '1px solid white',
+                                        marginTop: '9px'
+                                    }}
+                                >
+                                    <br />
+                                    <br />
+                                </div>
+                            );
                     })}
                 </div>
 
@@ -483,7 +483,7 @@ class Renderer extends Component {
                     style={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        width: '94.5%',
+                        width: '90.5%',
                         marginTop: '-20px'
                     }}
                 >

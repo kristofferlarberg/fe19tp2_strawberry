@@ -67,7 +67,7 @@ class Popup extends Component {
                 <div
                     key={'chart'}
                     style={{
-                        height: '8%',
+                        height: '20%',
                         padding: '4%',
                         display: 'flex',
                         borderRadius: '5px 5px 0 0',
@@ -94,8 +94,8 @@ class Popup extends Component {
                         {this.props.party === '-'
                             ? 'Partilösa'
                             : parties[
-                                  voteObject.parties.indexOf(this.props.party)
-                              ]}
+                            voteObject.parties.indexOf(this.props.party)
+                            ]}
                         &nbsp;
                         {!small && (
                             <img
@@ -124,25 +124,21 @@ class Popup extends Component {
                                 width: `${(e.length / totalVotes) * 100}%`,
                                 justifyContent: 'center',
                                 background: backgroundColor[i],
-                                borderTop: e.length > 0 && '2px solid white',
                                 borderRight:
-                                    (i === 0 &&
-                                        e.length > 0 &&
-                                        e.length / totalVotes !== 1 &&
-                                        '2px solid white') ||
-                                    (e.length / totalVotes > 0.5 &&
-                                        e.length / totalVotes !== 1 &&
-                                        '2px solid white'),
+                                    e.length > 0 &&
+                                    i !== 3 &&
+                                    '1px solid white',
                                 color: 'white',
                                 fontSize: small ? '1em' : '1.5em'
                             }}
                         >
-                            <span>
-                                {e.length > 0 &&
-                                    `${((e.length / totalVotes) * 100).toFixed(
-                                        1
-                                    )}%`}
-                            </span>
+                            {e.length > 0 &&
+                                <span
+                                    style={{
+                                        color: e.length / totalVotes < 0.06 && backgroundColor[i], fontFamily: 'Roboto Condensed'
+                                    }}>
+                                    {e.length / totalVotes > 0.06 ? `${(e.length / totalVotes * 100).toFixed(1).replace(/.0+$/, '')}%` : '.'}
+                                </span>}
                         </div>
                     );
                 })}
@@ -189,7 +185,7 @@ class Popup extends Component {
                     </div>
                     <div
                         style={{
-                            height: small ? '150px' : '270px',
+                            height: small ? '160px' : '290px',
                             display: 'flex',
                             overflowY: 'scroll',
                             fontFamily: 'Roboto',
