@@ -1,5 +1,7 @@
-# fe19tp2_strawberry
+## fe19tp2_strawberry
 
+# Riksdagskollen
+The foundation for a web app proposal which visualizes voting data from the Swedish parliament.
 
 ## [Trello](https://trello.com/b/WDkRo7A7/fe19tp2strawberry)
 
