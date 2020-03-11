@@ -24,5 +24,14 @@ export const GlobalStyles = createGlobalStyle`
     background: ${({ theme }) => theme.side};
 
   }
+<<<<<<< HEAD
  
 `;
+=======
+
+
+
+`
+
+
+>>>>>>> toggle-darkmode-final
