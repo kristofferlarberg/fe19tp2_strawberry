@@ -45,7 +45,7 @@ const Span = styled.span`
     margin: 2.5px;
 `;
 
-const DocH1 = styled.h1` 
+const DocH1 = styled.h1`
     font-size: 3.1rem;
     margin: 0px;
     margin-right: 0.7rem;

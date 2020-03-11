@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserStatus from './Pages/UserStatus'
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import CogWheel from './icons/cog-solid.svg'
 import SearchIcon from './icons/search-solid.svg'
 import EyeIcon from './icons/eye-solid.svg'
@@ -9,6 +9,8 @@ import LogIcon from './icons/sign-in-alt-solid.svg'
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import ToggleDarkLight from './ToggleDarkLight';
+
+
 /* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
 import { ReactComponent as StarIcon } from './icons/star-solid.svg';
 import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
@@ -20,16 +22,17 @@ const theme = {
 
 
 
-
-export const SidenavDiv = styled.div`
-    grid-column-start: 1;
-    height:100vh;
+const SidenavDiv = styled.div` {
+    grid - column - start: 1;
+    height: 100vh;
     position: fixed;
     width: 300px;
-    z-index:1;
-    overflow-x:hidden;
-    overflow-x: hidden;
+    z - index: 1;
+    overflow - x: hidden;
+    overflow - x: hidden;
+}
 `
+
 
 const SidenavMenu = styled.div`
     margin: 0 2rem;
@@ -136,7 +139,7 @@ export class Side extends React.Component {
 
     render() {
         return (
-            <SidenavDiv className="side">
+            <SidenavDiv>
                 <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
                 <SidenavMenu>
                     <ULlist>
