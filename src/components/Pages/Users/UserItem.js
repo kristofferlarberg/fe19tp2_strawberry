@@ -35,9 +35,7 @@ class UserItem extends Component {
         if (prevProp.match.params.id === this.props.match.params.id) {
             return;
         }
-
         this.setState({ loading: true });
-        console.log(this.props.match.params.id)
         this.props.firebase
             .user(this.props.match.params.id)
             .on('value', snapshot => {
@@ -63,7 +61,7 @@ class UserItem extends Component {
                 {user && (
                     <div>
                         <span>
-                            <strong>ID:</strong> {user.uid}
+                            <strong>ID:</strong> {this.props.match.params.id}
                         </span>
                         <span>
                             <strong>E-Mail:</strong> {user.email}
