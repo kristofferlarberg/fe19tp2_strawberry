@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import styled from 'styled-components';
 import CogWheel from './icons/cog-solid.svg';
 import SearchIcon from './icons/search-solid.svg';
 import EyeIcon from './icons/eye-solid.svg';
 import LogIcon from './icons/sign-in-alt-solid.svg';
-=======
-import UserStatus from './Pages/UserStatus'
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import CogWheel from './icons/cog-solid.svg'
-import SearchIcon from './icons/search-solid.svg'
-import EyeIcon from './icons/eye-solid.svg'
-import StarIcon from './icons/star-solid.svg'
-import LogIcon from './icons/sign-in-alt-solid.svg'
->>>>>>> toggle-darkmode-final
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
 import AdminLink from './AdminLink'
 import ToggleDarkLight from './ToggleDarkLight';
-<<<<<<< HEAD
 
 const SidenavDiv = styled.div`
     grid-column-start: 1;
@@ -29,31 +18,6 @@ const SidenavDiv = styled.div`
     overflow-x: hidden;
     overflow-x: hidden;
 `;
-=======
-
-
-/* import { ReactComponent as LogIcon } from './icons/sign-in-alt-solid.svg';
-import { ReactComponent as StarIcon } from './icons/star-solid.svg';
-import { ReactComponent as CogWheel } from './icons/cog-solid.svg'; */
-
-const theme = {
-    font_color: '#797979',
-    darker_font: '#707070'
-}
-
-
-
-const SidenavDiv = styled.div` {
-    grid - column - start: 1;
-    height: 100vh;
-    position: fixed;
-    width: 300px;
-    z - index: 1;
-    overflow - x: hidden;
-    overflow - x: hidden;
-}
-`
->>>>>>> toggle-darkmode-final
 
 
 const SidenavMenu = styled.div`
@@ -148,7 +112,6 @@ export class Side extends Component {
         const { authUser } = this.props;
         const { login, settings } = this.state;
         return (
-<<<<<<< HEAD
            
             <SidenavDiv className='side'>
                 <div
@@ -163,10 +126,6 @@ export class Side extends Component {
                 >
                     <img alt='' src={DN} style={{ height: '95px' }} />
                 </div>
-=======
-            <SidenavDiv>
-                <div style={{ backgroundColor: '#fff', minWidth: '296px', height: '100px', borderTop: '5px solid red', display: 'flex', justifyContent: 'center' }}><img src={DN} style={{ height: '95px' }} /></div>
->>>>>>> toggle-darkmode-final
                 <SidenavMenu>
                     <ULlist>
                         <LIWithImg>
