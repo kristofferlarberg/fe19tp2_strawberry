@@ -112,7 +112,7 @@ export class Side extends Component {
         const { authUser } = this.props;
         const { login, settings } = this.state;
         return (
-           HEJHEJ
+           
             <SidenavDiv className='side'>
                 <div
                     style={{
