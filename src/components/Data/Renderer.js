@@ -54,6 +54,13 @@ const InfoIcon = styled.img`
         filter: opacity(0.7);
     }
 `;
+const Main = styled.div`
+    grid-column-start: 2;
+    height: 100vh;
+    padding-top: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+`;
 
 const options1 = {
     scales: {
@@ -285,15 +292,7 @@ class Renderer extends Component {
         let checkPopup = popups.filter(popup => popup.size === 'M');
 
         return (
-            <div
-                style={{
-                    width: '1045px',
-                    marginLeft: '340px',
-                    height: '100vh',
-                    paddingTop: '20px',
-                    boxSizing: 'border-box'
-                }}
-            >
+            <Main>
                 {this.props.authUser && this.props.authUser.branding
                     ? 'AFTONBLADET'
                     : null}
@@ -304,6 +303,19 @@ class Renderer extends Component {
                         width: '900px'
                     }}
                 >
+                    <InfoIcon
+                        src={InfoCircle}
+                        onClick={
+                            active && !checkPopup.length
+                                ? () => this.handlePopup('link')
+                                : undefined
+                        }
+                        style={{
+                            display: 'block',
+                            marginTop: '1rem',
+                            marginBottom: '0.5rem'
+                        }}
+                    />
                     {active ? (
                         <DocH1>{dok_id && dok_id.substr(4)}</DocH1>
                     ) : (
@@ -331,20 +343,6 @@ class Renderer extends Component {
                     <Search
                         data={data}
                         handleChange={this.handleSearchChange}
-                    />
-
-                    <InfoIcon
-                        src={InfoCircle}
-                        onClick={
-                            active && !checkPopup.length
-                                ? () => this.handlePopup('link')
-                                : undefined
-                        }
-                        style={{
-                            display: 'block',
-                            marginTop: '1rem',
-                            marginBottom: '0.5rem'
-                        }}
                     />
                 </div>
 
@@ -538,7 +536,7 @@ class Renderer extends Component {
                         dok_id={dok_id}
                     />
                 )}
-            </div>
+                </Main>
         );
     }
 }
