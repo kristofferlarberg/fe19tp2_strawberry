@@ -327,7 +327,8 @@ class Renderer extends Component {
                         display: 'flex',
                         flexDirection: 'row',
                         width: '100%',
-                        marginTop: '1rem'
+                        marginTop: '1.5rem',
+                        marginBottom: '1.5rem'
                     }}
                 >
                     <Search
@@ -410,7 +411,7 @@ class Renderer extends Component {
                                         textAlign: 'center',
                                         background: '#eee',
                                         border: '1px solid white',
-                                        marginTop: '9px'
+                                        marginTop: '0.5rem'
                                     }}
                                 >
                                     <br />
@@ -471,7 +472,7 @@ class Renderer extends Component {
                     style={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        width: '90.5%',
+                        width: '94.5%',
                         marginTop: '-20px'
                     }}
                 >
