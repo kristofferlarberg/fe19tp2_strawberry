@@ -31,6 +31,22 @@ class UserItem extends Component {
                 });
             });
     }
+    componentDidUpdate (prevProp) {
+        if (prevProp.match.params.id === this.props.match.params.id) {
+            return;
+        }
+
+        this.setState({ loading: true });
+        console.log(this.props.match.params.id)
+        this.props.firebase
+            .user(this.props.match.params.id)
+            .on('value', snapshot => {
+                this.setState({
+                    user: snapshot.val(),
+                    loading: false
+                });
+            });
+    }
 
     componentWillUnmount() {
         this.props.firebase.user(this.props.match.params.id).off();
