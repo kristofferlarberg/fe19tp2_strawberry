@@ -303,19 +303,9 @@ class Renderer extends Component {
                         width: '900px'
                     }}
                 >
-                    <InfoIcon
-                        src={InfoCircle}
-                        onClick={
-                            active && !checkPopup.length
-                                ? () => this.handlePopup('link')
-                                : undefined
-                        }
-                        style={{
-                            display: 'block',
-                            marginTop: '1rem',
-                            marginBottom: '0.5rem'
-                        }}
-                    />
+                    <div>
+                        {active && <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block' }} />}
+                    </div>
                     {active ? (
                         <DocH1>{dok_id && dok_id.substr(4)}</DocH1>
                     ) : (
