@@ -20,9 +20,16 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.text};
   }
 
+  h3 {
+    color: ${({ theme }) => theme.h3};
+  }
+
   .side {
     background: ${({ theme }) => theme.side};
+  }
 
+  .icons {
+    fill: ${({ theme }) => theme.icons};
   }
  
 `;
