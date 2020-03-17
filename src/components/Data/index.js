@@ -45,7 +45,16 @@ export default class Data extends Component {
             let _receivedDataCounter = 0;
             const fetchDataCallback = (data, titles, i) => {
                 data.voteringlista.votering[0].titel = titles[i];
-                votingData.push(data.voteringlista.votering);
+
+                let filteredData = data.voteringlista.votering.filter(
+                    item => item.avser === 'sakfrågan'
+                )
+                filteredData = filteredData.filter(
+                    item => item.punkt === filteredData[0].punkt
+                )
+                console.log(filteredData)
+
+                votingData.push(filteredData);
                 localStorage.setItem('votingData', JSON.stringify(votingData));
                 this.rawData = votingData;
                 _receivedDataCounter++;
@@ -65,12 +74,12 @@ export default class Data extends Component {
                     beteckning.map(item => {
                         return !bet.includes(item.beteckning)
                             ? bet.push(item.beteckning) &&
-                                  titles.push(item.titel)
+                            titles.push(item.titel)
                             : null;
                     });
                     for (let i = 0; i < bet.length; i++) {
                         fetch(
-                            `http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=${bet[i]}&punkt=&valkrets=&rost=&iid=&sz=349&utformat=JSON&gruppering=`
+                            `http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=${bet[i]}&punkt=&valkrets=&rost=&iid=&sz=700&utformat=JSON&gruppering=`
                         )
                             .then(data => data.json())
                             .then(data => {
@@ -180,10 +189,10 @@ export default class Data extends Component {
                         }
                     </DataContext.Consumer>
                 ) : (
-                    <p style={{ marginLeft: '50vw', marginTop: '50vh' }}>
-                        <LoadingDots />
-                    </p>
-                )}
+                        <p style={{ marginLeft: '50vw', marginTop: '50vh' }}>
+                            <LoadingDots />
+                        </p>
+                    )}
             </DataContext.Provider>
         );
     }
