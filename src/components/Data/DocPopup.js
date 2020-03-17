@@ -3,6 +3,8 @@ import ReactHtmlParser from 'react-html-parser';
 import styled from 'styled-components';
 
 const DocBoxShadow = styled.div`
+    color: ${({ theme }) => theme.text};
+    background: ${({ theme }) => theme.body};
     position: absolute;
     top: 22%;
     box-sizing: border-box;
@@ -14,7 +16,6 @@ const DocBoxShadow = styled.div`
     overflow: auto;
     padding: 15px;
     padding-top: 0px;
-    background: ${({ theme }) => theme.body};
     z-index: 1;
 `;
 const Xspan = styled.span`

@@ -24,7 +24,11 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.h3};
   }
 
-  span {
+  span.Hyperlink {
+    color: ${({ theme }) => theme.text};
+  }
+
+  a, a:hover,a:active,a:visited {
     color: ${({ theme }) => theme.text};
   }
 
@@ -32,8 +36,5 @@ export const GlobalStyles = createGlobalStyle`
     background: ${({ theme }) => theme.side};
   }
 
-  .icons {
-    fill: ${({ theme }) => theme.icons};
-  }
  
 `;

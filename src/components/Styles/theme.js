@@ -4,7 +4,6 @@ export const lightTheme = {
     toggleBorder: '#36454f',
     side: '#ddd',
     h3: '#444444',
-    icons: '#444444',
 };
 
 export const darkTheme = {
@@ -13,5 +12,4 @@ export const darkTheme = {
     toggleBorder: '#fafafa',
     side: '#202124',
     h3: '#e1e1e1',
-    icons: '#e1e1e1',
 };
