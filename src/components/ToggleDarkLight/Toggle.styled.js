@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ToggleContainer = styled.label`
     background: #dddddd;
-    border: 2px solid #797979;
+    border: 2px solid ${({ theme }) => theme.h3};
     border-radius: 40px;
     cursor: pointer;
     font-size: 0.5rem;
@@ -13,8 +13,8 @@ export const ToggleContainer = styled.label`
     width: 2.5rem;
     height: 1rem;
     &::after {
-        background: #797979;
-        border: 2px solid #797979;
+        background: ${({ theme }) => theme.h3};
+        border: 2px solid ${({ theme }) => theme.h3};
         content: '';
         display: block;
         border-radius: 50%;
@@ -34,10 +34,10 @@ export const CheckBox = styled.input`
     margin: 0;
     padding: 0;
     &:checked + ${ToggleContainer} {
-        background: #797979;
+        background: ${({ theme }) => theme.side};
         &::after {
-            background: #dddddd;
-            border: 2px solid #dddddd;
+            background: ${({ theme }) => theme.h3};
+            border: 2px solid ${({ theme }) => theme.h3};
             content: '';
             display: block;
             border-radius: 50%;

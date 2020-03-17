@@ -19,7 +19,6 @@ const SidenavDiv = styled.div`
     overflow-x: hidden;
 `;
 
-
 const SidenavMenu = styled.div`
     margin: 0 3rem;
     /* margin-top:10px; */
@@ -132,6 +131,7 @@ export class Side extends Component {
                     <ULlist>
                         <LIWithImg>
                             <Icons
+                                className='icons'
                                 src={LogIcon}
                                 style={{ cursor: 'pointer', filter: IconTheme }}
                                 data-value='link'
@@ -148,6 +148,7 @@ export class Side extends Component {
                         ) : null}
                         <LIWithImg>
                             <Icons
+                                className='icons'
                                 src={CogWheel}
                                 style={{ cursor: 'pointer', filter: IconTheme }}
                                 data-value='link'
