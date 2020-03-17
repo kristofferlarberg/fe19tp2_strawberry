@@ -44,15 +44,13 @@ export default class Data extends Component {
             votingData = [];
             let _receivedDataCounter = 0;
             const fetchDataCallback = (data, titles, i) => {
-                data.voteringlista.votering[0].titel = titles[i];
-
                 let filteredData = data.voteringlista.votering.filter(
                     item => item.avser === 'sakfrågan'
                 )
                 filteredData = filteredData.filter(
                     item => item.punkt === filteredData[0].punkt
                 )
-                console.log(filteredData)
+                filteredData[0].titel = titles[i];
 
                 votingData.push(filteredData);
                 localStorage.setItem('votingData', JSON.stringify(votingData));
@@ -77,6 +75,7 @@ export default class Data extends Component {
                             titles.push(item.titel)
                             : null;
                     });
+
                     for (let i = 0; i < bet.length; i++) {
                         fetch(
                             `http://data.riksdagen.se/voteringlista/?rm=2019%2F20&bet=${bet[i]}&punkt=&valkrets=&rost=&iid=&sz=700&utformat=JSON&gruppering=`
