@@ -14,7 +14,7 @@ const DocBoxShadow = styled.div`
     overflow: auto;
     padding: 15px;
     padding-top: 0px;
-    background: white;
+    background: ${({ theme }) => theme.body};
     z-index: 1;
 `;
 const Xspan = styled.span`

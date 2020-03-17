@@ -24,6 +24,10 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.h3};
   }
 
+  span {
+    color: ${({ theme }) => theme.text};
+  }
+
   .side {
     background: ${({ theme }) => theme.side};
   }
