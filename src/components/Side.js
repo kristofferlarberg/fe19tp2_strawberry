@@ -111,6 +111,8 @@ export class Side extends Component {
     render() {
         const { authUser } = this.props;
         const { login, settings } = this.state;
+        console.log(this.props.theme);
+        const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)' ;
         return (
            
             <SidenavDiv className='side'>
@@ -131,7 +133,7 @@ export class Side extends Component {
                         <LIWithImg>
                             <Icons
                                 src={LogIcon}
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: 'pointer', filter: IconTheme }}
                                 data-value='link'
                                 onClick={this.toggleLogin}
                             />
@@ -147,7 +149,7 @@ export class Side extends Component {
                         <LIWithImg>
                             <Icons
                                 src={CogWheel}
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: 'pointer', filter: IconTheme }}
                                 data-value='link'
                                 onClick={this.toggleSettings}
                             />
@@ -164,7 +166,7 @@ export class Side extends Component {
                         ) : null}
 
                         <LIWithImg>
-                            <Icons src={EyeIcon} />
+                            <Icons src={EyeIcon} style={{filter: IconTheme }} />
                             <h3>Bevakningar</h3>
                         </LIWithImg>
                         <LIWithImg>
@@ -173,7 +175,7 @@ export class Side extends Component {
                     </ULlist>
                     <SearchHistoryDiv>
                         <SearchBarDiv>
-                            <Icons src={SearchIcon} />
+                            <Icons src={SearchIcon} style={{ filter: IconTheme }} />
                             <h3>Sökhistorik</h3>
                         </SearchBarDiv>
                         <ULlist>
