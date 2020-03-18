@@ -20,7 +20,7 @@ const Logos = styled.div`
     flex-direction: row;
     justify-content: space-around;
     width: 45%;
-    background-color: ${props => props.theme.body};
+    background: ${props => props.theme.body};
     z-index: 1;
 `;
 
@@ -292,6 +292,7 @@ class Renderer extends Component {
         const { data } = this.props;
         let checkPopup = popups.filter(popup => popup.size === 'M');
         const IconTheme = this.props.UserTheme === 'light' ? 'invert(0)' : 'invert(1)';
+        const PartyIcons = { filter: !active && 'grayscale(1) opacity(0.5)' }
         return (
             <Main>
                 {this.props.authUser && this.props.authUser.branding
@@ -478,20 +479,15 @@ class Renderer extends Component {
                         marginTop: '-20px'
                     }}
                 >
-                    <Logos
-                        style={{
-                            filter: !active && 'grayscale(100%)',
-                            opacity: !active && '0.5'
-                        }}
-                    >
-                        <img src={S} alt='S' className='img' />
-                        <img src={V} alt='V' className='img' />
-                        <img src={C} alt='C' className='img' />
-                        <img src={M} alt='M' className='img' />
-                        <img src={L} alt='L' className='img' />
-                        <img src={KD} alt='KD' className='img' />
-                        <img src={MP} alt='MP' className='img' />
-                        <img src={SD} alt='SD' className='img' />
+                    <Logos>
+                        <img style={PartyIcons} src={S} alt='S' className='img' />
+                        <img style={PartyIcons} src={V} alt='V' className='img' />
+                        <img style={PartyIcons} src={C} alt='C' className='img' />
+                        <img style={PartyIcons} src={M} alt='M' className='img' />
+                        <img style={PartyIcons} src={L} alt='L' className='img' />
+                        <img style={PartyIcons} src={KD} alt='KD' className='img' />
+                        <img style={PartyIcons} src={MP} alt='MP' className='img' />
+                        <img style={PartyIcons} src={SD} alt='SD' className='img' />
                     </Logos>
                 </div>
 
