@@ -163,11 +163,10 @@ export class Side extends Component {
                                 />
                             </SettingsBox>
                         ) : null}
-
-                        <LIWithImg>
+{/*                         <LIWithImg>
                             <Icons src={EyeIcon} style={{ filter: IconTheme }} />
                             <h3>Bevakningar</h3>
-                        </LIWithImg>
+                        </LIWithImg> */}
                         <LIWithImg>
                             <AdminLink />
                         </LIWithImg>
