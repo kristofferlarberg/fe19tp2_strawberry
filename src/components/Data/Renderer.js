@@ -510,6 +510,7 @@ class Renderer extends Component {
                             return (
                                 popup.size && (
                                     <Popup
+                                        theme={this.props.UserTheme}
                                         data={this.props.data}
                                         key={i}
                                         size={popup.size}

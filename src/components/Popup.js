@@ -44,6 +44,9 @@ const smallPopup = {
 
 class Popup extends Component {
     render() {
+        console.log(this.props)
+        const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)';
+
         const voteObject = this.props.data.getVoteData(
             this.props.id || 0,
             this.props.party
@@ -102,7 +105,7 @@ class Popup extends Component {
                         {!small && (
                             <img
                                 alt=''
-                                style={{ height: '25px', cursor: 'pointer' }}
+                                style={{ height: '25px', cursor: 'pointer', filter: IconTheme }}
                                 onClick={this.props.clickedPopup}
                                 src={EyeIcon}
                             />
