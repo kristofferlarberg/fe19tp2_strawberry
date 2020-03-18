@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { ThemeProvider, createMuiTheme} from '@material-ui/core/styles'
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 const Search = props => {
     const voteData = props.data.getVoteData(3);
@@ -19,45 +19,45 @@ const Search = props => {
             MuiInputBase: {
                 root: {
                     color: getTheme
-                },                
+                },
             },
-            MuiOutlinedInput : {
-                root : {
-                    '& $notchedOutline' : {
+            MuiOutlinedInput: {
+                root: {
+                    '& $notchedOutline': {
                         borderColor: getTheme
                     },
-                    '&:hover $notchedOutline' : {
+                    '&:hover $notchedOutline': {
                         borderColor: getTheme
                     }
                 }
             },
-            MuiSvgIcon : {
-                root : {
-                    filter : 'invert('+svgCon+')'
+            MuiSvgIcon: {
+                root: {
+                    filter: 'invert(' + svgCon + ')'
                 }
             },
-            MuiAutocomplete : {
-                option : {
-                    backgroundColor :  invertGetTheme,
-                    color : getTheme,
-                    '&:hover' : {
-                        backgroundColor : invertShade
+            MuiAutocomplete: {
+                option: {
+                    backgroundColor: invertGetTheme,
+                    color: getTheme,
+                    '&:hover': {
+                        backgroundColor: invertShade
                     },
-                    '&:enabled' : {
+                    '&:enabled': {
                         backgroundColor: invertShade
 
                     },
-                    '&[data-focus="true"]' : {
+                    '&[data-focus="true"]': {
                         backgroundColor: invertShade
                     },
-                    '&[aria-selected="true"]' : {
+                    '&[aria-selected="true"]': {
                         backgroundColor: invertShade
                     }
                 },
-                listbox : {
-                    backgroundColor : invertGetTheme,
-                    border: '2px solid '+invertGetTheme
-                }          
+                listbox: {
+                    backgroundColor: invertGetTheme,
+                    border: '2px solid ' + invertGetTheme
+                }
             }
         }
     })
@@ -73,14 +73,14 @@ const Search = props => {
                     renderInput={params => (
                         <TextField
                             {...params}
-                            label='Välj votering..'
+                            label='Välj votering...'
                             variant='outlined'
                         />
                     )}
                 />
-            </ThemeProvider> 
+            </ThemeProvider>
         </React.Fragment>
-        
+
     );
 };
 
