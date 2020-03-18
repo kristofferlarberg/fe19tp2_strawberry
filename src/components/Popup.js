@@ -21,7 +21,6 @@ const PopupDiv = styled.div`
     background-color: ${props => props.theme.body};
     overflow: hidden;
     padding: 0px;
-    z-index: 1;
     transition-duration: '0.3s'
 `;
 
@@ -31,6 +30,7 @@ const mediumPopup = {
     top: '22%',
     width: '850px',
     height: '500px',
+    zIndex: '1',
 };
 const smallPopup = {
     display: 'inline-block',
@@ -44,7 +44,6 @@ const smallPopup = {
 
 class Popup extends Component {
     render() {
-        console.log(this.props)
         const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)';
 
         const voteObject = this.props.data.getVoteData(
