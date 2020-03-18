@@ -291,7 +291,7 @@ class Renderer extends Component {
 
         const { data } = this.props;
         let checkPopup = popups.filter(popup => popup.size === 'M');
-        const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)';
+        const IconTheme = this.props.UserTheme === 'light' ? 'invert(0)' : 'invert(1)';
         return (
             <Main>
                 {this.props.authUser && this.props.authUser.branding
