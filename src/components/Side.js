@@ -110,10 +110,8 @@ export class Side extends Component {
     render() {
         const { authUser } = this.props;
         const { login, settings } = this.state;
-        console.log(this.props.theme);
-        const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)' ;
+        const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)';
         return (
-           
             <SidenavDiv className='side'>
                 <div
                     style={{
@@ -167,11 +165,11 @@ export class Side extends Component {
                         ) : null}
 
                         <LIWithImg>
-                            <Icons src={EyeIcon} style={{filter: IconTheme }} />
+                            <Icons src={EyeIcon} style={{ filter: IconTheme }} />
                             <h3>Bevakningar</h3>
                         </LIWithImg>
                         <LIWithImg>
-                            <AdminLink/>
+                            <AdminLink />
                         </LIWithImg>
                     </ULlist>
                     <SearchHistoryDiv>
@@ -192,7 +190,6 @@ export class Side extends Component {
                     </SearchHistoryDiv>
                 </SidenavMenu>
             </SidenavDiv>
-            
         );
     }
 }

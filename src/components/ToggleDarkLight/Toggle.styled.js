@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
+export const ToggleP = styled.p`
+    margin: 16px 0 16px !important;
+`
 export const ToggleContainer = styled.label`
     background: #dddddd;
     border: 2px solid ${({ theme }) => theme.h3};
     border-radius: 40px;
     cursor: pointer;
     font-size: 0.5rem;
-    margin: 0;
+    margin: 0 ;
     overflow: hidden;
     padding: 0.5rem;
     position: relative;
@@ -31,8 +34,8 @@ export const CheckBox = styled.input`
     border-radius: 15px;
     width: 0;
     height: 0;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     &:checked + ${ToggleContainer} {
         background: ${({ theme }) => theme.side};
         &::after {
