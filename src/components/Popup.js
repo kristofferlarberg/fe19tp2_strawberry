@@ -8,31 +8,37 @@ const Xspan = styled.span`
     cursor: pointer;
     text-align: right;
 `;
+
+const PartyH1 = styled.h1`
+    font-family: Roboto;
+    font-eight: '400';
+    color: ${props => props.theme.text}
+`;
+
+
+const PopupDiv = styled.div`
+    border-radius: 10px;
+    background-color: ${props => props.theme.body};
+    overflow: hidden;
+    padding: 0px;
+    z-index: 1;
+    transition-duration: '0.3s'
+`;
+
 const mediumPopup = {
     position: 'absolute',
-    top: '22%',
     boxShadow: '0px 0px 15px #aaa',
+    top: '22%',
     width: '850px',
     height: '500px',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    padding: '0px',
-    background: 'white',
-    zIndex: '1',
-    transitionDuration: '0.3s'
 };
 const smallPopup = {
     display: 'inline-block',
     width: '49%',
     height: '300px',
-    borderRadius: '5px',
     border: '1px solid grey',
-    overflow: 'hidden',
-    padding: '0px',
-    background: 'white',
     marginTop: '10px',
     marginBottom: '10px',
-    transitionDuration: '0.3s',
     cursor: 'pointer'
 };
 
@@ -59,7 +65,7 @@ class Popup extends Component {
         let partyMembers = [[], [], [], []];
         const small = this.props.size === 'S' ? true : false;
         return (
-            <div
+            <PopupDiv
                 key={this.props.party}
                 style={small ? smallPopup : mediumPopup}
                 onClick={small ? this.props.clickedPopup : undefined}
@@ -83,13 +89,9 @@ class Popup extends Component {
                             style={{ width: small ? '40px' : '80px' }}
                         />
                     )}
-                    <h1
-                        style={{
-                            fontFamily: 'Roboto',
-                            fontWeight: '400',
-                            fontSize: small ? '1.5em' : '2.5em',
-                            color: 'black'
-                        }}
+                    <PartyH1
+                        style={{ fontSize: small ? '1.5em' : '2.5em' }}
+
                     >
                         {this.props.party === '-'
                             ? 'Partilösa'
@@ -109,53 +111,57 @@ class Popup extends Component {
                             {' '}
                             ×
                         </Xspan>
-                    </h1>
+                    </PartyH1>
                 </div>
-                {voteObject.votes.map((e, i) => {
-                    return (
-                        <div
-                            key={i}
-                            style={{
-                                display: 'inline-flex',
-                                transitionDuration: '0.3s',
-                                alignItems: 'center',
-                                height: e.length > 0 && '12%',
-                                boxSizing: 'border-box',
-                                width: `${(e.length / totalVotes) * 100}%`,
-                                justifyContent: 'center',
-                                background: backgroundColor[i],
-                                borderRight:
-                                    e.length > 0 &&
-                                    i !== 3 &&
-                                    '1px solid white',
-                                color: 'white',
-                                fontSize: small ? '1em' : '1.5em'
-                            }}
-                        >
-                            {e.length > 0 &&
-                                <span
-                                    style={{
-                                        color: e.length / totalVotes < 0.06 && backgroundColor[i], fontFamily: 'Roboto Condensed'
-                                    }}>
-                                    {e.length / totalVotes > 0.06 ? `${(e.length / totalVotes * 100).toFixed(1).replace(/.0+$/, '')}%` : '.'}
-                                </span>}
-                        </div>
-                    );
-                })}
-                {voteObject.votes.forEach((e, id) => {
-                    e.forEach((member, i) =>
-                        partyMembers[id].push(
-                            <li
+                {
+                    voteObject.votes.map((e, i) => {
+                        return (
+                            <div
                                 key={i}
-                                style={{ color: '#707070' }}
-                                title={member.valkrets}
+                                style={{
+                                    display: 'inline-flex',
+                                    transitionDuration: '0.3s',
+                                    alignItems: 'center',
+                                    height: e.length > 0 && '12%',
+                                    boxSizing: 'border-box',
+                                    width: `${(e.length / totalVotes) * 100}%`,
+                                    justifyContent: 'center',
+                                    background: backgroundColor[i],
+                                    borderRight:
+                                        e.length > 0 &&
+                                        i !== 3 &&
+                                        '1px solid white',
+                                    color: 'white',
+                                    fontSize: small ? '1em' : '1.5em'
+                                }}
                             >
-                                {member.namn}
-                                <br />
-                            </li>
-                        )
-                    );
-                })}
+                                {e.length > 0 &&
+                                    <span
+                                        style={{
+                                            color: e.length / totalVotes < 0.06 && backgroundColor[i], fontFamily: 'Roboto Condensed'
+                                        }}>
+                                        {e.length / totalVotes > 0.06 ? `${(e.length / totalVotes * 100).toFixed(1).replace(/.0+$/, '')}%` : '.'}
+                                    </span>}
+                            </div>
+                        );
+                    })
+                }
+                {
+                    voteObject.votes.forEach((e, id) => {
+                        e.forEach((member, i) =>
+                            partyMembers[id].push(
+                                <li
+                                    key={i}
+                                    style={{ color: '#707070' }}
+                                    title={member.valkrets}
+                                >
+                                    {member.namn}
+                                    <br />
+                                </li>
+                            )
+                        );
+                    })
+                }
                 <div>
                     <div
                         style={{
@@ -212,7 +218,7 @@ class Popup extends Component {
                         })}
                     </div>
                 </div>
-            </div>
+            </PopupDiv >
         );
     }
 }
