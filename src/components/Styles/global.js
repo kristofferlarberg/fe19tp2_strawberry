@@ -20,9 +20,21 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.text};
   }
 
+  h3 {
+    color: ${({ theme }) => theme.h3};
+  }
+
+  span.Hyperlink {
+    color: ${({ theme }) => theme.text};
+  }
+
+  a, a:hover,a:active,a:visited {
+    color: ${({ theme }) => theme.text};
+  }
+
   .side {
     background: ${({ theme }) => theme.side};
-
   }
+
  
 `;

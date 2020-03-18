@@ -45,7 +45,7 @@ const HomePage = ({ authUser, firebase }) => {
                     ) : (
                         <></>
                     )}
-                    <Renderer authUser={authUser} />
+                    <Renderer authUser={authUser} UserTheme={theme}/>
                 </Data>
             </Main>
         </ThemeProvider>

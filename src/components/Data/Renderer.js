@@ -291,7 +291,7 @@ class Renderer extends Component {
 
         const { data } = this.props;
         let checkPopup = popups.filter(popup => popup.size === 'M');
-
+        const IconTheme = this.props.theme === 'light' ? 'invert(0)' : 'invert(1)';
         return (
             <Main>
                 {this.props.authUser && this.props.authUser.branding
@@ -305,7 +305,7 @@ class Renderer extends Component {
                     }}
                 >
                     <div>
-                        {active && <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block' }} />}
+                        {active && <InfoIcon src={InfoCircle} onClick={active && !checkPopup.length ? () => this.handlePopup('link') : undefined} style={{ display: 'block' , filter : IconTheme}} />}
                     </div>
                     {active ? (
                         <DocH1>{dok_id && dok_id.substr(4)}</DocH1>
@@ -333,6 +333,7 @@ class Renderer extends Component {
                     }}
                 >
                     <Search
+                        ThemeProps={this.props.UserTheme}
                         data={data}
                         handleChange={this.handleSearchChange}
                     />
