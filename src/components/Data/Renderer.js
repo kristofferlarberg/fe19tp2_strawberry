@@ -20,6 +20,7 @@ const Logos = styled.div`
     flex-direction: row;
     justify-content: space-around;
     width: 45%;
+    background-color: ${props => props.theme.body};
     z-index: 1;
 `;
 
@@ -388,7 +389,7 @@ class Renderer extends Component {
                                     justifyContent: 'center',
                                     background: backgroundColor[i],
                                     borderRight: e > 0 && '1px solid white',
-                                    marginTop: '9px',
+                                    marginTop: '0.5rem',
                                     fontFamily: 'Roboto Condensed',
                                     fontSize: '20px',
                                     fontWeight: '500',
@@ -527,7 +528,7 @@ class Renderer extends Component {
                         dok_id={dok_id}
                     />
                 )}
-                </Main>
+            </Main>
         );
     }
 }
