@@ -1,12 +1,12 @@
 import React from 'react';
-import {  AuthUserContext } from './Session';
+import { AuthUserContext } from './Session';
 import { Link } from 'react-router-dom';
 import * as ROLES from '../constants/roles';
-import {compose} from 'recompose'
+//import {compose} from 'recompose'
 import * as ROUTES from '../constants/routes';
 
 const AdminLink = () => {
-    return (  
+    return (
         <AuthUserContext.Consumer>
             {authUser => authUser ? <div>
                 {authUser.roles[ROLES.ADMIN] ? <Link
@@ -26,11 +26,11 @@ const AdminLink = () => {
                 >
                     Admin
                                         </Link> : null}
-                
-            </div>: null}
-           
-                                        </AuthUserContext.Consumer>
- );
+
+            </div> : null}
+
+        </AuthUserContext.Consumer>
+    );
 }
 
 export default AdminLink;

@@ -3,7 +3,7 @@ import Renderer from '../../Data/Renderer';
 import Data from '../../Data';
 import Side from '../../Side';
 import { withAuthorization } from '../../Session';
-import Admin from '../Admin';
+//import Admin from '../Admin';
 import * as ROLES from '../../../constants/roles';
 import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../../Styles/global';
@@ -43,9 +43,9 @@ const HomePage = ({ authUser, firebase }) => {
                         <>
                         </>
                     ) : (
-                        <></>
-                    )}
-                    <Renderer authUser={authUser} UserTheme={theme}/>
+                            <></>
+                        )}
+                    <Renderer authUser={authUser} UserTheme={theme} />
                 </Data>
             </Main>
         </ThemeProvider>

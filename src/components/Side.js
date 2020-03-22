@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import CogWheel from './icons/cog-solid.svg';
 import SearchIcon from './icons/search-solid.svg';
-import EyeIcon from './icons/eye-solid.svg';
+//import EyeIcon from './icons/eye-solid.svg';
 import LogIcon from './icons/sign-in-alt-solid.svg';
 import LogPopup from './LogPopup';
 import DN from './icons/dnLogo.png';
@@ -163,7 +163,7 @@ export class Side extends Component {
                                 />
                             </SettingsBox>
                         ) : null}
-{/*                         <LIWithImg>
+                        {/*                         <LIWithImg>
                             <Icons src={EyeIcon} style={{ filter: IconTheme }} />
                             <h3>Bevakningar</h3>
                         </LIWithImg> */}

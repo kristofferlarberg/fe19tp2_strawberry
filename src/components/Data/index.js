@@ -50,10 +50,11 @@ export default class Data extends Component {
                 filteredData = filteredData.filter(
                     item => item.punkt === filteredData[0].punkt
                 )
-                filteredData[0].titel = titles[i];
-
-                votingData.push(filteredData);
-                localStorage.setItem('votingData', JSON.stringify(votingData));
+                if (filteredData.length) {
+                    filteredData[0].titel = titles[i];
+                    votingData.push(filteredData);
+                    localStorage.setItem('votingData', JSON.stringify(votingData));
+                }
                 this.rawData = votingData;
                 _receivedDataCounter++;
                 if (

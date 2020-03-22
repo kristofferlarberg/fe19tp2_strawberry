@@ -400,7 +400,7 @@ class Renderer extends Component {
                             >
                                 {' '}
                                 {/* {e >= 10 ? `${data2.datasets[i].label}:` : <br />} <br />  */}
-                                {e >= 10 && `${((e / 349) * 100).toFixed(1).replace(/.0+$/, '')}%`}
+                                {e >= 17 && `${((e / 349) * 100).toFixed(1).replace(/.0+$/, '')}%`}
                             </div>
                         ) : (
                                 <div
